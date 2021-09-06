@@ -20,7 +20,7 @@ daysOfTheYear = 365
 accurateDays = 300
 accuracy = 100*accurateDays/daysOfTheYear
 
-print'Having ',accurateDays,' accurate out of ',daysOfTheYear,' days means the prediction algorithm has ',accuracy, '% accuracy'
+print'Having ',accurateDays,' accurate days out of ',daysOfTheYear,' days means the prediction algorithm has ',accuracy, '% accuracy'
 print'\b'
 print'3. Classification accuracy'
 
@@ -45,7 +45,7 @@ k=float(A[1]-B[1])/float(A[0]-B[0])
 
 print'The slope k of this line is equal to',k
 
-m=round((0-A[1])/k + (A[0]),2)
+m=round((A[1])/k + (A[0]),2)
 print'The constant term m of this line is equal to ',m
 
 print'\b'
