@@ -1,0 +1,40 @@
+10 simulations :
+1: frequency = 3 - probability = 0.3
+2: frequency = 1 - probability = 0.1
+3: frequency = 2 - probability = 0.2
+4: frequency = 1 - probability = 0.1
+5: frequency = 1 - probability = 0.1
+6: frequency = 2 - probability = 0.2
+
+100 simulations :
+1: frequency = 18 - probability = 0.18
+2: frequency = 9 - probability = 0.09
+3: frequency = 26 - probability = 0.26
+4: frequency = 13 - probability = 0.13
+5: frequency = 19 - probability = 0.19
+6: frequency = 15 - probability = 0.15
+
+1000 simulations :
+1: frequency = 168 - probability = 0.168
+2: frequency = 167 - probability = 0.167
+3: frequency = 167 - probability = 0.167
+4: frequency = 154 - probability = 0.154
+5: frequency = 185 - probability = 0.185
+6: frequency = 159 - probability = 0.159
+
+10000 simulations :
+1: frequency = 1642 - probability = 0.1642
+2: frequency = 1708 - probability = 0.1708
+3: frequency = 1670 - probability = 0.167
+4: frequency = 1645 - probability = 0.1645
+5: frequency = 1678 - probability = 0.1678
+6: frequency = 1657 - probability = 0.1657
+
+100000 simulations :
+1: frequency = 16561 - probability = 0.16561
+2: frequency = 16915 - probability = 0.16915
+3: frequency = 16566 - probability = 0.16566
+4: frequency = 16799 - probability = 0.16799
+5: frequency = 16637 - probability = 0.16637
+6: frequency = 16522 - probability = 0.16522
+
