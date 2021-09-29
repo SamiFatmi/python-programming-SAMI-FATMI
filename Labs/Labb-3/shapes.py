@@ -27,6 +27,9 @@ class Shape:
     def __repr__ (self)->str:
         return f"This is a shape with center coordinates ({self._x} , {self._y})"
 
+    #TODO: implement MOVE
+    #TODO: implement MOVE TO POINT
+
 
 
 class Circle(Shape):
@@ -54,6 +57,12 @@ class Circle(Shape):
     
     def __repr__(self):
         return f"This is a circle with center coordinates ({self.x} , {self.y}) and radius {self.radius}"
+
+    #TODO: implement AREA
+    #TODO: implement PERIMETER
+    #TODO: implement ==
+    #TODO: implement POINT_COMPARISION
+    
 
 
 
@@ -115,3 +124,15 @@ class Rectangle(Shape):
         else:
             return f"This is a square with center coordinates ({self.x} , {self.y}), height and width {self.side2} and tilted with an angle of {self.angle}"
 
+    #TODO: implement AREA
+    #TODO: implement PERIMETER
+    #TODO: implement ==
+    #TODO: implement POINT_COMPARISION
+    #TODO: implement ROTATE
+
+
+
+#TODO: create a cube class
+#TODO: create a rectangular cuboid class
+#TODO: create a sphere class
+#TODO: create a cylinder class
