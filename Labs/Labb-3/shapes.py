@@ -88,6 +88,37 @@ class Circle(Shape):
             return True 
         else :
             return False
+    
+    def scale(self,value):
+        if not isinstance(value,(int,float)) :
+            raise TypeError("Value must be an int or a float")
+
+        if value==0:
+            raise ValueError("Value can't be 0 ")
+
+        if value<0:
+            raise ValueError("Value can't be negative ")
+ 
+        self._radius *= value 
+
+    def change_radius(self,value):
+        if not isinstance(value,(int,float)) :
+            raise TypeError("Value must be an int or a float")
+
+        if value==0:
+            raise ValueError("Value can't be 0 ")
+
+        if value<0:
+            raise ValueError("Value can't be negative ")
+ 
+        self._radius = value
+
+    
+    #TODO: implement plot
+    #TODO: implement scale
+    #TODO: implement change_radius
+    '''def plot(self):
+        plt.'''
 
     
 
@@ -208,11 +239,11 @@ class Rectangle(Shape):
         if self._side1>=self._side2:
             self._angle = 0
         else:
-            self._angle = 90
+            self._angle = math.pi/2
     
     def make_vertical(self):
         if self._side1>=self._side2:
-            self._angle = 90
+            self._angle = math.pi/2
         else:
             self._angle = 0
 
@@ -237,10 +268,252 @@ class Rectangle(Shape):
         self._side2=new_side2
 
 
+# 3D shapes
+class Shape_3D: 
+    def __init__(self,x,y,z):
+        self.x=x
+        self.y=y
+        self.z=z
+
+    @property
+    def x(self):
+        return self._x
+    
+    @property
+    def y(self):
+        return self._y
+    
+    @property
+    def z(self):
+        return self._z
+
+    @x.setter
+    def x(self,value):
+        if not isinstance(value,(int,float)):
+            raise TypeError("Value should be a number")
+        
+        self._x = value
+
+    @y.setter
+    def y(self,value):
+        if not isinstance(value,(int,float)):
+            raise TypeError("Value should be a number")
+        
+        self._y = value
+
+    @z.setter
+    def z(self,value):
+        if not isinstance(value,(int,float)):
+            raise TypeError("Value should be a number")
+        
+        self._z = value
+
+    def move(self,x,y,z):
+        if not isinstance((x,y,z),(int,float)):
+            raise TypeError("Values should be numbers")
+
+        self._x+=x
+        self._y+=y
+        self._z+=z
+
+    def move_to(self,x,y,z):
+        if not isinstance((x,y,z),(int,float)):
+            raise TypeError("Values should be numbers")
+
+        self._x=x
+        self._y=y
+        self._z=z
 
 
 
-#TODO: create a cube class
-#TODO: create a rectangular cuboid class
-#TODO: create a sphere class
-#TODO: create a cylinder class
+class Cube(Shape_3D):
+    def __init__(self,x,y,z,side1,angle1=0,angle2=0,angle3=0):
+        super().__init__(x,y,z)
+        self.side1=side1
+        self.angle1=math.radians(angle1)
+        self.angle2=math.radians(angle2)
+        self.angle3=math.radians(angle3)
+
+    @property
+    def side1(self):
+        return self._side1 
+
+    @property
+    def angle1(self):
+        return self._angle1 
+    
+    @property
+    def angle2(self):
+        return self._angle2 
+
+    @property
+    def angle3(self):
+        return self._angle3
+
+    @side1.setter
+    def side1(self,value):
+        if not isinstance(value,(int,float)):
+            raise TypeError("Dimension of side 1 should be a valid number")
+        
+        if value==0:
+            raise ValueError("Dimension of side 1 can't be 0")
+        
+        if value<0:
+            raise ValueError("Dimension of side 1 can't be negative")
+
+        self._side1=value
+
+
+
+    @angle1.setter
+    def angle1(self,value):
+        if not isinstance(value,(int,float)):
+            raise TypeError("Angle 1 should be a valid number")
+
+        self._angle1=math.radians(value)
+    
+    @angle2.setter
+    def angle2(self,value):
+        if not isinstance(value,(int,float)):
+            raise TypeError("Angle 1 should be a valid number")
+
+        self._angle2=math.radians(value)
+    
+    @angle3.setter
+    def angle3(self,value):
+        if not isinstance(value,(int,float)):
+            raise TypeError("Angle 1 should be a valid number")
+
+        self._angle3=math.radians(value)
+
+        #TODO:implement AREA 
+        #TODO:implement circumference surface
+        #TODO:implement contains 
+        #TODO:implement Rotate
+
+
+
+class Rec_Cuboid(Cube):
+    def __init__(self,x,y,z,side1,side2,side3,angle1=0,angle2=0,angle3=0):
+        super().__init__(x,y,z,side1,angle1,angle2,angle3)
+        self.side2=side2
+        self.side3=side3
+
+    @property
+    def side2(self):
+        return self._side2 
+
+    @property
+    def side3(self):
+        return self._side3 
+
+    @side2.setter
+    def side2(self,value):
+        if not isinstance(value,(int,float)):
+            raise TypeError("Dimension of side 2 should be a valid number")
+        
+        if value==0:
+            raise ValueError("Dimension of side 2 can't be 0")
+        
+        if value<0:
+            raise ValueError("Dimension of side 2 can't be negative")
+
+        self._side2=value
+
+    @side3.setter
+    def side3(self,value):
+        if not isinstance(value,(int,float)):
+            raise TypeError("Dimension of side 3 should be a valid number")
+        
+        if value==0:
+            raise ValueError("Dimension of side 3 can't be 0")
+        
+        if value<0:
+            raise ValueError("Dimension of side 3 can't be negative")
+
+        self._side3=value
+
+
+
+class Sphere(Shape_3D):
+    def __init__(self,x,y,z,radius):
+        super().__init__(x,y,z)
+        self.radius=radius
+
+    @property
+    def radius(self):
+        return self._radius
+
+    @radius.setter
+    def radius(self,value):
+        if not isinstance(value,(int,float)):
+            raise TypeError("Radius value must be a valid number")
+        if radius==0:
+            raise ValueError("Radius can't be 0")
+        if radius<0:
+            raise ValueError("Radius can't be negative")
+        
+        self._radius=value
+
+
+
+
+class Cylinder(Sphere):
+    def __init__(self,x,y,z,radius,length,angle1=0,angle2=0,angle3=0):
+        super().__init__(x,y,z,radius)
+        self.length=length
+        self.angle1=math.radians(angle1)
+        self.angle2=math.radians(angle2)
+        self.angle3=math.radians(angle3)
+
+    @property
+    def length(self):
+        return self._length 
+
+    @property
+    def angle1(self):
+        return self._angle1 
+    
+    @property
+    def angle2(self):
+        return self._angle2 
+
+    @property
+    def angle3(self):
+        return self._angle3
+
+    @length.setter
+    def length(self,value):
+        if not isinstance(value,(int,float)):
+            raise TypeError("length should be a valid number")
+        
+        if value==0:
+            raise ValueError("length can't be 0")
+        
+        if value<0:
+            raise ValueError("length can't be negative")
+
+        self._length=value
+
+    @angle1.setter
+    def angle1(self,value):
+        if not isinstance(value,(int,float)):
+            raise TypeError("Angle 1 should be a valid number")
+
+        self._angle1=math.radians(value)
+    
+    @angle2.setter
+    def angle2(self,value):
+        if not isinstance(value,(int,float)):
+            raise TypeError("Angle 1 should be a valid number")
+
+        self._angle2=math.radians(value)
+    
+    @angle3.setter
+    def angle3(self,value):
+        if not isinstance(value,(int,float)):
+            raise TypeError("Angle 1 should be a valid number")
+
+        self._angle3=math.radians(value)
+    pass
+
