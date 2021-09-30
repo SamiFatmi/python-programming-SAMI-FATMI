@@ -4,12 +4,15 @@ from shapes import Rectangle
 import math 
 import matplotlib.pyplot as plt
 
+import os
+
+
 circle_list=[]
 square_list=[]
 rectangle_list=[]
 
 
-main_menu="1. Create a new shape\n2.Select a shape\n3.Refresh plot\n4.Quit\n"
+main_menu="1. Create a new shape\n2. Select a shape\n3. Quit\n"
 
 menu_1="What type of shape ?\nA.Circle\nB.Rectangle\nC.Square\nM. Go back to main menu\n"
 menu_circle="Please enter the x and y coordinates and the radius of your circle\n"
@@ -22,17 +25,21 @@ menu_select_rectangle="What do you want to do with this rectangle ?\n1. Area\n2.
 menu_select_square="What do you want to do with this square ?\n1. Area\n2. Circumference\n3. Move it\n4. Move it to an exact point\n5. Scale it\n6. Change dimensions to exact values\n7. Rotate\n8. Make it horizontale\n9. Remove\n"
 
 while True:
+    os.system('cls' if os.name == 'nt' else 'clear')
     choice1=input(main_menu)
-    if choice1!="1" and choice1!="2" and choice1!="3" and choice1!="4":
+    if choice1 not in ["1","2","3"]:
         print("Please enter a valid choice")
         continue
 
     elif choice1=="1":
+        os.system('cls' if os.name == 'nt' else 'clear')
         choice2=(input(menu_1)).capitalize()
         if choice2!="A" and choice2!="B" and choice2!="C" and choice2!="M":
+            os.system('cls' if os.name == 'nt' else 'clear')
             print("Invalid choice")
         elif choice2 =="A":
-            try:
+            try:             
+                os.system('cls' if os.name == 'nt' else 'clear')
                 x,y,radius=input(menu_circle).split()
                 x = float(x) if (str(float(x))==x or str(int(x))==x) else x
                 y = float(y) if str(float(y))==y or str(int(y))==y else y
@@ -48,6 +55,7 @@ while True:
 
         elif choice2 =="B":
             try:
+                os.system('cls' if os.name == 'nt' else 'clear')
                 x,y,side1,side2=input(menu_rectangle).split()
                 x= float(x) if (str(float(x))==x or str(int(x))==x) else x
                 y= float(y) if (str(float(y))==y or str(int(y))==y) else y
@@ -63,7 +71,9 @@ while True:
 
         elif choice2 =="C":
             try:
+                os.system('cls' if os.name == 'nt' else 'clear')
                 x,y,side=input(menu_square).split()
+                os.system('cls' if os.name == 'nt' else 'clear')
                 x= float(x) if (str(float(x))==x or str(int(x))==x) else x
                 y= float(y) if (str(float(y))==y or str(int(y))==y) else y
                 side = float(side) if (str(float(side))==side or str(int(side))==side) else side
@@ -81,17 +91,20 @@ while True:
     
 
     elif choice1=="2":
+        os.system('cls' if os.name == 'nt' else 'clear')
         choice2=(input(menu_2)).capitalize()
         if choice2 not in ["A","B","C","M"]:
+            os.system('cls' if os.name == 'nt' else 'clear')
             print("Please enter a valid choice")
         elif choice2 =="A":
             if len(circle_list)==0:
+                os.system('cls' if os.name == 'nt' else 'clear')
                 print("There are no circles to be selected")
             else:
+                os.system('cls' if os.name == 'nt' else 'clear')
                 print("Please select a circle by entering its number")
                 for index_circle in range(len(circle_list)):
                     print(f"{index_circle}. {circle_list[index_circle][0]}")
-
                 choice3=input("")
                 choice3= int(choice3) if str(int(choice3))==choice3 else choice3
 
@@ -116,6 +129,7 @@ while True:
                             print(err)
 
                     elif choice4=="4": #Move to a certain point
+                        os.system('cls' if os.name == 'nt' else 'clear')
                         x,y=input("Please enter the coordinates of the point you want to move your cirle to").split()
                         x=float(x) if str(float(x))==x or str(int(x))==x else x
                         y=float(y) if str(float(y))==y or str(int(y))==y else y
@@ -125,6 +139,7 @@ while True:
                             print(err)
 
                     elif choice4=="5": #Scale it
+                        os.system('cls' if os.name == 'nt' else 'clear')
                         scaling_value=input("Please enter the scaling value ")
                         scaling_value=float(scaling_value) if str(float(scaling_value))==scaling_value or str(int(scaling_value))==scaling_value else scaling_value
                         try:
@@ -133,6 +148,7 @@ while True:
                             print(err)
 
                     elif choice4=="6": #Change radius
+                        os.system('cls' if os.name == 'nt' else 'clear')
                         new_radius=input("Please enter the new radius value ")
                         new_radius=float(new_radius) if str(float(new_radius))==new_radius or str(int(new_radius))==new_radius else new_radius
                         try:
@@ -141,6 +157,7 @@ while True:
                             print(err)
 
                     elif choice4=="7": ##Check if it contains a point
+                        os.system('cls' if os.name == 'nt' else 'clear')
                         x,y=input("Please enter the coordinates of the point ").split()
                         x=float(x) if str(float(x))==x or str(int(x))==x else x
                         y=float(y) if str(float(y))==y or str(int(y))==y else y
@@ -160,6 +177,7 @@ while True:
                 print("There are no rectangles to be selected")
             else:
                 print("Please select a rectangle by entering its number")
+                os.system('cls' if os.name == 'nt' else 'clear')
                 for index_rec in range(len(rectangle_list)):
                     print(f"{index_rec}. {rectangle_list[index_rec][0]}")
 
@@ -172,12 +190,16 @@ while True:
                     selected_shape=rectangle_list[choice3][1]
                     choice4=input(menu_select_rectangle)
                     if choice4 not in ["1","2","3","4","5","6","7","8","9","10"]:
+                        os.system('cls' if os.name == 'nt' else 'clear')
                         print("Please enter a valid choice")
                     elif choice4=="1": #Area
+                        os.system('cls' if os.name == 'nt' else 'clear')
                         print(f"\n{selected_shape.area()}\n")
                     elif choice4=="2": #Circumference
+                        os.system('cls' if os.name == 'nt' else 'clear')
                         print(f"\n{selected_shape.perimeter}\n")
                     elif choice4=="3": #Move it
+                        os.system('cls' if os.name == 'nt' else 'clear')
                         x,y=(input("Please enter the distances of which you want to move your rectangle in the X and Y directions").strip()).split()
                         x=float(x) if str(float(x))==x or str(int(x))==x else x
                         y=float(y) if str(float(y))==y or str(int(y))==y else y
@@ -187,6 +209,7 @@ while True:
                             print(err)
 
                     elif choice4=="4": #Move to a certain point
+                        os.system('cls' if os.name == 'nt' else 'clear')
                         x,y=(input("Please enter the coordinates of the point you want to move your rectangle to").strip()).split()
                         x=float(x) if str(float(x))==x or str(int(x))==x else x
                         y=float(y) if str(float(y))==y or str(int(y))==y else y
@@ -197,6 +220,7 @@ while True:
 
 
                     elif choice4=="5": #Scale it
+                        os.system('cls' if os.name == 'nt' else 'clear')
                         scaling_value=input("Please enter the scaling value ")
                         scaling_value=float(scaling_value) if str(float(scaling_value))==scaling_value or str(int(scaling_value))==scaling_value else scaling_value
                         try:
@@ -205,6 +229,7 @@ while True:
                             print(err)
 
                     elif choice4=="6": #Change dimensions
+                        os.system('cls' if os.name == 'nt' else 'clear')
                         new_x,new_y=(input("Please enter the new dimensions ").strip()).split()
                         new_x=float(new_x) if str(float(new_x))==new_x or str(int(new_x))==new_x else new_x
                         new_y=float(new_y) if str(float(new_y))==new_y or str(int(new_y))==new_y else new_y
@@ -214,6 +239,7 @@ while True:
                             print(err)
 
                     elif choice4=="7": #rotate
+                        os.system('cls' if os.name == 'nt' else 'clear')
                         angle=input("Please enter the rotation angle")
                         angle=float(angle) if str(float(angle))==angle or str(int(angle))==angle else angle
 
@@ -234,8 +260,10 @@ while True:
         elif choice2 =="C": # Select a square
 
             if len(square_list)==0:
+                os.system('cls' if os.name == 'nt' else 'clear')
                 print("There are no rectangles to be selected")
             else:
+                os.system('cls' if os.name == 'nt' else 'clear')
                 print("Please select a square by entering its number")
                 for index_squ in range(len(square_list)):
                     print(f"{index_squ}. {square_list[index_squ][0]}")
@@ -251,10 +279,13 @@ while True:
                     if choice4 not in ["1","2","3","4","5","6","7","8","9"]:
                         print("Please enter a valid choice")
                     elif choice4=="1": #Area
+                        os.system('cls' if os.name == 'nt' else 'clear')
                         print(f"\n{selected_shape.area()}\n")
                     elif choice4=="2": #Circumference
+                        os.system('cls' if os.name == 'nt' else 'clear')
                         print(f"\n{selected_shape.perimeter}\n")
                     elif choice4=="3": #Move it
+                        os.system('cls' if os.name == 'nt' else 'clear')
                         x,y=(input("Please enter the distances of which you want to move your rectangle in the X and Y directions").strip()).split()
                         x=float(x) if str(float(x))==x or str(int(x))==x else x
                         y=float(y) if str(float(y))==y or str(int(y))==y else y
@@ -264,6 +295,7 @@ while True:
                             print(err)
 
                     elif choice4=="4": #Move to a certain point
+                        os.system('cls' if os.name == 'nt' else 'clear')
                         x,y=(input("Please enter the coordinates of the point you want to move your rectangle to").strip()).split()
                         x=float(x) if str(float(x))==x or str(int(x))==x else x
                         y=float(y) if str(float(y))==y or str(int(y))==y else y
@@ -274,6 +306,7 @@ while True:
 
 
                     elif choice4=="5": #Scale it
+                        os.system('cls' if os.name == 'nt' else 'clear')
                         scaling_value=input("Please enter the scaling value ")
                         scaling_value=float(scaling_value) if str(float(scaling_value))==scaling_value or str(int(scaling_value))==scaling_value else scaling_value
                         try:
@@ -282,6 +315,7 @@ while True:
                             print(err)
 
                     elif choice4=="6": #Change dimensions
+                        os.system('cls' if os.name == 'nt' else 'clear')
                         new_x=input("Please enter the new width ")
                         new_x=float(new_x) if str(float(new_x))==new_x or str(int(new_x))==new_x else new_x
                         try:
@@ -290,6 +324,7 @@ while True:
                             print(err)
 
                     elif choice4=="7": #rotate
+                        os.system('cls' if os.name == 'nt' else 'clear')
                         angle=input("Please enter the rotation angle")
                         angle=float(angle) if str(float(angle))==angle or str(int(angle))==angle else angle
 
@@ -307,10 +342,7 @@ while True:
             continue
 
     elif choice1=="3":
-        continue
-
-    elif choice1=="4":
-        break1
+        break
 
     plt.ion()
      
@@ -325,9 +357,7 @@ while True:
     
     plt.axis('equal')
     plt.show()
-    
-    pause_input=input("Press enter to continue")
-    plt.close('all')
+
 
 
 rectangle_list=[]
