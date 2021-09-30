@@ -33,13 +33,13 @@ class Shape:
 
 
     def move(self,xdistance,ydistance):
-        if not isinstance((xdistance,ydistance),(int,float)):
+        if not all([isinstance(i,(int,float)) for i in [xdistance,ydistance]]):                               #https://stackoverflow.com/questions/23986266/is-there-a-better-way-of-checking-multiple-variables-are-a-single-type-in-python
             raise TypeError("X and Y distances should be a number")
         self._x+=xdistance
         self._y+=ydistance
 
     def move_to(self,x,y):
-        if not isinstance((x,y),(int,float)):
+        if not all([isinstance(i,(int,float)) for i in [x,y]]) :
             raise TypeError("X and Y distances should be a number")
         self._x=x
         self._y=y
@@ -82,7 +82,7 @@ class Circle(Shape):
         return True if self._radius == other._radius else False
 
     def contain(self,x,y):
-        if not isinstance((x,y),(int,float)):
+        if not all([isinstance(i,(int,float)) for i in [x,y]]):
             raise TypeError("Point coordinates should be numbers")
         if pow(pow(x-self._x,2)+pow(y-self._y,2),0.5)<=self._radius :
             return True 
@@ -113,12 +113,10 @@ class Circle(Shape):
  
         self._radius = value
 
-    
-    #TODO: implement plot
-    #TODO: implement scale
-    #TODO: implement change_radius
-    '''def plot(self):
-        plt.'''
+    def plot(self):
+        X = [ self._x+ self._radius*math.cos(math.radians(i)) for i in range(1,361)]
+        Y = [ self._y+ self._radius*math.sin(math.radians(i)) for i in range(1,361)]
+        plt.plot(X,Y)
 
     
 
@@ -181,7 +179,8 @@ class Rectangle(Shape):
             return f"This is a rectangle with center coordinates ({self._x} , {self._y}), height {self._side1}, width {self._side2} and tilted with an angle of {self._angle}"
         else:
             return f"This is a square with center coordinates ({self._x} , {self._y}), height and width {self._side2} and tilted with an angle of {self._angle}"
-
+    
+    @staticmethod
     def corners (self):
         distance = pow(pow(self._side1/2,2)+pow(self._side2/2,2),0.5)
         inner_angle=math.acos(self._side1/(2*distance))
@@ -193,6 +192,7 @@ class Rectangle(Shape):
 
         return [c1,c2,c3,c4,c1]
 
+    @staticmethod
     def euc_distance(point1,point2):
         return ((point1[0]-point2[0])**2+(point1[1]-point2[1])**2)**0.5
 
@@ -209,7 +209,7 @@ class Rectangle(Shape):
             return False
 
     def contains(self,x,y):
-        if not isinstance((x,y),(int,float)):
+        if not all([isinstance(i,(int,float)) for i in [x,y]]):
             raise TypeError("Point coordinates must be numbers")
 
         if self._angle == 0 :
@@ -227,7 +227,6 @@ class Rectangle(Shape):
         X_coordinates = [(self.corners())[i][0] for i in range(5)]
         Y_coordinates = [(self.corners())[i][1] for i in range(5)]
         plt.plot(X_coordinates,Y_coordinates)
-
 
     def rotate(self,rotation_angle):
         if not isinstance(rotation_angle,(int,float)):
@@ -255,7 +254,7 @@ class Rectangle(Shape):
         self._side2*=value
 
     def change_size(self,new_side1,new_side2):
-        if not isinstance((new_side1,new_side2),(int,float)):
+        if not all([isinstance(i,(int,float)) for i in [new_side1,new_side2]]):
             raise TypeError("The new length and width must be numbers")
 
         if new_side1==0 or new_side2==0:
@@ -309,7 +308,7 @@ class Shape_3D:
         self._z = value
 
     def move(self,x,y,z):
-        if not isinstance((x,y,z),(int,float)):
+        if not all([isinstance(i,(int,float)) for i in [x,y,z]]):
             raise TypeError("Values should be numbers")
 
         self._x+=x
@@ -317,7 +316,7 @@ class Shape_3D:
         self._z+=z
 
     def move_to(self,x,y,z):
-        if not isinstance((x,y,z),(int,float)):
+        if not all([isinstance(i,(int,float)) for i in [x,y,z]]):
             raise TypeError("Values should be numbers")
 
         self._x=x
