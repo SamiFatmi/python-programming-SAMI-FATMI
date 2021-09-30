@@ -1,3 +1,7 @@
+import math
+import matplotlib.pyplot as plt
+
+
 class Shape:
     def __init__ (self,x:float,y:float)->None:
         self.x= x 
@@ -142,7 +146,7 @@ class Rectangle(Shape):
         self._angle = value 
 
     def __repr__(self):
-        if self.side1==self.side2:
+        if self._side1!=self._side2:
             return f"This is a rectangle with center coordinates ({self._x} , {self._y}), height {self._side1}, width {self._side2} and tilted with an angle of {self._angle}"
         else:
             return f"This is a square with center coordinates ({self._x} , {self._y}), height and width {self._side2} and tilted with an angle of {self._angle}"
@@ -150,24 +154,6 @@ class Rectangle(Shape):
     def corners (self):
         distance = pow(pow(self._side1/2,2)+pow(self._side2/2,2),0.5)
         inner_angle=math.acos(self._side1/(2*distance))
-
-        '''inner_angle1 = math.acos(self._side1/(2*distance))
-        inner_angle2 = math.pi - inner_angle1
-        inner_angle3 = math.pi + inner_angle1
-        inner_angle4 = math.tau - inner_angle1 
-
-        
-        c1v1=math.cos(inner_angle+self._angle)*distance
-        c1v2=math.sin(inner_angle+self._angle)*distance
-
-        c2v1=math.cos(math.pi - inner_angle +self._angle)*distance
-        c2v2=math.sin(math.pi - inner_angle +self._angle)*distance
-
-        c3v1=math.cos(math.pi + inner_angle+self._angle)*distance
-        c3v2=math.sin(math.pi + inner_angle+self._angle)*distance
-
-        c4v1=math.cos(math.tau - inner_angle+self._angle)*distance
-        c4v2=math.sin(math.tau - inner_angle+self._angle)*distance'''
 
         c1=[self._x + math.cos(inner_angle+self._angle)*distance, self._y +math.sin(inner_angle+self._angle)*distance]
         c2=[self._x + math.cos(math.pi - inner_angle +self._angle)*distance,self._y + math.sin(math.pi - inner_angle +self._angle)*distance]
@@ -205,12 +191,24 @@ class Rectangle(Shape):
                 if euc_distance(point,[x,y]) > euc_distance((self.corners())[0],(self.corners())[2]):
                     return False
             return True 
+    
+    def plot(self):
+        X_coordinates = [(self.corners())[i][0] for i in range(5)]
+        Y_coordinates = [(self.corners())[i][1] for i in range(5)]
+        plt.plot(X_coordinates,Y_coordinates)
+
 
     def rotate(self,rotation_angle):
         if not isinstance(rotation_angle,(int,float)):
             raise TypeError("Rotation angle should be an int or a float")
 
         self._angle += math.radians(rotation_angle)
+
+
+    # TODO: implement make horizontal
+    # TODO: implement make vertical 
+    # TODO: implement scale 
+    # TODO: implement change size
 
 
 
