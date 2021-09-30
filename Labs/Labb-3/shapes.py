@@ -204,11 +204,38 @@ class Rectangle(Shape):
 
         self._angle += math.radians(rotation_angle)
 
+    def make_horizontal(self):
+        if self._side1>=self._side2:
+            self._angle = 0
+        else:
+            self._angle = 90
+    
+    def make_vertical(self):
+        if self._side1>=self._side2:
+            self._angle = 90
+        else:
+            self._angle = 0
 
-    # TODO: implement make horizontal
-    # TODO: implement make vertical 
-    # TODO: implement scale 
-    # TODO: implement change size
+    def scale(self,value):
+        if not isinstance(value,(int,float)):
+            raise TypeError("Scaling Value should be a number")
+        
+        self._side1*=value
+        self._side2*=value
+
+    def change_size(self,new_side1,new_side2):
+        if not isinstance((new_side1,new_side2),(int,float)):
+            raise TypeError("The new length and width must be numbers")
+
+        if new_side1==0 or new_side2==0:
+            raise ValueError("Length and width can't be 0")
+
+        if new_side1<0 or new_side2<0:
+            raise ValueError("Length and width can't be negative")
+
+        self._side1=new_side1
+        self._side2=new_side2
+
 
 
 
