@@ -138,7 +138,7 @@ class Circle(Shape):
         return Circle(self._x,self._y,self._radius)
 
     def move_to(self,x,y):
-        if not all([isinstance(i,(int,float)) for i in [x,y]]) or str(xdistance) in ['True','False'] or str(ydistance) in ['True','False']:                               #https://stackoverflow.com/questions/23986266/is-there-a-better-way-of-checking-multiple-variables-are-a-single-type-in-python
+        if not all([isinstance(i,(int,float)) for i in [x,y]]) or str(x) in ['True','False'] or str(y) in ['True','False']:                               #https://stackoverflow.com/questions/23986266/is-there-a-better-way-of-checking-multiple-variables-are-a-single-type-in-python
             raise TypeError("X and Y distances should be a number")
         self._x=x
         self._y=y
@@ -187,7 +187,7 @@ class Rectangle(Shape):
 
     @side1.setter
     def side1(self,value)->None:
-        if not isinstance(value,(int,float)) :
+        if not isinstance(value,(int,float)) or isinstance(value,bool):
             raise TypeError("Height must be an int or a")
 
         if value==0:
@@ -200,7 +200,7 @@ class Rectangle(Shape):
 
     @side2.setter
     def side2(self,value)->None:
-        if not isinstance(value,(int,float)) :
+        if not isinstance(value,(int,float)) or isinstance(value,bool):
             raise TypeError("Height must be an int or a float")
 
         if value==0:
@@ -235,14 +235,14 @@ class Rectangle(Shape):
         return [c1,c2,c3,c4,c1]
     
     def move(self,xdistance,ydistance):
-        if not all([isinstance(i,(int,float)) for i in [xdistance,ydistance]]):                               #https://stackoverflow.com/questions/23986266/is-there-a-better-way-of-checking-multiple-variables-are-a-single-type-in-python
+        if not all([isinstance(i,(int,float)) for i in [xdistance,ydistance]]) or not all([not isinstance(i,bool) for i in [xdistance,ydistance]]):                               #https://stackoverflow.com/questions/23986266/is-there-a-better-way-of-checking-multiple-variables-are-a-single-type-in-python
             raise TypeError("X and Y distances should be a number")
         self._x+=xdistance
         self._y+=ydistance
         return Rectangle(self._x,self._y,self._side1,self._side2)
 
     def move_to(self,new_x,new_y):
-        if not all([isinstance(i,(int,float)) for i in [new_x,new_y]]):                               #https://stackoverflow.com/questions/23986266/is-there-a-better-way-of-checking-multiple-variables-are-a-single-type-in-python
+        if not all([isinstance(i,(int,float)) for i in [new_x,new_y]]) or not all([not isinstance(i,bool) for i in [new_x,new_y]]):                               #https://stackoverflow.com/questions/23986266/is-there-a-better-way-of-checking-multiple-variables-are-a-single-type-in-python
             raise TypeError("X and Y distances should be a number")
         self._x=new_x
         self._y=new_y
@@ -259,13 +259,15 @@ class Rectangle(Shape):
         return 2*self._side1 + 2*self._side2
 
     def __eq__(self,other):
+        if type(other)!=type(self):
+            raise TypeError("Can't compare a rectangle with a non rectangle")
         if (self._side1 == other._side1 and self._side2 == other._side2 ) or (self._side2 == other._side1 and self._side1 == other._side2 ) :
             return True 
         else :
             return False
 
     def contains(self,x,y):
-        if not all([isinstance(i,(int,float)) for i in [x,y]]):
+        if not all([isinstance(i,(int,float)) for i in [x,y]]) or not all([not isinstance(i,bool) for i in [x,y]]):
             raise TypeError("Point coordinates must be numbers")
 
         if self._angle == 0 :
@@ -286,10 +288,10 @@ class Rectangle(Shape):
         
 
     def rotate(self,rotation_angle):
-        if not isinstance(rotation_angle,(int,float)):
+        if not isinstance(rotation_angle,(int,float)) or isinstance(rotation_angle,bool):
             raise TypeError("Rotation angle should be an int or a float")
-
-        return Rectangle(self._x,self._y,self._side1,self._side2,rotation_angle)
+        self._angle+=rotation_angle
+        return Rectangle(self._x,self._y,self._side1,self._side2,self._angle)
 
     def make_horizontal(self):
         if self._side1>=self._side2:
@@ -306,15 +308,20 @@ class Rectangle(Shape):
         return Rectangle(self._x,self._y,self._side1,self._side2,self._angle)
 
     def scale(self,value):
-        if not isinstance(value,(int,float)):
+        if not isinstance(value,(int,float)) or isinstance(value,bool):
             raise TypeError("Scaling Value should be a number")
         
+        if value == 0 :
+            raise ValueError("Scaling value can't be 0")
+
+        if value<0 :
+            raise ValueError("Scaling Value can't be negative")
         self._side1*=value
         self._side2*=value
         return Rectangle(self._x,self._y,self._side1,self._side2,self._angle)
 
     def change_size(self,new_side1,new_side2):
-        if not all([isinstance(i,(int,float)) for i in [new_side1,new_side2]]):
+        if not all([isinstance(i,(int,float)) for i in [new_side1,new_side2]]) or not all([not isinstance(i,bool) for i in[new_side1,new_side2]]):
             raise TypeError("The new length and width must be numbers")
 
         if new_side1==0 or new_side2==0:
