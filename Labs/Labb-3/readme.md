@@ -2,6 +2,8 @@
 
 ## UML 
 
-![alt text](https://github.com/SamiFatmi/python-programming-SAMI-FATMI/tree/main/Labs/Labb-3/UML/Shape.png?raw=true)
 
-![plot](./UML/Shape.png)
+![Shape](./UML/Shape.png)
+
+<img src="/UML/Shape.png" alt="Shape"
+	title="Shape" width="150" height="100" />
