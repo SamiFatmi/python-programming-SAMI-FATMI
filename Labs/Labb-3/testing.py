@@ -248,20 +248,293 @@ class TestCircle(unittest.TestCase):
         c.change_radius(5)
         self.assertEqual(c.radius,5)
 
-    #TODO: test plot
 
+class TestRectangle(unittest.TestCase):
+    def setUp(self) -> None:
+        self.x,self.y,self.side1,self.side2 = 5,5,4,2
 
+    def create_rectangle(self):
+        return Rectangle(self.x,self.y,self.side1,self.side2)
 
+    def test_create_rectangle(self):
+        r = self.create_rectangle()
+
+        self.side1=""
+        with self.assertRaises(TypeError):
+            r = self.create_rectangle()
         
-
-
-
-
-
-
         
-
+        self.side1 = True
+        with self.assertRaises(TypeError):
+            r = self.create_rectangle()
         
+        self.side1 = False
+        with self.assertRaises(TypeError):
+            r = self.create_rectangle()
+            
+        self.side1 = 4
+
+        self.side2=""
+        with self.assertRaises(TypeError):
+            r = self.create_rectangle()
+        
+        
+        self.side2 = True
+        with self.assertRaises(TypeError):
+            r = self.create_rectangle()
+        
+        self.side2 = False
+        with self.assertRaises(TypeError):
+            r = self.create_rectangle()
+
+        self.side2=2
+        r = self.create_rectangle()
+
+        self.assertEqual(r.x,5)
+        self.assertEqual(r.y,5)
+        self.assertEqual(r.side1,4)
+        self.assertEqual(r.side2,2)
+        self.assertEqual(r.angle,0)
+    
+    def test_corners(self):
+        self.x,self.y,self.side1,self.side2= 0,0,2,2
+        r = self.create_rectangle()
+
+        testcorners=[[1,1],[-1,1],[-1,-1],[1,-1],[1,1]]
+        corners = r.corners()
+        for i,j in zip(corners,testcorners):
+            for x,y in zip(i,j):
+                self.assertAlmostEqual(x,y)
+
+        r = Rectangle(0,0,2,2,90)
+        
+        testcorners=[[-1,1],[-1,-1],[1,-1],[1,1],[-1,1]]
+        corners = r.corners()
+        for i,j in zip(corners,testcorners):
+            for x,y in zip(i,j):
+                self.assertAlmostEqual(x,y)
+
+    def test_move(self):
+        r = self.create_rectangle()
+
+        with self.assertRaises(TypeError):
+            r.move("",1)
+
+        with self.assertRaises(TypeError):
+            r.move(1,"")
+
+        with self.assertRaises(TypeError):
+            r.move(True,1)
+
+        with self.assertRaises(TypeError):
+            r.move(1,False)
+
+        r.move(5,5)
+        self.assertEqual(r.x,10)
+        self.assertEqual(r.y,10)
+
+        r.move(0,0)
+        self.assertEqual(r.x,10)
+        self.assertEqual(r.y,10)
+
+        r.move(-10,5)
+        self.assertEqual(r.x,0)
+        self.assertEqual(r.y,15)
+
+
+
+
+
+    def test_move_to(self):
+        r = self.create_rectangle()
+
+        with self.assertRaises(TypeError):
+            r.move_to("",1)
+
+        with self.assertRaises(TypeError):
+            r.move_to(1,"")
+
+        with self.assertRaises(TypeError):
+            r.move_to(True,1)
+
+        with self.assertRaises(TypeError):
+            r.move_to(1,False)
+
+        r.move_to(5,5)
+        self.assertEqual(r.x,5)
+        self.assertEqual(r.y,5)
+
+        r.move_to(0,0)
+        self.assertEqual(r.x,0)
+        self.assertEqual(r.y,0)
+
+        r.move_to(-10,5)
+        self.assertEqual(r.x,-10)
+        self.assertEqual(r.y,5)
+
+    def test_area(self):
+        r = self.create_rectangle()
+
+        self.assertEqual(r.area(),8)
+
+        r.side1 = 5
+        r.side2 = 10
+        self.assertEqual(r.area(),50)
+
+    def test_perimeter(self):
+        r = self.create_rectangle()
+
+        self.assertEqual(r.perimeter(),12)
+
+        r.side1 = 5
+        r.side2 = 10
+        self.assertEqual(r.perimeter(),30)
+
+    def test_eq(self):
+        r1 = self.create_rectangle()
+
+        with self.assertRaises(TypeError):
+            x = (r1==5)
+        
+        r2 = Rectangle(3,0,4,2)
+        r3 = Rectangle(0,0,2,4)
+        r4 = Rectangle(3,10,4,4)
+        self.assertTrue(r1==r2)
+        self.assertTrue(r1==r3)
+        self.assertFalse(r1==r4)
+
+    def test_contains(self):
+        r = self.create_rectangle()
+
+        with self.assertRaises(TypeError):
+            v = r.contains("",0)
+
+        with self.assertRaises(TypeError):
+            v = r.contains(0,"")
+        
+        with self.assertRaises(TypeError):
+            v = r.contains(True,0)
+
+        with self.assertRaises(TypeError):
+            v = r.contains(0,True)
+
+        self.assertTrue(r.contains(5,5))
+        self.assertTrue(r.contains(5,6))
+        self.assertFalse(r.contains(5,7))
+        self.assertFalse(r.contains(10,10))
+
+
+    def test_rotate(self):
+        r = self.create_rectangle()
+
+        with self.assertRaises(TypeError):
+            r.rotate("")
+
+        with self.assertRaises(TypeError):
+            r.rotate(True)
+
+        r.rotate(20)
+        self.assertEqual(r.angle,20)
+
+        r.rotate(20)
+        self.assertEqual(r.angle,40)
+
+        r.rotate(-40)
+        self.assertEqual(r.angle,0)
+
+
+    def test_make_horizontal(self):
+        r = self.create_rectangle()
+
+        r.make_horizontal()
+        self.assertEqual(r.angle,0)
+
+        r.rotate(20)
+        r.make_horizontal()
+        self.assertEqual(r.angle,0)
+
+        r = Rectangle(5,5,2,20)
+        r.make_horizontal()
+        self.assertEqual(r.angle,90)
+
+
+    def test_make_vertical(self):
+        r = self.create_rectangle()
+
+        r.make_vertical()
+        self.assertEqual(r.angle,90)
+
+        r.rotate(20)
+        r.make_vertical()
+        self.assertEqual(r.angle,90)
+
+        r = Rectangle(5,5,2,20)
+        r.make_vertical()
+        self.assertEqual(r.angle,0)
+
+    def test_scale(self):
+        r = self.create_rectangle()
+        
+        with self.assertRaises(TypeError):
+            r.scale("")
+
+        with self.assertRaises(TypeError):
+            r.scale(True)
+
+        with self.assertRaises(ValueError):
+            r.scale(-1)
+
+        with self.assertRaises(ValueError):
+            r.scale(0)
+
+        r.scale(2)
+        self.assertEqual(r.side1,8)
+        self.assertEqual(r.side2,4)
+
+        r.scale(1)
+        self.assertEqual(r.side1,8)
+        self.assertEqual(r.side2,4)
+
+        r.scale(0.5)
+        self.assertEqual(r.side1,4)
+        self.assertEqual(r.side2,2)
+
+        self.assertEqual(type(r),type(r.scale(1)))
+
+
+    def test_change_size(self):
+        r = self.create_rectangle()
+
+        with self.assertRaises(TypeError):
+            r.change_size("",5)
+
+        with self.assertRaises(TypeError):
+            r.change_size(5,"")
+
+        with self.assertRaises(TypeError):
+            r.change_size(True,5)
+
+        with self.assertRaises(TypeError):
+            r.change_size(5,False)
+
+        with self.assertRaises(ValueError):
+            r.change_size(0,5)
+
+        with self.assertRaises(ValueError):
+            r.change_size(5,0)
+
+        r.change_size(10,10)
+        self.assertEqual(r.side1,10)
+        self.assertEqual(r.side2,10)
+        self.assertEqual(r.x,5)
+        self.assertEqual(r.y,5)
+
+        r.change_size(1,500)
+        self.assertEqual(r.side1,1)
+        self.assertEqual(r.side2,500)
+        self.assertEqual(r.x,5)
+        self.assertEqual(r.y,5)
+
 
 
 
