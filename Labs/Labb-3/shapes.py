@@ -215,7 +215,7 @@ class Rectangle(Shape):
     def angle(self,value)->None:
         if not isinstance(value,(int,float)) :
             raise TypeError("Angle must be an int or a float ")
-        self._angle = value 
+        self._angle = math.radians(value) 
 
     def __repr__(self):
         if self._side1!=self._side2:
@@ -290,7 +290,7 @@ class Rectangle(Shape):
     def rotate(self,rotation_angle):
         if not isinstance(rotation_angle,(int,float)) or isinstance(rotation_angle,bool):
             raise TypeError("Rotation angle should be an int or a float")
-        self._angle+=rotation_angle
+        self._angle+=math.radians(rotation_angle)
         return Rectangle(self._x,self._y,self._side1,self._side2,self._angle)
 
     def make_horizontal(self):
