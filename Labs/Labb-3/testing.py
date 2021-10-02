@@ -5,6 +5,7 @@ from shapes import Shape
 from shapes import Circle
 from shapes import Rectangle
 from shapes import Shape_3D
+from shapes import Cube
 from shapes import Rec_Cuboid
 from shapes import Sphere
 
@@ -537,8 +538,752 @@ class TestRectangle(unittest.TestCase):
 
 
 
+class TestShape_3D(unittest.TestCase):
+    def setUp(self) -> None:
+        self.x=0
+        self.y=0
+        self.z=0
+
+    def create_shape_3D(self):
+        return Shape_3D(self.x,self.y,self.z)
+
+    def test_create_shape_3D(self):
+        s = self.create_shape_3D()
+        self.assertEqual(s.x,self.x)
+        self.assertEqual(s.y,self.y)
+        self.assertEqual(s.z,self.z)
+
+        with self.assertRaises(TypeError):
+            self.x=True 
+            s = self.create_shape_3D()
+
+        with self.assertRaises(TypeError):
+            self.x="True" 
+            s = self.create_shape_3D()
+        
+        with self.assertRaises(TypeError):
+            self.x="" 
+            s = self.create_shape_3D()
+
+        self.x=0
+        with self.assertRaises(TypeError):
+            self.y=True 
+            s = self.create_shape_3D()
+
+        with self.assertRaises(TypeError):
+            self.y="True" 
+            s = self.create_shape_3D()
+        
+        with self.assertRaises(TypeError):
+            self.y="" 
+            s = self.create_shape_3D()
+        
+        self.y=0
+        with self.assertRaises(TypeError):
+            self.z=True 
+            s = self.create_shape_3D()
+
+        with self.assertRaises(TypeError):
+            self.z="True" 
+            s = self.create_shape_3D()
+        
+        with self.assertRaises(TypeError):
+            self.z="" 
+            s = self.create_shape_3D()
+
+    def test_move(self):
+        s = self.create_shape_3D()
+
+        with self.assertRaises(TypeError):
+            s.move(0,0,"")
+
+        with self.assertRaises(TypeError):
+            s.move(0,"",3)
+
+        with self.assertRaises(TypeError):
+            s.move("",0,3)
+
+        s = self.create_shape_3D()
+
+        s.move(1,1,1)
+        self.assertEqual(s.x,1)
+        self.assertEqual(s.y,1)
+        self.assertEqual(s.z,1)
+
+        s.move(0,1,0)
+        self.assertEqual(s.x,1)
+        self.assertEqual(s.y,2)
+        self.assertEqual(s.z,1)
+
+        s.move(-5,-5,-5)
+        self.assertEqual(s.x,-4)
+        self.assertEqual(s.y,-3)
+        self.assertEqual(s.z,-4)
+
+    def test_move_to(self):
+        s = self.create_shape_3D()
+
+        with self.assertRaises(TypeError):
+            s.move_to(0,0,"")
+
+        with self.assertRaises(TypeError):
+            s.move_to(0,"",3)
+
+        with self.assertRaises(TypeError):
+            s.move_to("",0,3)
+
+        s = self.create_shape_3D()
+
+        s.move_to(1,1,1)
+        self.assertEqual(s.x,1)
+        self.assertEqual(s.y,1)
+        self.assertEqual(s.z,1)
+
+        s.move_to(0,1,0)
+        self.assertEqual(s.x,0)
+        self.assertEqual(s.y,1)
+        self.assertEqual(s.z,0)
+
+        s.move_to(-5,-5,-5)
+        self.assertEqual(s.x,-5)
+        self.assertEqual(s.y,-5)
+        self.assertEqual(s.z,-5)
+
+class TestCube(unittest.TestCase):
+    def setUp(self) -> None:
+        self.x,self.y,self.z,self.side1=0,0,0,4
+
+    def create_cube(self):
+        return Cube(self.x,self.y,self.z,self.side1)
+
+    def test_create_cube(self):
+        c = self.create_cube()
+
+        self.assertEqual(c.x,0)
+        self.assertEqual(c.y,0)
+        self.assertEqual(c.z,0)
+        self.assertEqual(c.side1,4)
+
+        self.side1 = 0 
+        with self.assertRaises(ValueError):
+            c = self.create_cube()
+        
+        self.side1 = -1 
+        with self.assertRaises(ValueError):
+            c = self.create_cube()
+
+        self.side1 = "" 
+        with self.assertRaises(TypeError):
+            c = self.create_cube()
+        
+        self.side1 = True 
+        with self.assertRaises(TypeError):
+            c = self.create_cube()
+
+        self.side1 = 4 
+        self.x = ""
+        with self.assertRaises(TypeError):
+            c = self.create_cube()
+
+        self.x = True
+        with self.assertRaises(TypeError):
+            c = self.create_cube()
+
+        self.x=0
+        self.y = ""
+        with self.assertRaises(TypeError):
+            c = self.create_cube()
+
+        self.y = True
+        with self.assertRaises(TypeError):
+            c = self.create_cube()
+        
+        self.y=0
+        self.z = ""
+        with self.assertRaises(TypeError):
+            c = self.create_cube()
+
+        self.z = True
+        with self.assertRaises(TypeError):
+            c = self.create_cube()
+
+    def test_corners(self):
+        c = self.create_cube()
+        c1=[self.x+self.side1/2,self.y+self.side1/2,self.z+self.side1]
+        c2=[self.x+self.side1/2,self.y-self.side1/2,self.z+self.side1]
+        c3=[self.x+self.side1/2,self.y-self.side1/2,self.z-self.side1]
+        c4=[self.x+self.side1/2,self.y+self.side1/2,self.z-self.side1]
+        c5=[self.x-self.side1/2,self.y+self.side1/2,self.z+self.side1]
+        c6=[self.x-self.side1/2,self.y-self.side1/2,self.z+self.side1]
+        c7=[self.x-self.side1/2,self.y-self.side1/2,self.z-self.side1]
+        c8=[self.x-self.side1/2,self.y+self.side1/2,self.z-self.side1]
+
+        self.assertEqual(c.corners(),[c1,c2,c3,c4,c1,c5,c6,c2,c6,c7,c3,c7,c8,c4,c8,c5])
+
+    def test_area(self):
+        c = self.create_cube()
+
+        self.assertEqual(c.area(),self.side1**3)
+
+        c.side1 = 3 
+        self.assertEqual(c.area(),27)
+
+    def test_circumference_surface(self):
+        c = self.create_cube()
+
+        self.assertEqual(c.circumference_surface(),(self.side1**2)*6)
+
+        c.side1=10
+
+        self.assertEqual(c.circumference_surface(),600)
+
+    def test_contains(self):
+        c = self.create_cube()
+
+        with self.assertRaises(TypeError):
+            c.contains(0,0,"")
+
+        with self.assertRaises(TypeError):
+            c.contains(0,"",0)
+
+        with self.assertRaises(TypeError):
+            c.contains("",0,0)
+
+        with self.assertRaises(TypeError):
+            c.contains(0,0,False)
+
+        with self.assertRaises(TypeError):
+            c.contains(0,False,0)
+
+        with self.assertRaises(TypeError):
+            c.contains(False,0,0)
+
+        self.assertTrue(c.contains(0,0,0))
+        self.assertTrue(c.contains(0,0,2))
+        self.assertTrue(c.contains(0,2,0))
+        self.assertTrue(c.contains(2,0,0))
+        self.assertTrue(c.contains(0,0,-2))
+        self.assertTrue(c.contains(0,-2,0))
+        self.assertTrue(c.contains(-2,0,0))
+
+        self.assertFalse(c.contains(5,5,5))
+        self.assertFalse(c.contains(2.01,0,0))
+
+    def test_move(self):
+        c = self.create_cube()
+
+        with self.assertRaises(TypeError):
+            c.move(0,0,"")
+
+        with self.assertRaises(TypeError):
+            c.move(0,"",0)
+
+        with self.assertRaises(TypeError):
+            c.move("",0,0)
+
+        with self.assertRaises(TypeError):
+            c.move(0,0,True)
+
+        with self.assertRaises(TypeError):
+            c.move(0,False,0)
+
+        with self.assertRaises(TypeError):
+            c.move(False,0,0)
+
+        c.move(5,5,5)
+        self.assertEqual(c.x,5)
+        self.assertEqual(c.y,5)
+        self.assertEqual(c.z,5)
+
+        c.move(5,5,5)
+        self.assertEqual(c.x,10)
+        self.assertEqual(c.y,10)
+        self.assertEqual(c.z,10)
+
+        c.move(-20,0,100)
+        self.assertEqual(c.x,-10)
+        self.assertEqual(c.y,10)
+        self.assertEqual(c.z,110)
+    
+    def test_move_to(self):
+        c = self.create_cube()
+
+        with self.assertRaises(TypeError):
+            c.move_to(0,0,"")
+
+        with self.assertRaises(TypeError):
+            c.move_to(0,"",0)
+
+        with self.assertRaises(TypeError):
+            c.move_to("",0,0)
+
+        with self.assertRaises(TypeError):
+            c.move_to(0,0,True)
+
+        with self.assertRaises(TypeError):
+            c.move_to(0,False,0)
+
+        with self.assertRaises(TypeError):
+            c.move_to(False,0,0)
+
+        c.move_to(5,5,5)
+        self.assertEqual(c.x,5)
+        self.assertEqual(c.y,5)
+        self.assertEqual(c.z,5)
+
+        c.move_to(15,5,55)
+        self.assertEqual(c.x,15)
+        self.assertEqual(c.y,5)
+        self.assertEqual(c.z,55)
+
+        c.move_to(-20,0,100)
+        self.assertEqual(c.x,-20)
+        self.assertEqual(c.y,0)
+        self.assertEqual(c.z,100)
+
+    def test_scale(self):
+        c = self.create_cube()
+
+        with self.assertRaises(TypeError):
+            c.scale("")
+
+        with self.assertRaises(TypeError):
+            c.scale(True)
+
+        with self.assertRaises(ValueError):
+            c.scale(0)
+
+        with self.assertRaises(ValueError):
+            c.scale(-10)
+
+        c.scale(10)
+        self.assertEqual(c.side1,40)
+
+        c.scale(0.1)
+        self.assertEqual(c.side1,4)
+
+        c.scale(25)
+        self.assertEqual(c.side1,100)
+
+    def test_change_size(self):
+        c = self.create_cube()
+
+        with self.assertRaises(TypeError):
+            c.change_size("")
+
+        with self.assertRaises(TypeError):
+            c.change_size(True)
+
+        with self.assertRaises(ValueError):
+            c.change_size(0)
+
+        with self.assertRaises(ValueError):
+            c.change_size(-10)
+
+        c.change_size(10)
+        self.assertEqual(c.side1,10)
+
+        c.change_size(0.1)
+        self.assertEqual(c.side1,0.1)
+
+        c.change_size(25)
+        self.assertEqual(c.side1,25)
+
+    
+class TestRec_Cuboid(unittest.TestCase):
+    def setUp(self) -> None:
+        self.x = 0
+        self.y = 0
+        self.z = 0
+        self.side1 = 2
+        self.side2 = 4
+        self.side3 = 6
+
+    def create_Rec_Cuboid(self):
+        return Rec_Cuboid(self.x,self.y,self.z,self.side1,self.side2,self.side3)
+
+    def test_create_Rec_Cuboid(self):
+        r = self.create_Rec_Cuboid()
+
+        self.assertEqual(r.side1,self.side1)
+        self.assertEqual(r.side2,self.side2)
+        self.assertEqual(r.side3,self.side3)
 
 
+        with self.assertRaises(TypeError):
+            r.side1=""
+        
+        with self.assertRaises(TypeError):
+            r.side2=""
+        
+        with self.assertRaises(TypeError):
+            r.side3=""
+        
+        with self.assertRaises(TypeError):
+            r.side1=True
+        
+        with self.assertRaises(TypeError):
+            r.side2=True
+        
+        with self.assertRaises(TypeError):
+            r.side3=True
+
+    
+    def test_area(self):
+        r = self.create_Rec_Cuboid()
+        self.assertEqual(r.area(),self.side1*self.side2*self.side3)
+
+        r.side1=1
+        r.side2=2
+        r.side3=3
+        self.assertEqual(r.area(),6)
+
+    def test_circumference_surface(self):
+        r = self.create_Rec_Cuboid()
+        self.assertEqual(r.circumference_surface(),self.side1*self.side2*2 + self.side1*self.side3*2 + self.side2*self.side3*2)
+
+        r.side1=1
+        r.side2=2
+        r.side3=3
+        self.assertEqual(r.circumference_surface(),22)
+
+    def test_contains(self):
+        r = self.create_Rec_Cuboid()
+
+        with self.assertRaises(TypeError):
+            r.contains("",9,9)
+
+        with self.assertRaises(TypeError):
+            r.contains(True,9,9)
+
+        with self.assertRaises(TypeError):
+            r.contains(9,"",9)
+
+        with self.assertRaises(TypeError):
+            r.contains(9,True,9)
+
+        with self.assertRaises(TypeError):
+            r.contains(9,9,"")
+
+        with self.assertRaises(TypeError):
+            r.contains(9,9,True)
+
+        self.assertTrue(r.contains(0,0,0))
+        self.assertTrue(r.contains(0.5,1,1.5))
+        self.assertTrue(r.contains(-0.5,-1,-1.5))
+
+        self.assertFalse(r.contains(0,0,-10))
+        self.assertFalse(r.contains(0.5,1,-11.5))
+        self.assertFalse(r.contains(-0.5,11,-1.5))
+
+    def test_scale(self):
+        r = self.create_Rec_Cuboid()
+
+        with self.assertRaises(TypeError):
+            r.scale("")
+
+        with self.assertRaises(TypeError):
+            r.scale(False)
+
+        with self.assertRaises(ValueError):
+            r.scale(0)
+
+        with self.assertRaises(ValueError):
+            r.scale(-9)
+
+        r.scale(1)
+        self.assertEqual(r.side1,self.side1)
+        self.assertEqual(r.side2,self.side2)
+        self.assertEqual(r.side3,self.side3)
+
+        r.scale(10)
+        self.assertEqual(r.side1,20)
+        self.assertEqual(r.side2,40)
+        self.assertEqual(r.side3,60)
+
+        r.scale(10)
+        self.assertEqual(r.side1,200)
+        self.assertEqual(r.side2,400)
+        self.assertEqual(r.side3,600)
+
+        r.scale(1/200)
+        self.assertEqual(r.side1,1)
+        self.assertEqual(r.side2,2)
+        self.assertEqual(r.side3,3)
+
+    def test_change_siez(self):
+        r = self.create_Rec_Cuboid()
+
+        with self.assertRaises(TypeError):
+            r.change_size("",10,10)
+
+        with self.assertRaises(TypeError):
+            r.change_size(True,10,10)
+
+        with self.assertRaises(TypeError):
+            r.change_size(10,"",10)
+
+        with self.assertRaises(TypeError):
+            r.change_size(10,True,10)
+
+        with self.assertRaises(TypeError):
+            r.change_size(10,10,"")
+
+        with self.assertRaises(TypeError):
+            r.change_size(10,10,True)
+
+
+        with self.assertRaises(ValueError):
+            r.change_size(0,10,10)
+
+        with self.assertRaises(ValueError):
+            r.change_size(-1,10,10)
+
+        with self.assertRaises(ValueError):
+            r.change_size(10,0,10)
+
+        with self.assertRaises(ValueError):
+            r.change_size(10,-1,10)
+
+        with self.assertRaises(ValueError):
+            r.change_size(10,10,0)
+
+        with self.assertRaises(ValueError):
+            r.change_size(10,10,-1)
+
+        
+        r.change_size(5,5,5)
+        self.assertEqual(r.side1,5)
+        self.assertEqual(r.side2,5)
+        self.assertEqual(r.side3,5)
+        
+        r.change_size(1,15,50)
+        self.assertEqual(r.side1,1)
+        self.assertEqual(r.side2,15)
+        self.assertEqual(r.side3,50)
+
+    def test_corners(self):
+        r = self.create_Rec_Cuboid()
+
+        c1=[self.x+self.side1/2,self.y+self.side2/2,self.z+self.side3]
+        c2=[self.x+self.side1/2,self.y-self.side2/2,self.z+self.side3]
+        c3=[self.x+self.side1/2,self.y-self.side2/2,self.z-self.side3]
+        c4=[self.x+self.side1/2,self.y+self.side2/2,self.z-self.side3]
+        c5=[self.x-self.side1/2,self.y+self.side2/2,self.z+self.side3]
+        c6=[self.x-self.side1/2,self.y-self.side2/2,self.z+self.side3]
+        c7=[self.x-self.side1/2,self.y-self.side2/2,self.z-self.side3]
+        c8=[self.x-self.side1/2,self.y+self.side2/2,self.z-self.side3]
+
+        list2 = [c1,c2,c3,c4,c1,c5,c6,c2,c6,c7,c3,c7,c8,c4,c8,c5]
+        list1 = r.corners()
+
+        self.assertEqual(list1,list2)
+
+
+class TestSphere(unittest.TestCase):
+    def setUp(self) -> None:
+        self.x,self.y,self.z,self.radius =  0,0,0,5
+
+    def create_Sphere(self):
+        return Sphere(self.x,self.y,self.z,self.radius)
+
+    def test_create_Sphere(self):
+        s = self.create_Sphere()
+
+        with self.assertRaises(TypeError):
+            s.radius = ""
+
+        with self.assertRaises(TypeError):
+            s.radius = False
+
+        with self.assertRaises(ValueError):
+            s.radius = 0
+
+        with self.assertRaises(ValueError):
+            s.radius = -1
+
+        self.assertEqual(s.radius,self.radius)
+
+    def test_volume(self):
+        s = self.create_Sphere()
+        self.assertEqual(s.volume(),4 * math.pi*(self.radius**3)/3)
+        
+        s.radius = 10
+        v = 4 * math.pi*1000/3
+        self.assertEqual(s.volume(),v)
+
+    def test_circrumference_surface(self):
+        s = self.create_Sphere()
+        self.assertEqual(s.circumference_surface(),4*math.pi*(self.radius**2))
+
+        s.radius=10 
+        self.assertEqual(s.circumference_surface(),4*math.pi*(10**2))
+
+    def test_contains(self):
+        s = self.create_Sphere()
+
+        with self.assertRaises(TypeError):
+            s.contains("",0,0)
+
+        with self.assertRaises(TypeError):
+            s.contains(True,0,0)
+
+        with self.assertRaises(TypeError):
+            s.contains(0,"",0)
+
+        with self.assertRaises(TypeError):
+            s.contains(0,True,0)
+
+        with self.assertRaises(TypeError):
+            s.contains(0,0,"")
+
+        with self.assertRaises(TypeError):
+            s.contains(0,0,True)
+
+        self.assertTrue(s.contains(0,0,0))
+        self.assertTrue(s.contains(0,0,5))
+        self.assertTrue(s.contains(0,5,0))
+        self.assertTrue(s.contains(-5,0,0))
+
+        self.assertFalse(s.contains(-5,10,0))
+        self.assertFalse(s.contains(-5,0,15))
+        self.assertFalse(s.contains(20,0,0))
+
+    def test_move(self):
+        s = self.create_Sphere()
+
+        with self.assertRaises(TypeError):
+            s.move("",0,0)
+
+        with self.assertRaises(TypeError):
+            s.move(False,0,0)
+
+        with self.assertRaises(TypeError):
+            s.move(0,"",0)
+
+        with self.assertRaises(TypeError):
+            s.move(0,False,0)
+
+        with self.assertRaises(TypeError):
+            s.move(0,0,"")
+
+        with self.assertRaises(TypeError):
+            s.move(0,0,False)
+
+        s.move(5,5,5)
+        self.assertEqual(s.x,5)
+        self.assertEqual(s.y,5)
+        self.assertEqual(s.z,5)
+
+        s.move(5,5,5)
+        self.assertEqual(s.x,10)
+        self.assertEqual(s.y,10)
+        self.assertEqual(s.z,10)
+
+        s.move(-10,-10,-10)
+        self.assertEqual(s.x,0)
+        self.assertEqual(s.y,0)
+        self.assertEqual(s.z,0)
+
+    def test_move_to(self):
+        s = self.create_Sphere()
+
+        with self.assertRaises(TypeError):
+            s.move_to("",0,0)
+
+        with self.assertRaises(TypeError):
+            s.move_to(False,0,0)
+
+        with self.assertRaises(TypeError):
+            s.move_to(0,"",0)
+
+        with self.assertRaises(TypeError):
+            s.move_to(0,False,0)
+
+        with self.assertRaises(TypeError):
+            s.move_to(0,0,"")
+
+        with self.assertRaises(TypeError):
+            s.move_to(0,0,False)
+
+        s.move_to(5,5,5)
+        self.assertEqual(s.x,5)
+        self.assertEqual(s.y,5)
+        self.assertEqual(s.z,5)
+
+        s.move_to(15,5,25)
+        self.assertEqual(s.x,15)
+        self.assertEqual(s.y,5)
+        self.assertEqual(s.z,25)
+
+        s.move_to(-10,-150,-1)
+        self.assertEqual(s.x,-10)
+        self.assertEqual(s.y,-150)
+        self.assertEqual(s.z,-1)
+
+    def test_scale(self):
+        s = self.create_Sphere()
+
+        with self.assertRaises(TypeError):
+            s.scale("")
+
+        with self.assertRaises(TypeError):
+            s.scale(True)
+
+        with self.assertRaises(ValueError):
+            s.scale(0)
+
+        with self.assertRaises(ValueError):
+            s.scale(-1)
+
+        s.scale(10)
+        self.assertEqual(s.radius,50)
+
+        s.scale(0.1)
+        self.assertEqual(s.radius,5)
+
+        s.scale(4)
+        self.assertEqual(s.radius,20)
+
+    def test_change_radius(self):
+        s = self.create_Sphere()
+
+        with self.assertRaises(TypeError):
+            s.change_radius("")
+
+        with self.assertRaises(TypeError):
+            s.change_radius(True)
+
+        with self.assertRaises(ValueError):
+            s.change_radius(0)
+
+        with self.assertRaises(ValueError):
+            s.change_radius(-1)
+
+        s.change_radius(10)
+        self.assertEqual(s.radius,10)
+
+        s.change_radius(0.1)
+        self.assertEqual(s.radius,0.1)
+
+        s.change_radius(4)
+        self.assertEqual(s.radius,4)
+        
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
 
 
 
