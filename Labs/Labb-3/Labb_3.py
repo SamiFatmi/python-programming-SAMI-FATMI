@@ -7,6 +7,7 @@ from shapes import Shape_3D
 from shapes import Sphere
 from shapes import Rec_Cuboid
 from shapes import Cube
+import numpy as np
 
 import math 
 import matplotlib.pyplot as plt
@@ -647,7 +648,7 @@ while True :
                                 print(f"\n{selected_shape.circumference_surface()}\n")
                                 time.sleep(3)
                             elif choice4=="3": #Move it
-                                x,y,z=(input("Please enter the distances of which you want to move your sphere in the X and Y directions\n\n")*strip()).split()
+                                x,y,z=(input("Please enter the distances of which you want to move your sphere in the X and Y directions\n\n").strip()).split()
                                 x=float(x) if str(float(x))==x or str(int(x))==x else x
                                 y=float(y) if str(float(y))==y or str(int(y))==y else y
                                 z=float(z) if str(float(z))==z or str(int(z))==z else z
@@ -948,20 +949,44 @@ while True :
 
                 os.system('cls' if os.name == 'nt' else 'clear')
                 print("Please close the plot figure to continue")
+
+                fig = plt.figure()
+                ax = plt.axes(projection='3d')
+                u = np.linspace(0, np.pi, 20)
+                v = np.linspace(0, 2 * np.pi, 20)
+
                 for sphere in sphere_list:
-                    sphere[1].plot()
+                    actual_sphere = sphere[1]
+                    x = actual_sphere.x + np.outer(np.sin(u), np.sin(v))*actual_sphere.radius
+                    y = actual_sphere.y + np.outer(np.sin(u), np.cos(v))*actual_sphere.radius
+                    z = actual_sphere.z + np.outer(np.cos(u), np.ones_like(v)) *actual_sphere.radius
+
+                    ax.plot_wireframe(x, y, z)
+
+                    
 
                 for rec_cuboid in rec_cuboid_list:
-                    rec_cuboid[1].plot()
+                    actual_rec = rec_cuboid[1]
+                    corners = actual_rec.corners()
+                    X = [ item[0] for item in corners]
+                    Y = [ item[1] for item in corners]    
+                    Z = [ item[2] for item in corners]
+
+                    ax.plot3D(X, Y, Z)    
 
                 for cube in cube_list:
-                    cube[1].plot()
+                    actual_cube = cube[1]
+                    corners = actual_cube.corners()
+                    X = [ item[0] for item in corners]
+                    Y = [ item[1] for item in corners]    
+                    Z = [ item[2] for item in corners]
+
+                    ax.plot3D(X, Y, Z)
+
                 
 
-                plt.gca().set_aspect('equal', adjustable='box')
-                
-                plt.grid()
                 plt.show()
+                
 
 
 

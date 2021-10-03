@@ -1,5 +1,9 @@
 import math
 import matplotlib.pyplot as plt
+import numpy as np
+from mpl_toolkits.mplot3d import Axes3D
+import time
+
 
 
 class Shape:
@@ -171,7 +175,7 @@ class Rectangle(Shape):
         super().__init__(x,y)
         self.side1=side1
         self.side2=side2
-        self.angle=math.radians(angle) 
+        self.angle=angle 
     
     @property
     def side1(self):
@@ -215,7 +219,7 @@ class Rectangle(Shape):
     def angle(self,value)->None:
         if not isinstance(value,(int,float)) :
             raise TypeError("Angle must be an int or a float ")
-        self._angle = math.radians(value) 
+        self._angle = value 
 
     def __repr__(self):
         if self._side1!=self._side2:
@@ -227,10 +231,10 @@ class Rectangle(Shape):
         distance = pow(pow(self._side1/2,2)+pow(self._side2/2,2),0.5)
         inner_angle=math.acos(self._side1/(2*distance))
 
-        c1=[self._x + math.cos(inner_angle+self._angle)*distance, self._y +math.sin(inner_angle+self._angle)*distance]
-        c2=[self._x + math.cos(math.pi - inner_angle +self._angle)*distance,self._y + math.sin(math.pi - inner_angle +self._angle)*distance]
-        c3=[self._x + math.cos(math.pi + inner_angle+self._angle)*distance,self._y + math.sin(math.pi + inner_angle+self._angle)*distance]
-        c4=[self._x + math.cos(math.tau - inner_angle+self._angle)*distance,self._y +math.sin(math.tau - inner_angle+self._angle)*distance]
+        c1=[self._x + math.cos(inner_angle+math.radians(self.angle))*distance, self._y +math.sin(inner_angle+math.radians(self.angle))*distance]
+        c2=[self._x + math.cos(math.pi - inner_angle +math.radians(self.angle))*distance,self._y + math.sin(math.pi - inner_angle +math.radians(self.angle))*distance]
+        c3=[self._x + math.cos(math.pi + inner_angle+math.radians(self.angle))*distance,self._y + math.sin(math.pi + inner_angle+math.radians(self.angle))*distance]
+        c4=[self._x + math.cos(math.tau - inner_angle+math.radians(self.angle))*distance,self._y +math.sin(math.tau - inner_angle+math.radians(self.angle))*distance]
 
         return [c1,c2,c3,c4,c1]
     
@@ -290,22 +294,24 @@ class Rectangle(Shape):
     def rotate(self,rotation_angle):
         if not isinstance(rotation_angle,(int,float)) or isinstance(rotation_angle,bool):
             raise TypeError("Rotation angle should be an int or a float")
-        self._angle+=math.radians(rotation_angle)
+        self._angle+=rotation_angle
         return Rectangle(self._x,self._y,self._side1,self._side2,self._angle)
 
     def make_horizontal(self):
         if self._side1>=self._side2:
             self._angle = 0
+            return Rectangle(self._x,self._y,self._side1,self._side2,0)
         else:
-            self._angle = 90
-        return Rectangle(self._x,self._y,self._side1,self._side2,self._angle)
+            self._angle = math.pi/2
+            return Rectangle(self._x,self._y,self._side1,self._side2,90)
     
     def make_vertical(self):
         if self._side1>=self._side2:
             self._angle = 90
+            return Rectangle(self._x,self._y,self._side1,self._side2,90)
         else:
             self._angle = 0
-        return Rectangle(self._x,self._y,self._side1,self._side2,self._angle)
+            return Rectangle(self._x,self._y,self._side1,self._side2,0)
 
     def scale(self,value):
         if not isinstance(value,(int,float)) or isinstance(value,bool):
@@ -434,7 +440,7 @@ class Cube(Shape_3D):
         return [c1,c2,c3,c4,c1,c5,c6,c2,c6,c7,c3,c7,c8,c4,c8,c5]
 
 
-    def area(self):
+    def volume(self):
         return self.side1**3 
 
     def circumference_surface(self):
@@ -493,9 +499,6 @@ class Cube(Shape_3D):
         return Cube(self.x,self.y,self.z,self.side1)
         
 
-    def plot(self):
-        pass 
-
 
 
 class Rec_Cuboid(Cube):
@@ -538,7 +541,7 @@ class Rec_Cuboid(Cube):
 
         self._side3=value
 
-    def area(self):
+    def volume(self):
         return self.side1*self.side2*self.side3 
 
     def circumference_surface(self):
@@ -595,8 +598,6 @@ class Rec_Cuboid(Cube):
 
         return [c1,c2,c3,c4,c1,c5,c6,c2,c6,c7,c3,c7,c8,c4,c8,c5]
 
-    def plot(self):
-        pass 
         
 
 
@@ -678,6 +679,6 @@ class Sphere(Shape_3D):
         self.radius = new_radius_value
         return Sphere(self.x,self.y,self.z,self.radius)
 
-    def plot(self):
-        pass 
+
+
 
