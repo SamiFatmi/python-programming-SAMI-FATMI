@@ -36,7 +36,7 @@ while True : #program will run until we chose to quit by entering Q in the main 
     elif main_choice=="2" : #2D Geometry
         while True:
             try:
-                show_plot=True 
+                show_plot=True  #boolean to keep track of the cases where we should plot or not plot
 
                 os.system('cls' if os.name == 'nt' else 'clear')
                 choice1=input("\n1. Create a new shape\n\n2. Select a shape\n\nQ. Quit\n\n\n").strip()
@@ -45,7 +45,7 @@ while True : #program will run until we chose to quit by entering Q in the main 
                     time.sleep(1.5)
                     show_plot=False 
 
-                elif choice1=="1":
+                elif choice1=="1": # Case : user wants to create a new 2D shape
                     os.system('cls' if os.name == 'nt' else 'clear')
                     choice2=((input("\nWhat type of shape ?\n\nA.Circle\n\nB.Rectangle\n\nC.Square\n\nM. Go back to main menu\n\n\n")).strip()).capitalize()
                     
@@ -125,9 +125,9 @@ while True : #program will run until we chose to quit by entering Q in the main 
                             else:
                                 os.system('cls' if os.name == 'nt' else 'clear')
                                 selected_shape=circle_list[choice3][1]
-                                choice4=input("What do you want to do with this circle ?\n1. Area\n2. Circumference\n3. Move it\n4. Move it to an exact point\n5. Scale it\n6. Change radius \n7. Check if it contains a point\n\n8. Remove\n\n\n").strip()
+                                choice4=input("What do you want to do with this circle ?\n1. Area\n2. Circumference\n3. Move it\n4. Move it to an exact point\n5. Scale it\n6. Change radius \n7. Check if it contains a point\n\n8. Compare it to another\n\nR. Remove\n\n\n").strip()
                                 
-                                if choice4 not in ["1","2","3","4","5","6","7","R","r"]:
+                                if choice4 not in ["1","2","3","4","5","6","7","8","R","r"]:
                                     print("Please enter a valid choice")
                                     time.sleep(1.5)
                                     show_plot=False 
@@ -182,6 +182,34 @@ while True : #program will run until we chose to quit by entering Q in the main 
                                         print(f"The point ({x},{y}) is not withing this circle")
                                         time.sleep(4)
 
+                                elif choice4=="8": #Compare it to another circle
+                                    show_plot=False
+                                    os.system('cls' if os.name == 'nt' else 'clear')
+                                    print("There are no circles to be selected")
+
+                                    if len(circle_list) < 2:
+                                        os.system('cls' if os.name == 'nt' else 'clear')
+                                        print("There are no circles to be selected")
+                                        time.sleep(1.5)
+                                        show_plot=False 
+                                    else:
+                                        os.system('cls' if os.name == 'nt' else 'clear')
+                                        print("Please select a circle by entering its number\n")
+                                        for index_circle in range(len(circle_list)):
+                                            if index_circle!=choice3:
+                                                print(f"{index_circle}. {circle_list[index_circle][0]}")
+
+                                        choice5=int(input("").strip())
+                                        os.system('cls' if os.name == 'nt' else 'clear')
+                                        if circle_list[choice3][1]==circle_list[choice5][1]:
+                                            print("These 2 circles are equal")
+                                        else : 
+                                            print("These 2 circles are not equal equal")
+                                    
+                                    time.sleep(4)
+
+
+
                                 elif choice4=="R" or choice4=="r": #Remove it
                                     circle_list.remove(circle_list[choice3])
                                 
@@ -205,9 +233,9 @@ while True : #program will run until we chose to quit by entering Q in the main 
                             else:
                                 selected_shape=rectangle_list[choice3][1]
                                 os.system('cls' if os.name == 'nt' else 'clear')
-                                choice4=input("What do you want to do with this rectangle ?\n1. Area\n2. Circumference\n3. Move it\n4. Move it to an exact point\n5. Scale it\n6. Change dimensions to exact values\n7. Check if it contains a point\n8. Rotate\n9. Make horizontal\n10. Make vertical\nR. Remove\n\n\n")
+                                choice4=input("What do you want to do with this rectangle ?\n1. Area\n2. Circumference\n3. Move it\n4. Move it to an exact point\n5. Scale it\n6. Change dimensions to exact values\n7. Check if it contains a point\n8. Compare to another rectangle\n9. Rotate\n10. Make horizontal\n11. Make vertical\nR. Remove\n\n\n")
                                 
-                                if choice4 not in ["1","2","3","4","5","6","7","8","9","10"]:
+                                if choice4 not in ["1","2","3","4","5","6","7","8","9","10","11","r","R"]:
                                     os.system('cls' if os.name == 'nt' else 'clear')
                                     print("Please enter a valid choice")
                                     time.sleep(1.5)
@@ -267,18 +295,44 @@ while True : #program will run until we chose to quit by entering Q in the main 
                                         time.sleep(4)
                                             
 
+                                elif choice4=="8": #Compare it to another rectangle
 
-                                elif choice4=="8": #rotate
+                                    show_plot=False
+                                    os.system('cls' if os.name == 'nt' else 'clear')
+                                    print("There are no rectangles to be selected")
+
+                                    if len(rectangle_list) < 2:
+                                        os.system('cls' if os.name == 'nt' else 'clear')
+                                        print("There are no rectangles to be selected")
+                                        time.sleep(1.5)
+                                        show_plot=False 
+                                    else:
+                                        os.system('cls' if os.name == 'nt' else 'clear')
+                                        print("Please select a rectangle by entering its number\n")
+                                        for index_rectangle in range(len(rectangle_list)):
+                                            if index_rectangle!=choice3:
+                                                print(f"{index_rectangle}. {rectangle_list[index_rectangle][0]}")
+
+                                        choice5=int(input("").strip())
+                                        os.system('cls' if os.name == 'nt' else 'clear')
+                                        if rectangle_list[choice3][1]==rectangle_list[choice5][1]:
+                                            print("These 2 rectangles are equal")
+                                        else : 
+                                            print("These 2 rectangles are not equal")
+                                    
+                                    time.sleep(4)
+
+                                elif choice4=="9": #rotate
                                     os.system('cls' if os.name == 'nt' else 'clear')
                                     angle=float(input("Please enter the rotation angle :\n\n").strip())
                                     selected_shape.rotate(angle) 
-                                    
                                 
-                                elif choice4=="8": #Make horizontal
+                                
+                                elif choice4=="10": #Make horizontal
                                     os.system('cls' if os.name == 'nt' else 'clear')
                                     rectangle_list[choice3][1]=selected_shape.make_horizontal()
 
-                                elif choice4=="9": #Make vertical
+                                elif choice4=="11": #Make vertical
                                     os.system('cls' if os.name == 'nt' else 'clear')
                                     rectangle_list[choice3][1]=selected_shape.make_vertical()
 
@@ -307,7 +361,7 @@ while True : #program will run until we chose to quit by entering Q in the main 
                             else:
                                 selected_shape=square_list[choice3][1]
                                 os.system('cls' if os.name == 'nt' else 'clear')
-                                choice4=input("What do you want to do with this square ?\n1. Area\n2. Circumference\n3. Move it\n4. Move it to an exact point\n5. Scale it\n6. Change dimensions to exact values\n7. Check if it contains a point\n8. Rotate\n9. Make it horizontal\nR. Remove\n\n\n").strip()
+                                choice4=input("What do you want to do with this square ?\n1. Area\n2. Circumference\n3. Move it\n4. Move it to an exact point\n5. Scale it\n6. Change dimensions to exact values\n7. Check if it contains a point\n8. Compare it to another circle\n9. Rotate\n10. Make it horizontal\nR. Remove\n\n\n").strip()
 
                                 if choice4 not in ["1","2","3","4","5","6","7","8","9","10","R","r"]:
                                     print("Please enter a valid choice")
@@ -346,15 +400,7 @@ while True : #program will run until we chose to quit by entering Q in the main 
                                     os.system('cls' if os.name == 'nt' else 'clear')
                                     new_x=float(input("Please enter the new width :\n\n").strip())
                                     selected_shape.change_size(new_x,new_x)
-                                    
-                                elif choice4=="8": #rotate
-                                    os.system('cls' if os.name == 'nt' else 'clear')
-                                    angle=float(input("Please enter the rotation angle :\n\n").strip())
-                                    selected_shape.rotate(angle)
-
-                                elif choice4=="9": #Make Horizontal
-                                    selected_shape.make_horizontal()
-
+                                
                                 elif choice4=="7": ##Check if it contains a point
                                     show_plot=False 
                                     os.system('cls' if os.name == 'nt' else 'clear')
@@ -364,10 +410,43 @@ while True : #program will run until we chose to quit by entering Q in the main 
                                     if selected_shape.contains(x,y) :
                                         print(f"The point ({x},{y}) is withing this square")
                                         time.sleep(4)
-                                    
                                     else :
                                         print(f"The point ({x},{y}) is not withing this square")
                                         time.sleep(4)
+
+                                elif choice4=="8": #Compare it to another square
+                                    show_plot=False
+
+                                    if len(square_list) < 2:
+                                        os.system('cls' if os.name == 'nt' else 'clear')
+                                        print("There are no squares to be selected")
+                                        time.sleep(1.5)
+                                        show_plot=False 
+                                    else:
+                                        os.system('cls' if os.name == 'nt' else 'clear')
+                                        print("Please select a circle by entering its number\n")
+                                        for index_square in range(len(square_list)):
+                                            if index_square!=choice3:
+                                                print(f"{index_square}. {square_list[index_square][0]}")
+
+                                        choice5=int(input("").strip())
+                                        os.system('cls' if os.name == 'nt' else 'clear')
+                                        if square_list[choice3][1]==square_list[choice5][1]:
+                                            print("These 2 squares are equal")
+                                        else : 
+                                            print("These 2 squares are not equal")
+                                    
+                                    time.sleep(4)
+                                    
+                                elif choice4=="9": #rotate
+                                    os.system('cls' if os.name == 'nt' else 'clear')
+                                    angle=float(input("Please enter the rotation angle :\n\n").strip())
+                                    selected_shape.rotate(angle)
+
+                                elif choice4=="10": #Make Horizontal
+                                    selected_shape.make_horizontal()
+
+                                    
                             
                                 elif choice4.capitalize()=="R": #Remove it
                                     square_list.remove(square_list[choice3])
