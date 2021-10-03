@@ -497,6 +497,12 @@ class Cube(Shape_3D):
 
         self.side1=side_value
         return Cube(self.x,self.y,self.z,self.side1)
+    
+    def __eq__(self, o: object) -> bool:
+        if type(self)!=type(o):
+            raise TypeError("Can't compare a cube with a non-cube.")
+        else:
+            return True if (self.side1 == o.side1) else False
         
 
 
@@ -595,6 +601,12 @@ class Rec_Cuboid(Cube):
 
         return [c1,c2,c3,c4,c1,c5,c6,c2,c6,c7,c3,c7,c8,c4,c8,c5]
 
+    def __eq__(self, o: object) -> bool:
+        if type(self)!=type(o):
+            raise TypeError("Can't compare a rectangular cuboid shape with a non-rectangular cuboid shape.")
+        else:
+            return True if (self.side1 == o.side1 or self.side1 == o.side2 or self.side1 == o.side3) and (self.side2 == o.side1 or self.side2 == o.side2 or self.side2 == o.side3) and (self.side3 == o.side1 or self.side3 == o.side2 or self.side3 == o.side3) else False
+
         
 
 
@@ -675,6 +687,12 @@ class Sphere(Shape_3D):
 
         self.radius = new_radius_value
         return Sphere(self.x,self.y,self.z,self.radius)
+
+    def __eq__(self, o: object) -> bool:
+        if type(self)!=type(o):
+            raise TypeError("Can't compare a Sphere with a non-sphere.")
+        else:
+            return True if self.radius == o.radius else False
 
 
 
