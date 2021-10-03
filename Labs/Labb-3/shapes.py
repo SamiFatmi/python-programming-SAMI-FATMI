@@ -281,7 +281,7 @@ class Rectangle(Shape):
                 return False 
         else : 
             for point in self.corners():
-                if euc_distance(point,[x,y]) > euc_distance((self.corners())[0],(self.corners())[2]):
+                if self.euc_distance(point,[x,y]) > self.euc_distance((self.corners())[0],(self.corners())[2]):
                     return False
             return True 
     
@@ -382,7 +382,7 @@ class Shape_3D:
         
         self._z = value
 
-    def move(self,x:float,y:float,z:float)-None:
+    def move(self,x:float,y:float,z:float)->None:
         if not all([isinstance(i,(int,float)) for i in [x,y,z]]) or not all([not isinstance(x,bool) for i in [x,y,z]]):
             raise TypeError("Values should be numbers")
 
@@ -390,7 +390,7 @@ class Shape_3D:
         self._y+=y
         self._z+=z
 
-    def move_to(self,:floatx,y:float,z:float):
+    def move_to(self,x:float,y:float,z:float):
         if not all([isinstance(i,(int,float)) for i in [x,y,z]]) or not all([not isinstance(x,bool) for i in [x,y,z]]):
             raise TypeError("Values should be numbers")
 
