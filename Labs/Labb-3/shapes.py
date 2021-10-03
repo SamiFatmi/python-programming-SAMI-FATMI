@@ -54,7 +54,7 @@ class Shape:
         self._y=y
         
     def __repr__ (self)->str:
-        return f"Type: 2D Shape\nCenter : ({self.x},{self.y})"
+        return (f"Type: 2D Shape\nCenter : ({self.x},{self.y})")
         
 
 
@@ -154,7 +154,7 @@ class Circle(Shape):
         plt.plot(X,Y)
 
     def __repr__(self)->str:
-        return f"Type: Circle\nCenter : ({self.x},{self.y})\nRadius : {self.radius}"
+        return (f"Type: Circle\nCenter : ({self.x},{self.y})\nRadius : {self.radius}")
     
     
     
@@ -329,9 +329,9 @@ class Rectangle(Shape):
 
     def __repr__(self)->str:
         if self._side1!=self._side2:
-            return f"Type: Rectangle\nCenter : ({self.x},{self.y})\nWidth : {self.side1}\nHeight: {self.side2}"
+            return (f"Type: Rectangle\nCenter : ({self.x},{self.y})\nWidth : {self.side1}\nHeight: {self.side2}")
         else:
-            return f"Type: Square\nCenter : ({self.x},{self.y})\nWidth : {self.side1}"
+            return (f"Type: Square\nCenter : ({self.x},{self.y})\nWidth : {self.side1}")
 
 # 3D shapes
 class Shape_3D: 
@@ -390,7 +390,7 @@ class Shape_3D:
         self._z=z
 
     def __repr__(self)->str:
-        print(f"Type: 3D Shape\nCenter : ({self.x},{self.y},{self.z})")
+        return (f"Type: 3D Shape\nCenter : ({self.x},{self.y},{self.z})")
 
 
 class Cube(Shape_3D):
@@ -499,7 +499,7 @@ class Cube(Shape_3D):
         return [c1,c2,c3,c4,c1,c5,c6,c2,c6,c7,c3,c7,c8,c4,c8,c5]
     
     def __repr__(self)->str:
-        print(f"Type: Cube\nCenter : ({self.x},{self.y},{self.z})\nWidth : {self.side1}")
+        return (f"Type: Cube\nCenter : ({self.x},{self.y},{self.z})\nWidth : {self.side1}")
 
         
         
@@ -608,7 +608,7 @@ class Rec_Cuboid(Cube):
         return [c1,c2,c3,c4,c1,c5,c6,c2,c6,c7,c3,c7,c8,c4,c8,c5]
     
     def __repr__(self)->str:
-        print(f"Type: Rectangular cuboid\nCenter : ({self.x},{self.y},{self.z})\nWidth : {self.side1}\nHeight : {self.side2}\nDepth : {self.side3}")
+        return (f"Type: Rectangular cuboid\nCenter : ({self.x},{self.y},{self.z})\nWidth : {self.side1}\nHeight : {self.side2}\nDepth : {self.side3}")
 
 
         
@@ -700,7 +700,7 @@ class Sphere(Shape_3D):
             return True if self.radius == o.radius else False
 
     def __repr__(self)->str:
-        print(f"Type: Sphere\nCenter : ({self.x},{self.y},{self.z})\nRadius : {self.radius}")
+        return (f"Type: Sphere\nCenter : ({self.x},{self.y},{self.z})\nRadius : {self.radius}")
 
 
 
