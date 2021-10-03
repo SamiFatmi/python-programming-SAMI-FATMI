@@ -888,6 +888,19 @@ class TestCube(unittest.TestCase):
         c.change_size(25)
         self.assertEqual(c.side1,25)
 
+    def test_eq(self):
+        c1 = Cube(-1,-2,-500,40)
+        c2 = Cube(0,0,0,15)
+        c3 = Cube(10,-9,109,40)
+        s = Sphere(5,5,5,15)
+
+        self.assertFalse(c1==c2)
+        self.assertTrue(c1==c3)
+
+        with self.assertRaises(TypeError):
+            condition = c1==s
+        
+
     
 class TestRec_Cuboid(unittest.TestCase):
     def setUp(self) -> None:
@@ -1077,6 +1090,18 @@ class TestRec_Cuboid(unittest.TestCase):
         list1 = r.corners()
 
         self.assertEqual(list1,list2)
+    
+    def test_eq(self):
+        r1 = Rec_Cuboid(-1,-2,-500,40,50,60)
+        r2 = Rec_Cuboid(0,0,0,15,9,9)
+        r3 = Rec_Cuboid(10,-9,109,40,60,50)
+        s = Sphere(5,5,5,15)
+
+        self.assertFalse(r1==r2)
+        self.assertTrue(r1==r3)
+
+        with self.assertRaises(TypeError):
+            condition = r1==s
 
 
 class TestSphere(unittest.TestCase):
@@ -1267,6 +1292,18 @@ class TestSphere(unittest.TestCase):
 
         s.change_radius(4)
         self.assertEqual(s.radius,4)
+    
+    def test_eq(self):
+        s1 = Sphere(-1,-2,-500,40)
+        s2 = Sphere(0,0,0,15)
+        s3 = Sphere(10,-9,109,40)
+        r = Rec_Cuboid(5,5,5,15,42,24)
+
+        self.assertFalse(s1==s2)
+        self.assertTrue(s1==s3)
+
+        with self.assertRaises(TypeError):
+            print(s1==r)
         
 
         
