@@ -1,4 +1,3 @@
-from typing import Type
 import unittest
 import math
 from shapes import Shape
@@ -723,10 +722,10 @@ class TestCube(unittest.TestCase):
     def test_area(self):
         c = self.create_cube()
 
-        self.assertEqual(c.area(),self.side1**3)
+        self.assertEqual(c.volume(),self.side1**3)
 
         c.side1 = 3 
-        self.assertEqual(c.area(),27)
+        self.assertEqual(c.volume(),27)
 
     def test_circumference_surface(self):
         c = self.create_cube()
@@ -931,12 +930,12 @@ class TestRec_Cuboid(unittest.TestCase):
     
     def test_area(self):
         r = self.create_Rec_Cuboid()
-        self.assertEqual(r.area(),self.side1*self.side2*self.side3)
+        self.assertEqual(r.volume(),self.side1*self.side2*self.side3)
 
         r.side1=1
         r.side2=2
         r.side3=3
-        self.assertEqual(r.area(),6)
+        self.assertEqual(r.volume(),6)
 
     def test_circumference_surface(self):
         r = self.create_Rec_Cuboid()

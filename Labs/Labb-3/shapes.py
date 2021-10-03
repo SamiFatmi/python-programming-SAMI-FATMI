@@ -302,7 +302,7 @@ class Rectangle(Shape):
             self._angle = 0
             return Rectangle(self._x,self._y,self._side1,self._side2,0)
         else:
-            self._angle = math.pi/2
+            self._angle = 90
             return Rectangle(self._x,self._y,self._side1,self._side2,90)
     
     def make_vertical(self)->'Rectangle':
@@ -552,9 +552,6 @@ class Rec_Cuboid(Cube):
             raise TypeError ("Point coordinates must be valid numbers")
 
         return True if  self.x-self.side1 <=X<= self.x+self.side1 and self.y-self.side2 <=Y<= self.y+self.side2 and self.z-self.side3 <=Z<= self.z+self.side3 else False
-
-    def rotate(self,axis,angle):
-        pass
 
     def scale(self,scaling_value:float)->'Rec_Cuboid':
         if not isinstance(scaling_value,(int,float)) or isinstance(scaling_value,bool):
