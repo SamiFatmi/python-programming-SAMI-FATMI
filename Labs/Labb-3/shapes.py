@@ -29,7 +29,7 @@ class Shape:
         self._x = value 
 
     @y.setter
-    def y(self,value)->None:
+    def y(self,value:float)->None:
         if str(value)=='True' or str(value)=='False' :
             raise TypeError("y coordinate can't be a boolean")
 
@@ -43,7 +43,7 @@ class Shape:
         return f"This is a shape with center coordinates ({self._x} , {self._y})"
 
 
-    def move(self,xdistance,ydistance):
+    def move(self,xdistance:float,ydistance:float)->None:
         if str(xdistance) in['True','False'] or str(ydistance) in['True','False']:
             raise TypeError("X and Y distances can't be booleans")
 
@@ -53,7 +53,7 @@ class Shape:
         self._y+=ydistance
         
 
-    def move_to(self,x,y):
+    def move_to(self,x:float,y:float)->None:
         if str(x) in['True','False'] or str(y) in ['True','False']:
             raise TypeError("X and Y coordinates can't be booleans")
 
@@ -76,7 +76,7 @@ class Circle(Shape):
         return self._radius
 
     @radius.setter
-    def radius(self,value)->None:
+    def radius(self,value:float)->None:
         if str(value) in ['True','False']:
             raise TypeError("Radius can't be a boolean")
 
@@ -92,21 +92,21 @@ class Circle(Shape):
         self._radius = value 
 
     
-    def __repr__(self):
+    def __repr__(self)->str:
         return f"This is a circle with center coordinates ({self.x} , {self.y}) and radius {self.radius}"
 
-    def area(self):
+    def area(self)->float:
         return math.pi*(self._radius**2)
 
-    def perimeter(self):
+    def perimeter(self)->float:
         return 2*math.pi*self._radius
 
-    def __eq__(self,other):
+    def __eq__(self,other:'Circle')->bool:
         if type(other) != type(self):
             raise TypeError("Can't compare a circle with a non-circle")
         return True if self._radius == other._radius else False
 
-    def contain(self,x,y):
+    def contain(self,x:float,y:float)->bool:
         if str(x) in ['True','False'] or str(y) in ['True','False']:
             raise TypeError("X and Y can't be booleans")
 
@@ -118,7 +118,7 @@ class Circle(Shape):
         else :
             return False
     
-    def scale(self,value):
+    def scale(self,value:float)->'Circle':
         if str(value) in ['True','False']:
             raise TypeError("Scaling value can't be a boolean")
 
@@ -134,21 +134,21 @@ class Circle(Shape):
         self._radius *= value 
         return Circle(self._x,self._y,self._radius)
 
-    def move(self,xdistance,ydistance):
+    def move(self,xdistance:float,ydistance:float)->'Circle':
         if not all([isinstance(i,(int,float)) for i in [xdistance,ydistance]]) or str(xdistance) in ['True','False'] or str(ydistance) in ['True','False']:                               #https://stackoverflow.com/questions/23986266/is-there-a-better-way-of-checking-multiple-variables-are-a-single-type-in-python
             raise TypeError("X and Y distances should be a number")
         self._x+=xdistance
         self._y+=ydistance
         return Circle(self._x,self._y,self._radius)
 
-    def move_to(self,x,y):
+    def move_to(self,x:float,y:float)->'Circle':
         if not all([isinstance(i,(int,float)) for i in [x,y]]) or str(x) in ['True','False'] or str(y) in ['True','False']:                               #https://stackoverflow.com/questions/23986266/is-there-a-better-way-of-checking-multiple-variables-are-a-single-type-in-python
             raise TypeError("X and Y distances should be a number")
         self._x=x
         self._y=y
         return Circle(self._x,self._y,self._radius)
 
-    def change_radius(self,value):
+    def change_radius(self,value:float)->'Circle':
         if not isinstance(value,(int,float)) or str(value) in ['True','False']:
             raise TypeError("Value must be an int or a float")
 
@@ -160,7 +160,7 @@ class Circle(Shape):
         self._radius = value
         return Circle(self._x,self._y,value)
 
-    def plot(self):
+    def plot(self)->None:
         X = [ self._x+ self._radius*math.cos(math.radians(i)) for i in range(1,361)]
         Y = [ self._y+ self._radius*math.sin(math.radians(i)) for i in range(1,361)]
         plt.plot(X,Y)
@@ -190,7 +190,7 @@ class Rectangle(Shape):
         return self._angle
 
     @side1.setter
-    def side1(self,value)->None:
+    def side1(self,value:float)->None:
         if not isinstance(value,(int,float)) or isinstance(value,bool):
             raise TypeError("Height must be an int or a")
 
@@ -203,7 +203,7 @@ class Rectangle(Shape):
         self._side1 = value 
 
     @side2.setter
-    def side2(self,value)->None:
+    def side2(self,value:float)->None:
         if not isinstance(value,(int,float)) or isinstance(value,bool):
             raise TypeError("Height must be an int or a float")
 
@@ -216,18 +216,18 @@ class Rectangle(Shape):
         self._side2 = value 
 
     @angle.setter
-    def angle(self,value)->None:
+    def angle(self,value:float)->None:
         if not isinstance(value,(int,float)) :
             raise TypeError("Angle must be an int or a float ")
         self._angle = value 
 
-    def __repr__(self):
+    def __repr__(self)->str:
         if self._side1!=self._side2:
             return f"This is a rectangle with center coordinates ({self._x} , {self._y}), height {self._side1}, width {self._side2} and tilted with an angle of {self._angle}"
         else:
             return f"This is a square with center coordinates ({self._x} , {self._y}), height and width {self._side2} and tilted with an angle of {self._angle}"
     
-    def corners (self):
+    def corners (self)->list:
         distance = pow(pow(self._side1/2,2)+pow(self._side2/2,2),0.5)
         inner_angle=math.acos(self._side1/(2*distance))
 
@@ -238,14 +238,14 @@ class Rectangle(Shape):
 
         return [c1,c2,c3,c4,c1]
     
-    def move(self,xdistance,ydistance):
+    def move(self,xdistance:float,ydistance:float)->'Rectangle':
         if not all([isinstance(i,(int,float)) for i in [xdistance,ydistance]]) or not all([not isinstance(i,bool) for i in [xdistance,ydistance]]):                               #https://stackoverflow.com/questions/23986266/is-there-a-better-way-of-checking-multiple-variables-are-a-single-type-in-python
             raise TypeError("X and Y distances should be a number")
         self._x+=xdistance
         self._y+=ydistance
         return Rectangle(self._x,self._y,self._side1,self._side2)
 
-    def move_to(self,new_x,new_y):
+    def move_to(self,new_x:float,new_y:float)->'Rectangle':
         if not all([isinstance(i,(int,float)) for i in [new_x,new_y]]) or not all([not isinstance(i,bool) for i in [new_x,new_y]]):                               #https://stackoverflow.com/questions/23986266/is-there-a-better-way-of-checking-multiple-variables-are-a-single-type-in-python
             raise TypeError("X and Y distances should be a number")
         self._x=new_x
@@ -253,16 +253,16 @@ class Rectangle(Shape):
         return Rectangle(new_x,new_y,self._side1,self._side2)
 
     @staticmethod
-    def euc_distance(point1,point2):
+    def euc_distance(point1:list,point2:list)->float:
         return ((point1[0]-point2[0])**2+(point1[1]-point2[1])**2)**0.5
 
-    def area(self):
+    def area(self)->float:
         return self._side1*self._side2
 
-    def perimeter(self):
+    def perimeter(self)->float:
         return 2*self._side1 + 2*self._side2
 
-    def __eq__(self,other):
+    def __eq__(self,other:'Rectangle')->bool:
         if type(other)!=type(self):
             raise TypeError("Can't compare a rectangle with a non rectangle")
         if (self._side1 == other._side1 and self._side2 == other._side2 ) or (self._side2 == other._side1 and self._side1 == other._side2 ) :
@@ -270,7 +270,7 @@ class Rectangle(Shape):
         else :
             return False
 
-    def contains(self,x,y):
+    def contains(self,x:float,y:float)->bool:
         if not all([isinstance(i,(int,float)) for i in [x,y]]) or not all([not isinstance(i,bool) for i in [x,y]]):
             raise TypeError("Point coordinates must be numbers")
 
@@ -291,13 +291,13 @@ class Rectangle(Shape):
         plt.plot(X_coordinates,Y_coordinates)
         
 
-    def rotate(self,rotation_angle):
+    def rotate(self,rotation_angle:float)->'Rectangle':
         if not isinstance(rotation_angle,(int,float)) or isinstance(rotation_angle,bool):
             raise TypeError("Rotation angle should be an int or a float")
         self._angle+=rotation_angle
         return Rectangle(self._x,self._y,self._side1,self._side2,self._angle)
 
-    def make_horizontal(self):
+    def make_horizontal(self)->'Rectangle':
         if self._side1>=self._side2:
             self._angle = 0
             return Rectangle(self._x,self._y,self._side1,self._side2,0)
@@ -305,7 +305,7 @@ class Rectangle(Shape):
             self._angle = math.pi/2
             return Rectangle(self._x,self._y,self._side1,self._side2,90)
     
-    def make_vertical(self):
+    def make_vertical(self)->'Rectangle':
         if self._side1>=self._side2:
             self._angle = 90
             return Rectangle(self._x,self._y,self._side1,self._side2,90)
@@ -313,7 +313,7 @@ class Rectangle(Shape):
             self._angle = 0
             return Rectangle(self._x,self._y,self._side1,self._side2,0)
 
-    def scale(self,value):
+    def scale(self,value:float)->'Rectangle':
         if not isinstance(value,(int,float)) or isinstance(value,bool):
             raise TypeError("Scaling Value should be a number")
         
@@ -326,7 +326,7 @@ class Rectangle(Shape):
         self._side2*=value
         return Rectangle(self._x,self._y,self._side1,self._side2,self._angle)
 
-    def change_size(self,new_side1,new_side2):
+    def change_size(self,new_side1:float,new_side2:float)->'Rectangle':
         if not all([isinstance(i,(int,float)) for i in [new_side1,new_side2]]) or not all([not isinstance(i,bool) for i in[new_side1,new_side2]]):
             raise TypeError("The new length and width must be numbers")
 
@@ -344,45 +344,45 @@ class Rectangle(Shape):
 
 # 3D shapes
 class Shape_3D: 
-    def __init__(self,x,y,z):
+    def __init__(self,x:float,y:float,z:float)->None:
         self.x=x
         self.y=y
         self.z=z
 
     @property
-    def x(self):
+    def x(self)->float:
         return self._x
     
     @property
-    def y(self):
+    def y(self)->float:
         return self._y
     
     @property
-    def z(self):
+    def z(self)->float:
         return self._z
 
     @x.setter
-    def x(self,value):
+    def x(self,value:float)->None:
         if not isinstance(value,(int,float)) or isinstance(value,bool):
             raise TypeError("Value should be a number")
         
         self._x = value
 
     @y.setter
-    def y(self,value):
+    def y(self,value:float)->None:
         if not isinstance(value,(int,float)) or isinstance(value,bool):
             raise TypeError("Value should be a number")
         
         self._y = value
 
     @z.setter
-    def z(self,value):
+    def z(self,value:float)->None:
         if not isinstance(value,(int,float)) or isinstance(value,bool):
             raise TypeError("Value should be a number")
         
         self._z = value
 
-    def move(self,x,y,z):
+    def move(self,x:float,y:float,z:float)-None:
         if not all([isinstance(i,(int,float)) for i in [x,y,z]]) or not all([not isinstance(x,bool) for i in [x,y,z]]):
             raise TypeError("Values should be numbers")
 
@@ -390,7 +390,7 @@ class Shape_3D:
         self._y+=y
         self._z+=z
 
-    def move_to(self,x,y,z):
+    def move_to(self,:floatx,y:float,z:float):
         if not all([isinstance(i,(int,float)) for i in [x,y,z]]) or not all([not isinstance(x,bool) for i in [x,y,z]]):
             raise TypeError("Values should be numbers")
 
@@ -401,16 +401,16 @@ class Shape_3D:
 
 
 class Cube(Shape_3D):
-    def __init__(self,x,y,z,side1):
+    def __init__(self,x:float,y:float,z:float,side1:float)->None:
         super().__init__(x,y,z)
         self.side1=side1
 
     @property
-    def side1(self):
+    def side1(self)->float:
         return self._side1 
 
     @side1.setter
-    def side1(self,value):
+    def side1(self,value:float)->None:
         if not isinstance(value,(int,float)) or isinstance(value,bool):
             raise TypeError("Dimension of side 1 should be a valid number")
         
@@ -423,10 +423,10 @@ class Cube(Shape_3D):
         self._side1=value
 
     @staticmethod
-    def euc_distance(point1,point2):
+    def euc_distance(point1:list,point2:list)->float:
         return ((point1[0]-point2[0])**2+(point1[1]-point2[1])**2+(point1[2]-point2[2])**2)**0.5
 
-    def corners(self):
+    def corners(self)->list:
 
         c1=[self.x+self.side1/2,self.y+self.side1/2,self.z+self.side1]
         c2=[self.x+self.side1/2,self.y-self.side1/2,self.z+self.side1]
@@ -440,20 +440,20 @@ class Cube(Shape_3D):
         return [c1,c2,c3,c4,c1,c5,c6,c2,c6,c7,c3,c7,c8,c4,c8,c5]
 
 
-    def volume(self):
+    def volume(self)->float:
         return self.side1**3 
 
-    def circumference_surface(self):
+    def circumference_surface(self)->float:
         return (self.side1**2)*6
 
 
-    def contains(self,X,Y,Z):
+    def contains(self,X:float,Y:float,Z:float)->bool:
         if not all([isinstance(i,(int,float)) for i in [X,Y,Z]]) or not all([not isinstance(i,bool) for i in [X,Y,Z]]):
             raise TypeError ("Point coordinates must be valid numbers")
 
         return True if (self.x-self.side1/2<=X<=self.x+self.side1/2 and self.y-self.side1/2<=Y<=self.y+self.side1/2 and self.z-self.side1/2<=Z<=self.z+self.side1/2) else False
 
-    def move(self,X,Y,Z):
+    def move(self,X:float,Y:float,Z:float)->'Cube':
         if not all([isinstance(i,(int,float)) for i in [X,Y,Z]]) or not all([not isinstance(i,bool) for i in [X,Y,Z]]):
             raise TypeError ("Distances must be valid numbers")
 
@@ -463,7 +463,7 @@ class Cube(Shape_3D):
         return Cube(self.x,self.y,self.z,self.side1)
         
 
-    def move_to(self,X,Y,Z):
+    def move_to(self,X:float,Y:float,Z:float)->'Cube':
         if not all([isinstance(i,(int,float)) for i in [X,Y,Z]]) or not all([not isinstance(i,bool) for i in [X,Y,Z]]):
             raise TypeError ("Distances must be valid numbers")
 
@@ -472,7 +472,7 @@ class Cube(Shape_3D):
         self.z=Z
         return Cube(self.x,self.y,self.z,self.side1) 
 
-    def scale(self,scaling_value):
+    def scale(self,scaling_value:float)->'Cube':
         if not isinstance(scaling_value,(int,float)) or isinstance(scaling_value,bool):
             raise TypeError("Scaling value must be a valid number")
 
@@ -485,7 +485,7 @@ class Cube(Shape_3D):
         self.side1*=scaling_value
         return Cube(self.x,self.y,self.z,self.side1)
 
-    def change_size(self,side_value):
+    def change_size(self,side_value:float)->'Cube':
         if not isinstance(side_value,(int,float)) or isinstance(side_value,bool):
             raise TypeError("Side dimension must be a valid number")
 
@@ -502,21 +502,21 @@ class Cube(Shape_3D):
 
 
 class Rec_Cuboid(Cube):
-    def __init__(self,x,y,z,side1,side2,side3):
+    def __init__(self,x:float,y:float,z:float,side1:float,side2:float,side3:float)->None:
         super().__init__(x,y,z,side1)
         self.side2=side2
         self.side3=side3
 
     @property
-    def side2(self):
+    def side2(self)->float:
         return self._side2 
 
     @property
-    def side3(self):
+    def side3(self)->float:
         return self._side3 
 
     @side2.setter
-    def side2(self,value):
+    def side2(self,value:float)->None:
         if not isinstance(value,(int,float)) or isinstance(value,bool):
             raise TypeError("Dimension of side 2 should be a valid number")
         
@@ -529,7 +529,7 @@ class Rec_Cuboid(Cube):
         self._side2=value
 
     @side3.setter
-    def side3(self,value) :
+    def side3(self,value:float)->None :
         if not isinstance(value,(int,float)) or isinstance(value,bool):
             raise TypeError("Dimension of side 3 should be a valid number")
         
@@ -541,13 +541,13 @@ class Rec_Cuboid(Cube):
 
         self._side3=value
 
-    def volume(self):
+    def volume(self)->float:
         return self.side1*self.side2*self.side3 
 
-    def circumference_surface(self):
+    def circumference_surface(self)->float:
         return self.side1*self.side2*2 + self.side1*self.side3*2 + self.side2*self.side3*2
 
-    def contains(self,X,Y,Z):
+    def contains(self,X:float,Y:float,Z:float)->bool:
         if not all([isinstance(i,(int,float)) for i in [X,Y,Z]]) or not all([not isinstance(i,bool) for i in [X,Y,Z]]):
             raise TypeError ("Point coordinates must be valid numbers")
 
@@ -556,7 +556,7 @@ class Rec_Cuboid(Cube):
     def rotate(self,axis,angle):
         pass
 
-    def scale(self,scaling_value):
+    def scale(self,scaling_value:float)->'Rec_Cuboid':
         if not isinstance(scaling_value,(int,float)) or isinstance(scaling_value,bool):
             raise TypeError("Scaling value must be a valid number")
 
@@ -571,7 +571,7 @@ class Rec_Cuboid(Cube):
         self.side3*=scaling_value
         return Rec_Cuboid(self.x,self.y,self.z,self.side1,self.side2,self.side3)
 
-    def change_size(self,new_side1,new_side2,new_side3):
+    def change_size(self,new_side1:float,new_side2:float,new_side3:float)->'Rec_Cuboid':
         if not all([isinstance(i,(int,float)) for i in [new_side1,new_side2,new_side3]]) or not all([ not isinstance(i,bool) for i in [new_side1,new_side2,new_side3]]):
             raise TypeError("New sides values must be valid numbers")
 
@@ -586,7 +586,7 @@ class Rec_Cuboid(Cube):
         self.side3=new_side3
         return Rec_Cuboid(self.x,self.y,self.z,self.side1,self.side2,self.side3)
     
-    def corners(self):
+    def corners(self)->list:
         c1=[self.x+self.side1/2,self.y+self.side2/2,self.z+self.side3]
         c2=[self.x+self.side1/2,self.y-self.side2/2,self.z+self.side3]
         c3=[self.x+self.side1/2,self.y-self.side2/2,self.z-self.side3]
@@ -602,16 +602,16 @@ class Rec_Cuboid(Cube):
 
 
 class Sphere(Shape_3D):
-    def __init__(self,x,y,z,radius):
+    def __init__(self,x:float,y:float,z:float,radius:float)->None:
         super().__init__(x,y,z)
         self.radius=radius
 
     @property
-    def radius(self):
+    def radius(self)->float:
         return self._radius
 
     @radius.setter
-    def radius(self,value):
+    def radius(self,value)->None:
         if not isinstance(value,(int,float)) or isinstance(value,bool):
             raise TypeError("Radius value must be a valid number")
         if value==0:
@@ -621,20 +621,20 @@ class Sphere(Shape_3D):
         
         self._radius=value
 
-    def volume(self):
+    def volume(self)->float:
         return 4 * math.pi*(self.radius**3)/3
 
-    def circumference_surface(self):
+    def circumference_surface(self)->float:
         return 4*math.pi*(self.radius**2)
 
-    def contains(self,X,Y,Z):
+    def contains(self,X:float,Y:float,Z:float)->bool:
         if not all([isinstance(i,(int,float)) for i in [X,Y,Z]]) or not all([not isinstance(i,bool) for i in [X,Y,Z]]):
             raise TypeError ("Point coordinates must be valid numbers")
 
         return True if  ((self.x-X)**2 + (self.y-Y)**2 + (self.z-Z)**2)**0.5 <= self.radius else False
 
 
-    def move(self,X,Y,Z):
+    def move(self,X:float,Y:float,Z:float)->'Sphere':
         if not all([isinstance(i,(int,float)) for i in [X,Y,Z]]) or not all([not isinstance(i,bool) for i in [X,Y,Z]]):
             raise TypeError ("Distances must be valid numbers")
 
@@ -643,7 +643,7 @@ class Sphere(Shape_3D):
         self.z +=Z
         return Sphere(self.x,self.y,self.z,self.radius)
 
-    def move_to(self,X,Y,Z):
+    def move_to(self,X:float,Y:float,Z:float)->'Sphere':
         if not all([isinstance(i,(int,float)) for i in [X,Y,Z]]) or not all([not isinstance(i,bool) for i in [X,Y,Z]]):
             raise TypeError ("Point coordinates must be valid numbers")
 
@@ -653,7 +653,7 @@ class Sphere(Shape_3D):
         return Sphere(self.x,self.y,self.z,self.radius) 
 
 
-    def scale(self,scaling_value):
+    def scale(self,scaling_value:float)->'Sphere':
         if not isinstance(scaling_value,(int,float)) or isinstance(scaling_value,bool):
             raise TypeError("Scaling value must be a valid number")
 
@@ -666,7 +666,7 @@ class Sphere(Shape_3D):
         self.radius *= scaling_value
         return Sphere(self.x,self.y,self.z,self.radius)
 
-    def change_radius(self,new_radius_value):
+    def change_radius(self,new_radius_value:float)->'Sphere':
         if not isinstance(new_radius_value,(int,float)) or isinstance(new_radius_value,bool):
             raise TypeError("New radius value must be a valid number")
 
