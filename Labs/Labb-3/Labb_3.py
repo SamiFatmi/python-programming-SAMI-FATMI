@@ -20,50 +20,10 @@ sphere_list=[]
 rec_cuboid_list=[]
 cube_list=[]
 
-choice1,choice2,choice3,choice4=0,0,0,0
-
-program_menu= "Please enter you choice:\n\n2 = 2D Geometry Shapes\n\n3 = 3D Geometry Shapes\n\nQ = Quit\n\n\nAnswer.."
-
-main_menu="\n1. Create a new shape\n2. Select a shape\nQ. Quit\n\n\n"
-
-menu_1="\nWhat type of shape ?\nA.Circle\nB.Rectangle\nC.Square\nM. Go back to main menu\n\n\n"
-
-menu_circle1="Please enter the X coordinate\n\n\n"
-menu_circle2="Please enter the Y coordinate\n\n\n"
-menu_circle3="Please enter the RADIUS of your circle\n\n\n"
-
-menu_rectangle1="Please enter the X coordinate\n\n\n"
-menu_rectangle2="Please enter the Y coordinate\n\n\n"
-menu_rectangle3="Please enter the WIDTH of you rectangle\n\n\n"
-menu_rectangle4="Please enter the HEIGHT of you rectangle\n\n\n"
-
-menu_square1="Please enter the X coordinate\n\n\n"
-menu_square2="Please enter the Y coordinate\n\n\n"
-menu_square3="Please enter the WIDTH of your square \n\n\n"
-
-
-menu_2="What type of shape ?\nA.Circle\nB.Rectangle\nC.Square\n\nM. Go back to main menu\n\n\n"
-menu_select_circle="What do you want to do with this circle ?\n1. Area\n2. Circumference\n3. Move it\n4. Move it to an exact point\n5. Scale it\n6. Change radius \n7. Check if it contains a point\n\n8. Remove\n\n\n"
-menu_select_rectangle="What do you want to do with this rectangle ?\n1. Area\n2. Circumference\n3. Move it\n4. Move it to an exact point\n5. Scale it\n6. Change dimensions to exact values\n7. Check if it contains a point\n8. Rotate\n9. Make horizontal\n10. Make vertical\nR. Remove\n\n\n"
-menu_select_square="What do you want to do with this square ?\n1. Area\n2. Circumference\n3. Move it\n4. Move it to an exact point\n5. Scale it\n6. Change dimensions to exact values\n7. Check if it contains a point\n8. Rotate\n9. Make it horizontal\nR. Remove\n\n\n"
-
-main_menu_3D="\n1. Create a new 3D shape\n2. Select a 3D shape\nQ. Quit\n\n\n"
-
-menu_1_3D="\nWhat type of shape ?\nA.Sphere\nB.Rectangular Cuboid\nC.Cube\nM. Go back to main menu\n\n\n"
-menu_sphere_3D="Please enter the X,Y and Z coordinates and the RADIUS of your sphere\n\n\n"
-menu_rec_cuboid_3D="Please enter the X,Y and Z coordinates and the HEIGHT, WIDTH and DEPTH of you rectagular cuboid\n\n\n"
-menu_cube_3D="Please enter the X,Y and Z coordinates and side length of yout cube \n\n\n"
-
-menu_2_3D="What type of shape ?\nA.Sphere\nB.Rectangular Cuboid\nC.Cube\nM. Go back to main menu\n\n\n"
-menu_select_sphere_3D="What do you want to do with this sphere ?\n1. Volume\n2. Circumference surface\n3. Move it\n4. Move it to an exact point\n5. Scale it\n6. Change radius \n7. Check if it contains a point\n\n8. Remove\n\n\n"
-menu_select_rec_cuboid_3D="What do you want to do with this rectangular cuboid ?\n1. Volume\n2. Circumference surface\n3. Move it\n4. Move it to an exact point\n5. Scale it\n6. Change dimensions to exact values\n7. Check if it contains a point\n8. Remove\n\n\n"
-menu_select_cube_3D="What do you want to do with this square ?\n1. Volume\n2. Circumference surface\n3. Move it\n4. Move it to an exact point\n5. Scale it\n6. Change dimensions to exact values\n7. Check if it contains a point\n8. Remove\n\n\n"
-
-
 
 while True :
     os.system('cls' if os.name == 'nt' else 'clear')
-    main_choice=input(program_menu).strip()
+    main_choice=input("Please enter you choice:\n\n2 = 2D Geometry Shapes\n\n3 = 3D Geometry Shapes\n\nQ = Quit\n\n\n").strip()
 
     if main_choice not in ["2","3","Q","q"]:
         os.system('cls' if os.name == 'nt' else 'clear')
@@ -72,13 +32,14 @@ while True :
     elif main_choice=="q" or main_choice=="Q":
         break
 
+
     elif main_choice=="2" : #2D Geometry
         while True:
 
             show_plot=True 
 
             os.system('cls' if os.name == 'nt' else 'clear')
-            choice1=input(main_menu).strip()
+            choice1=input("\n1. Create a new shape\n\n2. Select a shape\n\nQ. Quit\n\n\n").strip()
             if choice1 not in ["1","2","Q","q"]:
                 print("Please enter a valid choice")
                 time.sleep(1.5)
@@ -86,20 +47,21 @@ while True :
 
             elif choice1=="1":
                 os.system('cls' if os.name == 'nt' else 'clear')
-                choice2=((input(menu_1)).strip()).capitalize()
+                choice2=((input("\nWhat type of shape ?\n\nA.Circle\n\nB.Rectangle\n\nC.Square\n\nM. Go back to main menu\n\n\n")).strip()).capitalize()
                 if choice2!="A" and choice2!="B" and choice2!="C" and choice2!="M":
                     os.system('cls' if os.name == 'nt' else 'clear')
                     print("Invalid choice")
                     time.sleep(1.5)
                     show_plot=False 
                 elif choice2 =="A":
-                    try:             
+                    try:
+                        
                         os.system('cls' if os.name == 'nt' else 'clear')
-                        x=float(input(menu_circle1).strip())
+                        x=float(input("Please enter the X coordinate\n\n\n").strip())
                         os.system('cls' if os.name == 'nt' else 'clear')
-                        y=float(input(menu_circle2).strip())
+                        y=float(input("Please enter the Y coordinate\n\n\n").strip())
                         os.system('cls' if os.name == 'nt' else 'clear')
-                        radius=float(input(menu_circle3).strip())
+                        radius=float(input("Please enter the RADIUS of your circle\n\n\n").strip())
                         
                         name = "cir"+str(len(circle_list))
                         try: 
@@ -116,13 +78,13 @@ while True :
                 elif choice2 =="B":
                     try:
                         os.system('cls' if os.name == 'nt' else 'clear')
-                        x=float(input(menu_rectangle1).strip())
+                        x=float(input("Please enter the X coordinate\n\n\n").strip())
                         os.system('cls' if os.name == 'nt' else 'clear')
-                        y=float(input(menu_rectangle2).strip())
+                        y=float(input("Please enter the Y coordinate\n\n\n").strip())
                         os.system('cls' if os.name == 'nt' else 'clear')
-                        side1=float(input(menu_rectangle3).strip())
+                        side1=float(input("Please enter the WIDTH of you rectangle\n\n\n").strip())
                         os.system('cls' if os.name == 'nt' else 'clear')
-                        side2=float(input(menu_rectangle4).strip())
+                        side2=float(input("Please enter the HEIGHT of you rectangle\n\n\n").strip())
                         
                         name = "rec" +str(len(rectangle_list))
                         try:
@@ -139,11 +101,11 @@ while True :
                 elif choice2 =="C":
                     try:
                         os.system('cls' if os.name == 'nt' else 'clear')
-                        x=float(input(menu_square1).strip())
+                        x=float(input("Please enter the X coordinate\n\n\n").strip())
                         os.system('cls' if os.name == 'nt' else 'clear')
-                        y=float(input(menu_square2).strip())
+                        y=float(input("Please enter the Y coordinate\n\n\n").strip())
                         os.system('cls' if os.name == 'nt' else 'clear')
-                        side=float(input(menu_square3).strip())
+                        side=float(input("Please enter the WIDTH of your square \n\n\n").strip())
                         
                         name = "squ"+str(len(square_list))
                         try:
@@ -165,7 +127,7 @@ while True :
 
             elif choice1=="2": 
                 os.system('cls' if os.name == 'nt' else 'clear')
-                choice2=((input(menu_2)).strip()).capitalize()
+                choice2=((input("What type of shape ?\nA.Circle\nB.Rectangle\nC.Square\n\nM. Go back to main menu\n\n\n")).strip()).capitalize()
                 if choice2 not in ["A","B","C","M"]:
                     os.system('cls' if os.name == 'nt' else 'clear')
                     print("Please enter a valid choice")
@@ -195,7 +157,7 @@ while True :
                         else:
                             os.system('cls' if os.name == 'nt' else 'clear')
                             selected_shape=circle_list[choice3][1]
-                            choice4=input(menu_select_circle).strip()
+                            choice4=input("What do you want to do with this circle ?\n1. Area\n2. Circumference\n3. Move it\n4. Move it to an exact point\n5. Scale it\n6. Change radius \n7. Check if it contains a point\n\n8. Remove\n\n\n").strip()
                             if choice4 not in ["1","2","3","4","5","6","7","R","r"]:
                                 print("Please enter a valid choice")
                                 time.sleep(1.5)
@@ -323,7 +285,7 @@ while True :
                             selected_shape=rectangle_list[choice3][1]
                             os.system('cls' if os.name == 'nt' else 'clear')
                             try:
-                                choice4=input(menu_select_rectangle)
+                                choice4=input("What do you want to do with this rectangle ?\n1. Area\n2. Circumference\n3. Move it\n4. Move it to an exact point\n5. Scale it\n6. Change dimensions to exact values\n7. Check if it contains a point\n8. Rotate\n9. Make horizontal\n10. Make vertical\nR. Remove\n\n\n")
                             except ValueError as err:
                                 print(err)
                                 time.sleep(1.5)
@@ -450,7 +412,8 @@ while True :
                                 show_plot=False 
                             else:
                                 selected_shape=square_list[choice3][1]
-                                choice4=input(menu_select_square)
+                                os.system('cls' if os.name == 'nt' else 'clear')
+                                choice4=input("What do you want to do with this square ?\n1. Area\n2. Circumference\n3. Move it\n4. Move it to an exact point\n5. Scale it\n6. Change dimensions to exact values\n7. Check if it contains a point\n8. Rotate\n9. Make it horizontal\nR. Remove\n\n\n").strip()
 
                                 if choice4 not in ["1","2","3","4","5","6","7","8","9","10","R","r"]:
                                     print("Please enter a valid choice")
@@ -550,7 +513,7 @@ while True :
             show_plot=True 
 
             os.system('cls' if os.name == 'nt' else 'clear')
-            choice1=input(main_menu_3D).strip()
+            choice1=input("\n1. Create a new 3D shape\n\n2. Select a 3D shape\n\nQ. Quit\n\n\n").strip()
             if choice1 not in ["1","2","Q","q"]:
                 print("Please enter a valid choice")
                 time.sleep(1.5)
@@ -558,7 +521,7 @@ while True :
 
             elif choice1=="1": #create a 3d shape
                 os.system('cls' if os.name == 'nt' else 'clear') #clear the
-                choice2=(input(menu_1_3D)).capitalize()
+                choice2=(input("\nWhat type of shape ?\n\nA.Sphere\n\nB.Rectangular Cuboid\n\nC.Cube\n\nM. Go back to main menu\n\n\n").strip()).capitalize()
                 if choice2 not in ["A","B","C","M"]:
                     os.system('cls' if os.name == 'nt' else 'clear')
                     print("Invalid choice")
@@ -633,7 +596,7 @@ while True :
 
             elif choice1=="2": 
                 os.system('cls' if os.name == 'nt' else 'clear')
-                choice2=(input(menu_2_3D).strip()).capitalize()
+                choice2=(input("What type of shape ?\nA.Sphere\nB.Rectangular Cuboid\nC.Cube\nM. Go back to main menu\n\n\n").strip()).capitalize()
                 if choice2 not in ["A","B","C","M"]:
                     os.system('cls' if os.name == 'nt' else 'clear')
                     print("Please enter a valid choice")
@@ -660,7 +623,7 @@ while True :
                             else:
                                 os.system('cls' if os.name == 'nt' else 'clear')
                                 selected_shape=sphere_list[choice3][1]
-                                choice4=input(menu_select_sphere_3D).strip()
+                                choice4=input("What do you want to do with this sphere ?\n1. Volume\n2. Circumference surface\n3. Move it\n4. Move it to an exact point\n5. Scale it\n6. Change radius \n7. Check if it contains a point\n\n8. Remove\n\n\n").strip()
                                 if choice4 not in ["1","2","3","4","5","6","7"]:
                                     os.system('cls' if os.name == 'nt' else 'clear')
                                     print("Please enter a valid choice")
@@ -758,8 +721,7 @@ while True :
                             else:
                                 selected_shape=rec_cuboid_list[choice3][1]
                                 os.system('cls' if os.name == 'nt' else 'clear')
-                                
-                                choice4=input(menu_select_rec_cuboid_3D)
+                                choice4=input("What do you want to do with this rectangular cuboid ?\n1. Volume\n2. Circumference surface\n3. Move it\n4. Move it to an exact point\n5. Scale it\n6. Change dimensions to exact values\n7. Check if it contains a point\n8. Remove\n\n\n").strip()
                                 
                                 if choice4 not in ["1","2","3","4","5","6","7","8","9","10"]:
                                     os.system('cls' if os.name == 'nt' else 'clear')
@@ -859,7 +821,8 @@ while True :
                                 show_plot=False 
                             else:
                                 selected_shape=cube_list[choice3][1]
-                                choice4=input(menu_select_cube_3D)
+                                os.system('cls' if os.name == 'nt' else 'clear')
+                                choice4=input("What do you want to do with this square ?\n1. Volume\n2. Circumference surface\n3. Move it\n4. Move it to an exact point\n5. Scale it\n6. Change dimensions to exact values\n7. Check if it contains a point\n8. Remove\n\n\n").strip()
                                 if choice4 not in ["1","2","3","4","5","6","7","8","9"]:
                                     os.system('cls' if os.name == 'nt' else 'clear')
                                     print("Please enter a valid choice")
