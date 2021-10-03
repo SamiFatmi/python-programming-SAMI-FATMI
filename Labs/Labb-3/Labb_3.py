@@ -32,7 +32,6 @@ while True : #program will run until we chose to quit by entering Q in the main 
     elif main_choice.capitalize()=="Q":
         break
 
-
     elif main_choice=="2" : #2D Geometry
         while True:
             try:
@@ -125,7 +124,7 @@ while True : #program will run until we chose to quit by entering Q in the main 
                             else:
                                 os.system('cls' if os.name == 'nt' else 'clear')
                                 selected_shape=circle_list[choice3][1]
-                                choice4=input("What do you want to do with this circle ?\n1. Area\n2. Circumference\n3. Move it\n4. Move it to an exact point\n5. Scale it\n6. Change radius \n7. Check if it contains a point\n\n8. Compare it to another\n\nR. Remove\n\n\n").strip()
+                                choice4=input("What do you want to do with this circle ?\n1. Area\n2. Circumference\n3. Move it\n4. Move it to an exact point\n5. Scale it\n6. Change radius \n7. Check if it contains a point\n8. Compare it to another\n\nR. Remove\n\n\n").strip()
                                 
                                 if choice4 not in ["1","2","3","4","5","6","7","8","R","r"]:
                                     print("Please enter a valid choice")
@@ -583,20 +582,24 @@ while True : #program will run until we chose to quit by entering Q in the main 
                             else:
                                 os.system('cls' if os.name == 'nt' else 'clear')
                                 selected_shape=sphere_list[choice3][1]
-                                choice4=input("What do you want to do with this sphere ?\n1. Volume\n2. Circumference surface\n3. Move it\n4. Move it to an exact point\n5. Scale it\n6. Change radius \n7. Check if it contains a point\n\n8. Remove\n\n\n").strip()
-                                if choice4 not in ["1","2","3","4","5","6","7"]:
+                                choice4=input("What do you want to do with this sphere ?\n1. Volume\n2. Circumference surface\n3. Move it\n4. Move it to an exact point\n5. Scale it\n6. Change radius \n7. Check if it contains a point\n8. Compare with another sphere\n\nR. Remove\n\n\n").strip()
+                                
+                                if choice4 not in ["1","2","3","4","5","6","7","8","r","R"]:
                                     os.system('cls' if os.name == 'nt' else 'clear')
                                     print("Please enter a valid choice")
                                     time.sleep(1.5)
                                     show_plot=False 
+                                
                                 elif choice4=="1": #Area
                                     os.system('cls' if os.name == 'nt' else 'clear')
                                     print(f"\n{selected_shape.volume()}\n")
                                     time.sleep(3)
+                                
                                 elif choice4=="2": #Circumference
                                     os.system('cls' if os.name == 'nt' else 'clear')
                                     print(f"\n{selected_shape.circumference_surface()}\n")
                                     time.sleep(3)
+                                
                                 elif choice4=="3": #Move it
                                     os.system('cls' if os.name == 'nt' else 'clear')
                                     x=float(input("Please enter the distances of which you want to move your sphere in the X direction :\n\n").strip())
@@ -648,9 +651,33 @@ while True : #program will run until we chose to quit by entering Q in the main 
                                     
                                     else :
                                         print(f"The point ({x},{y},{z}) is not withing this sphere")
-                                        time.sleep(4)    
+                                        time.sleep(4)  
+
+                                elif choice4=="8": #Compare it to another sphere
+                                    show_plot=False
+
+                                    if len(sphere_list) < 2:
+                                        os.system('cls' if os.name == 'nt' else 'clear')
+                                        print("There are no spheres to be selected")
+                                        time.sleep(1.5)
+                                        show_plot=False 
+                                    else:
+                                        os.system('cls' if os.name == 'nt' else 'clear')
+                                        print("Please select a circle by entering its number\n")
+                                        for index_sphere in range(len(sphere_list)):
+                                            if index_sphere!=choice3:
+                                                print(f"{index_sphere}. {sphere_list[index_sphere][0]}")
+
+                                        choice5=int(input("").strip())
+                                        os.system('cls' if os.name == 'nt' else 'clear')
+                                        if sphere_list[choice3][1]==sphere_list[choice5][1]:
+                                            print("These 2 spheres are equal")
+                                        else : 
+                                            print("These 2 spheres are not equal")
+                                    
+                                    time.sleep(4) 
                                 
-                                elif choice4=="8": #Remove it
+                                elif choice4.capitalize()=="R": #Remove it
                                     sphere_list.remove(sphere_list[choice3])
                                     
 
@@ -676,18 +703,21 @@ while True : #program will run until we chose to quit by entering Q in the main 
                             else:
                                 selected_shape=rec_cuboid_list[choice3][1]
                                 os.system('cls' if os.name == 'nt' else 'clear')
-                                choice4=input("What do you want to do with this rectangular cuboid ?\n1. Volume\n2. Circumference surface\n3. Move it\n4. Move it to an exact point\n5. Scale it\n6. Change dimensions to exact values\n7. Check if it contains a point\n8. Remove\n\n\n").strip()
+                                choice4=input("What do you want to do with this rectangular cuboid ?\n1. Volume\n2. Circumference surface\n3. Move it\n4. Move it to an exact point\n5. Scale it\n6. Change dimensions to exact values\n7. Check if it contains a point\n8. Compare it to another rectangular cuboid\nR. Remove\n\n\n").strip()
                                 
-                                if choice4 not in ["1","2","3","4","5","6","7","8","9","10"]:
+                                if choice4 not in ["1","2","3","4","5","6","7","8","r","R"]:
                                     os.system('cls' if os.name == 'nt' else 'clear')
                                     print("Please enter a valid choice")
                                     show_plot=False 
+                                
                                 elif choice4=="1": #Volume
                                     os.system('cls' if os.name == 'nt' else 'clear')
                                     print(f"\n{selected_shape.volume()}\n")
+                                
                                 elif choice4=="2": #Circumference
                                     os.system('cls' if os.name == 'nt' else 'clear')
                                     print(f"\n{selected_shape.circumference_surface()}\n")
+                                
                                 elif choice4=="3": #Move it
                                     os.system('cls' if os.name == 'nt' else 'clear')
                                     x=float(input("Please enter the distances of which you want to move your rectangular cuboid in the X direction :\n\n").strip())
@@ -708,13 +738,11 @@ while True : #program will run until we chose to quit by entering Q in the main 
 
                                     rec_cuboid_list[choice3][1]=selected_shape.move_to(x,y,z)
 
-
                                 elif choice4=="5": #Scale it
                                     os.system('cls' if os.name == 'nt' else 'clear')
                                     scaling_value=float(input("Please enter the scaling value :\n\n").strip())
 
-                                    rec_cuboid_list[choice3][1]=selected_shape.scale(scaling_value)
-                                    
+                                    rec_cuboid_list[choice3][1]=selected_shape.scale(scaling_value)                            
 
                                 elif choice4=="6": #Change dimensions
                                     os.system('cls' if os.name == 'nt' else 'clear')
@@ -743,8 +771,31 @@ while True : #program will run until we chose to quit by entering Q in the main 
                                         print(f"The point ({x},{y},{z}) is not withing this rectangular cuboid")
                                         time.sleep(4)
                                             
+                                elif choice4=="8": #Compare it to another rectangular cuboid
+                                    show_plot=False
 
-                                elif choice4=="7": #Remove it
+                                    if len(rec_cuboid_list) < 2:
+                                        os.system('cls' if os.name == 'nt' else 'clear')
+                                        print("There are no rectangular cuboids to be selected")
+                                        time.sleep(1.5)
+                                        show_plot=False 
+                                    else:
+                                        os.system('cls' if os.name == 'nt' else 'clear')
+                                        print("Please select a rectangular cuboid by entering its number\n")
+                                        for index_rec_cuboid in range(len(rec_cuboid_list)):
+                                            if index_rec_cuboid!=choice3:
+                                                print(f"{index_rec_cuboid}. {rec_cuboid_list[index_rec_cuboid][0]}")
+
+                                        choice5=int(input("").strip())
+                                        os.system('cls' if os.name == 'nt' else 'clear')
+                                        if rec_cuboid_list[choice3][1]==rec_cuboid_list[choice5][1]:
+                                            print("These 2 rectangular cuboids are equal")
+                                        else : 
+                                            print("These 2 rectangular cuboids are not equal")
+                                    
+                                    time.sleep(4) 
+
+                                elif choice4.capitalize()=="R": #Remove it
                                     rec_cuboid_list.remove(rec_cuboid_list[choice3])
 
                     elif choice2 =="C": # Select a cube
@@ -770,22 +821,26 @@ while True : #program will run until we chose to quit by entering Q in the main 
                             else:
                                 selected_shape=cube_list[choice3][1]
                                 os.system('cls' if os.name == 'nt' else 'clear')
-                                choice4=input("What do you want to do with this square ?\n1. Volume\n2. Circumference surface\n3. Move it\n4. Move it to an exact point\n5. Scale it\n6. Change dimensions to exact values\n7. Check if it contains a point\n8. Remove\n\n\n").strip()
-                                if choice4 not in ["1","2","3","4","5","6","7","8","9"]:
+                                choice4=input("What do you want to do with this square ?\n1. Volume\n2. Circumference surface\n3. Move it\n4. Move it to an exact point\n5. Scale it\n6. Change dimensions to exact values\n7. Check if it contains a point\n8. Compare it to another cube\nR. Remove\n\n\n").strip()
+                                
+                                if choice4 not in ["1","2","3","4","5","6","7","8","r","R"]:
                                     os.system('cls' if os.name == 'nt' else 'clear')
                                     print("Please enter a valid choice")
                                     time.sleep(1.5)
                                     show_plot=False 
+                                
                                 elif choice4=="1": #volume
                                     show_plot=False
                                     os.system('cls' if os.name == 'nt' else 'clear')
                                     print(f"\n{selected_shape.volume()}\n")
                                     time.sleep(4)
+                                
                                 elif choice4=="2": #Circumference
                                     show_plot=False
                                     os.system('cls' if os.name == 'nt' else 'clear')
                                     print(f"\n{selected_shape.circumference_surface()}\n")
                                     time.sleep(4)
+                                
                                 elif choice4=="3": #Move it
                                     os.system('cls' if os.name == 'nt' else 'clear')
                                     x=float(input("Please enter the distances of which you want to move your cube in the X direction :\n\n").strip())
@@ -805,7 +860,6 @@ while True : #program will run until we chose to quit by entering Q in the main 
                                     z=float(input("Please enter the Z coordinate of the point :\n\n").strip())
 
                                     selected_shape.move_to(x,y,z)
-
 
                                 elif choice4=="5": #Scale it
                                     os.system('cls' if os.name == 'nt' else 'clear')
@@ -835,9 +889,34 @@ while True : #program will run until we chose to quit by entering Q in the main 
                                     else :
                                         print(f"The point ({x},{y},{z}) is not withing this cube")
                                         time.sleep(4)
+                                
+                                elif choice4=="8": #Compare it to another cube
+                                    show_plot=False
+
+                                    if len(cube_list) < 2:
+                                        os.system('cls' if os.name == 'nt' else 'clear')
+                                        print("There are no cubes to be selected")
+                                        time.sleep(1.5)
+                                        show_plot=False 
+                                    else:
+                                        os.system('cls' if os.name == 'nt' else 'clear')
+                                        print("Please select a cube by entering its number\n")
+                                        for index_cube in range(len(cube_list)):
+                                            if index_cube!=choice3:
+                                                print(f"{index_cube}. {cube_list[index_cube][0]}")
+
+                                        choice5=int(input("").strip())
+                                        os.system('cls' if os.name == 'nt' else 'clear')
+                                        if cube_list[choice3][1]==cube_list[choice5][1]:
+                                            print("These 2 cubes are equal")
+                                        else : 
+                                            print("These 2 cubes are not equal")
+                                    
+                                    time.sleep(4) 
 
 
-                                elif choice4=="8": #Remove it
+
+                                elif choice4.capitalize()=="R": #Remove it
                                     cube_list.remove(cube_list[choice3])
 
                     elif choice2.capitalize() =="M": # Back to the Main Menu
