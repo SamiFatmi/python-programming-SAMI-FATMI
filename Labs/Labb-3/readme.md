@@ -1,5 +1,13 @@
 # Labb 3 : Shape plotter
 
+## Instructions
+
+For running the program, run Labb_3.py 
+
+testing.py contains the tests
+
+shapes.py contains the classes 
+
 ## Program description
 
 This program lets the user create both 2D and 3D shapes and shows the created shapes. 
