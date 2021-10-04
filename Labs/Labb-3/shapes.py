@@ -3,6 +3,9 @@ import matplotlib.pyplot as plt
 
 
 class Shape:
+    """ This class will be parent to the classes 'Rectangle' and 'Circle', it will contain the 
+    coordinates of the 2D shapes
+     """
     def __init__ (self,x:float,y:float)->None:
         self.x= x 
         self.y= y
@@ -17,37 +20,37 @@ class Shape:
 
     @x.setter
     def x(self,value)->None:
-        if str(value)=='True' or str(value)=='False' :
-            raise TypeError("x coordinate can't be a boolean")
 
-        if not isinstance(value,(int,float)):
+        if not isinstance(value,(int,float)) or isinstance(value,bool):
             raise TypeError("x coordinate must be an int or a float")
         self._x = value 
 
     @y.setter
     def y(self,value:float)->None:
-        if str(value)=='True' or str(value)=='False' :
-            raise TypeError("y coordinate can't be a boolean")
 
-
-        if not isinstance(value,(int,float)):
+        if not isinstance(value,(int,float)) or isinstance(value,bool):
             raise TypeError("y coordinate must be an int or a float")
         self._y = value 
 
     def move(self,xdistance:float,ydistance:float)->None:
-        if str(xdistance) in['True','False'] or str(ydistance) in['True','False']:
-            raise TypeError("X and Y distances can't be booleans")
+        """ Moving the Shape
+        Input from the user : X and Y translation distances
+        function will move the shape by adding the distances to the X and Y coordinates
+        """
 
-        if not all([isinstance(i,(int,float)) for i in [xdistance,ydistance]]):                               #https://stackoverflow.com/questions/23986266/is-there-a-better-way-of-checking-multiple-variables-are-a-single-type-in-python
+        if not all([isinstance(i,(int,float)) for i in [xdistance,ydistance]]) or not all([ not isinstance(i,bool) for i in [xdistance,ydistance]]):                               #https://stackoverflow.com/questions/23986266/is-there-a-better-way-of-checking-multiple-variables-are-a-single-type-in-python
             raise TypeError("X and Y distances should be a number")
         self._x+=xdistance
         self._y+=ydistance  
 
     def move_to(self,x:float,y:float)->None:
-        if str(x) in['True','False'] or str(y) in ['True','False']:
-            raise TypeError("X and Y coordinates can't be booleans")
+        """ Moving the shape to an exact point
+        Input from the user :  X and Y coordinates of the point
+        function will move the shape by changing the center of the shape's coordinates
+        to the coordinates given by the user 
+        """
 
-        if not all([isinstance(i,(int,float)) for i in [x,y]]) :
+        if not all([isinstance(i,(int,float)) for i in [x,y]]) or not all([not isinstance(i,bool) for i in [x,y]]):
             raise TypeError("X and Y coordinates should be a number")
 
         self._x=x
@@ -69,10 +72,8 @@ class Circle(Shape):
 
     @radius.setter
     def radius(self,value:float)->None:
-        if str(value) in ['True','False']:
-            raise TypeError("Radius can't be a boolean")
 
-        if not isinstance(value,(int,float)) :
+        if not isinstance(value,(int,float)) or isinstance(value,bool):
             raise TypeError("Radius must be an int or a float")
 
         if value==0:
@@ -90,24 +91,31 @@ class Circle(Shape):
         return 2*math.pi*self._radius
 
     def move(self,xdistance:float,ydistance:float)->'Circle':
-        if not all([isinstance(i,(int,float)) for i in [xdistance,ydistance]]) or str(xdistance) in ['True','False'] or str(ydistance) in ['True','False']:                               #https://stackoverflow.com/questions/23986266/is-there-a-better-way-of-checking-multiple-variables-are-a-single-type-in-python
+        """ Moving the circle
+        Input from the user : X and Y translation distances
+        function will move the circle by adding the distances to the X and Y coordinates
+        """
+        if not all([isinstance(i,(int,float)) for i in [xdistance,ydistance]]) or not all([not isinstance(i,bool) for i in [xdistance,ydistance]]):                               #https://stackoverflow.com/questions/23986266/is-there-a-better-way-of-checking-multiple-variables-are-a-single-type-in-python
             raise TypeError("X and Y distances should be a number")
         self._x+=xdistance
         self._y+=ydistance
         return Circle(self._x,self._y,self._radius)
 
     def move_to(self,x:float,y:float)->'Circle':
-        if not all([isinstance(i,(int,float)) for i in [x,y]]) or str(x) in ['True','False'] or str(y) in ['True','False']:                               #https://stackoverflow.com/questions/23986266/is-there-a-better-way-of-checking-multiple-variables-are-a-single-type-in-python
+        """ Moving the circle to an exact point
+        Input from the user :  X and Y coordinates of the point
+        function will move the circle by changing the center of the circle's coordinates
+        to the coordinates given by the user 
+        """
+        if not all([isinstance(i,(int,float)) for i in [x,y]]) or not all([not isinstance(i,bool) for i in [x,y]]):                               #https://stackoverflow.com/questions/23986266/is-there-a-better-way-of-checking-multiple-variables-are-a-single-type-in-python
             raise TypeError("X and Y distances should be a number")
         self._x=x
         self._y=y
         return Circle(self._x,self._y,self._radius)
     
     def scale(self,value:float)->'Circle':
-        if str(value) in ['True','False']:
-            raise TypeError("Scaling value can't be a boolean")
 
-        if not isinstance(value,(int,float)):
+        if not isinstance(value,(int,float)) or isinstance(value,bool):
             raise TypeError("Value must be an int or a float")
 
         if value==0:
@@ -120,7 +128,7 @@ class Circle(Shape):
         return Circle(self._x,self._y,self._radius)
 
     def change_radius(self,value:float)->'Circle':
-        if not isinstance(value,(int,float)) or str(value) in ['True','False']:
+        if not isinstance(value,(int,float)) or isinstance(value,bool):
             raise TypeError("Value must be an int or a float")
 
         if value==0:
@@ -132,10 +140,8 @@ class Circle(Shape):
         return Circle(self._x,self._y,value)
 
     def contain(self,x:float,y:float)->bool:
-        if str(x) in ['True','False'] or str(y) in ['True','False']:
-            raise TypeError("X and Y can't be booleans")
 
-        if not all([isinstance(i,(int,float)) for i in [x,y]]):
+        if not all([isinstance(i,(int,float)) for i in [x,y]]) or not all([not isinstance(i,bool) for i in [x,y]]):
             raise TypeError("Point coordinates should be numbers")
 
         if pow(pow(x-self._x,2)+pow(y-self._y,2),0.5)<=self._radius :
@@ -214,6 +220,10 @@ class Rectangle(Shape):
         self._angle = value 
 
     def move(self,xdistance:float,ydistance:float)->'Rectangle':
+        """ Moving the rectangle
+        Input from the user : X and Y translation distances
+        function will move the rectangle by adding the distances to the X and Y coordinates
+        """
         if not all([isinstance(i,(int,float)) for i in [xdistance,ydistance]]) or not all([not isinstance(i,bool) for i in [xdistance,ydistance]]):                               #https://stackoverflow.com/questions/23986266/is-there-a-better-way-of-checking-multiple-variables-are-a-single-type-in-python
             raise TypeError("X and Y distances should be a number")
         self._x+=xdistance
@@ -221,6 +231,11 @@ class Rectangle(Shape):
         return Rectangle(self._x,self._y,self._side1,self._side2)
 
     def move_to(self,new_x:float,new_y:float)->'Rectangle':
+        """ Moving the rectangle to an exact point
+        Input from the user :  X and Y coordinates of the point
+        function will move the rectangle by changing the center of the rectangle's coordinates
+        to the coordinates given by the user 
+        """
         if not all([isinstance(i,(int,float)) for i in [new_x,new_y]]) or not all([not isinstance(i,bool) for i in [new_x,new_y]]):                               #https://stackoverflow.com/questions/23986266/is-there-a-better-way-of-checking-multiple-variables-are-a-single-type-in-python
             raise TypeError("X and Y distances should be a number")
         self._x=new_x
@@ -374,6 +389,10 @@ class Shape_3D:
         self._z = value
 
     def move(self,x:float,y:float,z:float)->None:
+        """ Moving the 3D Shape
+        Input from the user : X,Y and Z translation distances
+        function will move the 3D shape by adding the distances to the X,Y and Z coordinates
+        """
         if not all([isinstance(i,(int,float)) for i in [x,y,z]]) or not all([not isinstance(x,bool) for i in [x,y,z]]):
             raise TypeError("Values should be numbers")
 
@@ -382,6 +401,11 @@ class Shape_3D:
         self._z+=z
 
     def move_to(self,x:float,y:float,z:float):
+        """ Moving the shape to an exact point
+        Input from the user :  X,Y and Z coordinates of the point
+        function will move the shape by changing the center of the shape's coordinates
+        to the coordinates given by the user 
+        """
         if not all([isinstance(i,(int,float)) for i in [x,y,z]]) or not all([not isinstance(x,bool) for i in [x,y,z]]):
             raise TypeError("Values should be numbers")
 
@@ -425,6 +449,10 @@ class Cube(Shape_3D):
 
 
     def move(self,X:float,Y:float,Z:float)->'Cube':
+        """ Moving the cube
+        Input from the user :  X,Y and Z translation distances
+        function will move the cube by adding the distances to the X,Y and Z coordinates
+        """
         if not all([isinstance(i,(int,float)) for i in [X,Y,Z]]) or not all([not isinstance(i,bool) for i in [X,Y,Z]]):
             raise TypeError ("Distances must be valid numbers")
 
@@ -435,6 +463,11 @@ class Cube(Shape_3D):
         
 
     def move_to(self,X:float,Y:float,Z:float)->'Cube':
+        """ Moving the cube to an exact point
+        Input from the user :  X,Y and Z coordinates of the point
+        function will move the cube by changing the center of the cube's coordinates
+        to the coordinates given by the user 
+        """
         if not all([isinstance(i,(int,float)) for i in [X,Y,Z]]) or not all([not isinstance(i,bool) for i in [X,Y,Z]]):
             raise TypeError ("Distances must be valid numbers")
 
@@ -553,6 +586,10 @@ class Rec_Cuboid(Cube):
         return self.side1*self.side2*2 + self.side1*self.side3*2 + self.side2*self.side3*2
 
     def move(self,X:float,Y:float,Z:float)->'Rec_Cuboid':
+        """ Moving the rectangular cuboid
+        Input from the user :  X,Y and Z translation distances
+        function will move the rectangular cuboid by adding the distances to the  X,Y and Z coordinates
+        """
         if not all([isinstance(i,(int,float)) for i in [X,Y,Z]]) or not all([not isinstance(i,bool) for i in [X,Y,Z]]):
             raise TypeError ("Distances must be valid numbers")
 
@@ -563,6 +600,12 @@ class Rec_Cuboid(Cube):
         
 
     def move_to(self,X:float,Y:float,Z:float)->'Rec_Cuboid':
+        """ Moving the rectangular cuboid to an exact point
+        Input from the user :  X,Y and Z coordinates of the point
+        function will move the rectangular cuboid by changing the center of the rectangular cuboid's coordinates
+        to the coordinates given by the user 
+        """
+        
         if not all([isinstance(i,(int,float)) for i in [X,Y,Z]]) or not all([not isinstance(i,bool) for i in [X,Y,Z]]):
             raise TypeEßrror ("Distances must be valid numbers")
 
@@ -662,6 +705,10 @@ class Sphere(Shape_3D):
 
 
     def move(self,X:float,Y:float,Z:float)->'Sphere':
+        """ Moving the sphere
+        Input from the user :  X,Y and Z translation distances
+        function will move the sphere by adding the distances to the  X,Y and Z coordinates
+        """
         if not all([isinstance(i,(int,float)) for i in [X,Y,Z]]) or not all([not isinstance(i,bool) for i in [X,Y,Z]]):
             raise TypeError ("Distances must be valid numbers")
 
@@ -671,6 +718,11 @@ class Sphere(Shape_3D):
         return Sphere(self.x,self.y,self.z,self.radius)
 
     def move_to(self,X:float,Y:float,Z:float)->'Sphere':
+        """ Moving the sphere to an exact point
+        Input from the user :  X,Y and Z coordinates of the point
+        function will move the sphere by changing the center of the sphere's coordinates
+        to the coordinates given by the user 
+        """
         if not all([isinstance(i,(int,float)) for i in [X,Y,Z]]) or not all([not isinstance(i,bool) for i in [X,Y,Z]]):
             raise TypeError ("Point coordinates must be valid numbers")
 
