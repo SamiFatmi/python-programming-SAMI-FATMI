@@ -552,6 +552,25 @@ class Rec_Cuboid(Cube):
     def circumference_surface(self)->float:
         return self.side1*self.side2*2 + self.side1*self.side3*2 + self.side2*self.side3*2
 
+    def move(self,X:float,Y:float,Z:float)->'Rec_Cuboid':
+        if not all([isinstance(i,(int,float)) for i in [X,Y,Z]]) or not all([not isinstance(i,bool) for i in [X,Y,Z]]):
+            raise TypeError ("Distances must be valid numbers")
+
+        self.x+=X
+        self.y+=Y
+        self.z+=Z
+        return Rec_Cuboid(self.x,self.y,self.z,self.side1,self.side2,self.side3)
+        
+
+    def move_to(self,X:float,Y:float,Z:float)->'Rec_Cuboid':
+        if not all([isinstance(i,(int,float)) for i in [X,Y,Z]]) or not all([not isinstance(i,bool) for i in [X,Y,Z]]):
+            raise TypeEßrror ("Distances must be valid numbers")
+
+        self.x=X
+        self.y=Y
+        self.z=Z
+        return Rec_Cuboid(self.x,self.y,self.z,self.side1,self.side2,self.side3) 
+
 
     def scale(self,scaling_value:float)->'Rec_Cuboid':
         if not isinstance(scaling_value,(int,float)) or isinstance(scaling_value,bool):
