@@ -1,5 +1,3 @@
-from logging import error
-from unittest.main import main
 from shapes import Circle
 from shapes import Rectangle
 from shapes import Sphere
@@ -11,7 +9,7 @@ import matplotlib.pyplot as plt
 import time # https://realpython.com/python-sleep/
 import os
 
-#creating lists for the geometric shapes that our used will create
+#creating lists for the geometric shapes that our user will create
 circle_list=[] 
 square_list=[] 
 rectangle_list=[] 
@@ -25,7 +23,7 @@ while True : #program will run until we chose to quit by entering Q in the main 
     os.system('cls' if os.name == 'nt' else 'clear') #clear the terminal screen, this will be done before each print statement, syntax found on : https://stackoverflow.com/questions/2084508/clear-terminal-in-python
     main_choice=input("Please enter you choice:\n\n2 = 2D Geometry Shapes\n\n3 = 3D Geometry Shapes\n\nQ = Quit\n\n\n").strip() #Taking the user's choice 
 
-    if main_choice not in ["2","3","Q","q"]:
+    if main_choice not in ["2","3","Q","q"]: # Checking for invalid input by the user
         os.system('cls' if os.name == 'nt' else 'clear')
         print("Please enter a valid choice")
 
@@ -39,7 +37,7 @@ while True : #program will run until we chose to quit by entering Q in the main 
 
                 os.system('cls' if os.name == 'nt' else 'clear')
                 choice1=input("\n1. Create a new shape\n\n2. Select a shape\n\nQ. Quit\n\n\n").strip()
-                if choice1 not in ["1","2","Q","q"]:
+                if choice1 not in ["1","2","Q","q"]: # Checking for invalid input by the user
                     print("Please enter a valid choice")
                     time.sleep(1.5)
                     show_plot=False 
@@ -48,13 +46,13 @@ while True : #program will run until we chose to quit by entering Q in the main 
                     os.system('cls' if os.name == 'nt' else 'clear')
                     choice2=((input("\nWhat type of shape ?\n\nA.Circle\n\nB.Rectangle\n\nC.Square\n\nM. Go back to main menu\n\n\n")).strip()).capitalize()
                     
-                    if choice2 not in ["A","B","C","M"]:
+                    if choice2 not in ["A","B","C","M"]: # Checking for invalid input by the user
                         os.system('cls' if os.name == 'nt' else 'clear')
                         print("Invalid choice")
                         time.sleep(1.5)
                         show_plot=False 
                     
-                    elif choice2 =="A":
+                    elif choice2 =="A": #Creating a new circle
                         os.system('cls' if os.name == 'nt' else 'clear')
                         x=float(input("Please enter the X coordinate\n\n\n").strip())
                         os.system('cls' if os.name == 'nt' else 'clear')
@@ -63,9 +61,9 @@ while True : #program will run until we chose to quit by entering Q in the main 
                         radius=float(input("Please enter the RADIUS of your circle\n\n\n").strip())
                         
                         name = "cir"+str(len(circle_list))
-                        circle_list.append([name,Circle(x,y,radius)])
+                        circle_list.append([name,Circle(x,y,radius)]) #creating a circle with the user input and storing it in our circle list
 
-                    elif choice2 =="B":
+                    elif choice2 =="B": #Creating a new rectangle
                         os.system('cls' if os.name == 'nt' else 'clear')
                         x=float(input("Please enter the X coordinate\n\n\n").strip())
                         os.system('cls' if os.name == 'nt' else 'clear')
@@ -76,9 +74,9 @@ while True : #program will run until we chose to quit by entering Q in the main 
                         side2=float(input("Please enter the HEIGHT of you rectangle\n\n\n").strip())
                         
                         name = "rec" +str(len(rectangle_list))
-                        rectangle_list.append([name,Rectangle(x,y,side1,side2)])
+                        rectangle_list.append([name,Rectangle(x,y,side1,side2)]) #creating a rectangle with the user input and storing it in our rectangle list
 
-                    elif choice2 =="C":
+                    elif choice2 =="C": #Creating a new square
                         os.system('cls' if os.name == 'nt' else 'clear')
                         x=float(input("Please enter the X coordinate\n\n\n").strip())
                         os.system('cls' if os.name == 'nt' else 'clear')
@@ -87,23 +85,23 @@ while True : #program will run until we chose to quit by entering Q in the main 
                         side=float(input("Please enter the WIDTH of your square \n\n\n").strip())
                         
                         name = "squ"+str(len(square_list))
-                        square_list.append([name,Rectangle(x,y,side,side)])
+                        square_list.append([name,Rectangle(x,y,side,side)]) #creating a square with the user input and storing it in our square list
 
 
-                    elif choice2 =="M":
+                    elif choice2 =="M": # Go back to the main menu
                         show_plot=False 
                         continue
 
-                elif choice1=="2": 
+                elif choice1=="2": #Selecting a shape
                     os.system('cls' if os.name == 'nt' else 'clear')
                     choice2=((input("What type of shape ?\nA.Circle\nB.Rectangle\nC.Square\n\nM. Go back to main menu\n\n\n")).strip()).capitalize()
-                    if choice2 not in ["A","B","C","M"]:
+                    if choice2 not in ["A","B","C","M"]: # Checking for invalid input by the user
                         os.system('cls' if os.name == 'nt' else 'clear')
                         print("Please enter a valid choice")
                         time.sleep(1.5)
                         show_plot=False 
-                    elif choice2 =="A":
-                        if len(circle_list)==0:
+                    elif choice2 =="A": # Selecting a circle
+                        if len(circle_list)==0: # checking if the circle list is empty
                             os.system('cls' if os.name == 'nt' else 'clear')
                             print("There are no circles to be selected")
                             time.sleep(1.5)
@@ -111,12 +109,12 @@ while True : #program will run until we chose to quit by entering Q in the main 
                         else:
                             os.system('cls' if os.name == 'nt' else 'clear')
                             print("Please select a circle by entering its number\n")
-                            for index_circle in range(len(circle_list)):
+                            for index_circle in range(len(circle_list)): # printing out the circle list
                                 print(f"{index_circle}. {circle_list[index_circle][0]}")
 
                             choice3=int(input("").strip())
 
-                            if choice3>=len(circle_list) or choice3<0:
+                            if choice3>=len(circle_list) or choice3<0: # checking for invalid input
                                 print("Invalid index")
                                 time.sleep(1.5)
                                 show_plot=False 
@@ -124,9 +122,10 @@ while True : #program will run until we chose to quit by entering Q in the main 
                             else:
                                 os.system('cls' if os.name == 'nt' else 'clear')
                                 selected_shape=circle_list[choice3][1]
+                                #printing the menu 
                                 choice4=input("What do you want to do with this circle ?\n1. Area\n2. Circumference\n3. Move it\n4. Move it to an exact point\n5. Scale it\n6. Change radius \n7. Check if it contains a point\n8. Compare it to another\n\n9. Info\n\nR. Remove\n\n\n").strip()
                                 
-                                if choice4 not in ["1","2","3","4","5","6","7","8","9","R","r"]:
+                                if choice4 not in ["1","2","3","4","5","6","7","8","9","R","r"]: # Checking for invalid input by the user
                                     print("Please enter a valid choice")
                                     time.sleep(1.5)
                                     show_plot=False 
@@ -177,11 +176,7 @@ while True : #program will run until we chose to quit by entering Q in the main 
                                         time.sleep(4)
 
                                 elif choice4=="8": #Compare it to another circle
-                                    show_plot=False
-                                    os.system('cls' if os.name == 'nt' else 'clear')
-                                    print("There are no circles to be selected")
-
-                                    if len(circle_list) < 2:
+                                    if len(circle_list) < 2: # checking if there are no other circles to compare to
                                         os.system('cls' if os.name == 'nt' else 'clear')
                                         print("There are no circles to be selected")
                                         time.sleep(1.5)
@@ -190,12 +185,12 @@ while True : #program will run until we chose to quit by entering Q in the main 
                                         os.system('cls' if os.name == 'nt' else 'clear')
                                         print("Please select a circle by entering its number\n")
                                         for index_circle in range(len(circle_list)):
-                                            if index_circle!=choice3:
+                                            if index_circle!=choice3: # displaying all the available circles we can compare to, except the one we have already selected
                                                 print(f"{index_circle}. {circle_list[index_circle][0]}")
 
                                         choice5=int(input("").strip())
                                         os.system('cls' if os.name == 'nt' else 'clear')
-                                        if circle_list[choice3][1]==circle_list[choice5][1]:
+                                        if circle_list[choice3][1]==circle_list[choice5][1]: # checking if the selected circles are equal
                                             print("These 2 circles are equal")
                                         else : 
                                             print("These 2 circles are not equal equal")
@@ -212,15 +207,15 @@ while True : #program will run until we chose to quit by entering Q in the main 
                                 elif choice4=="R" or choice4=="r": #Remove it
                                     circle_list.remove(circle_list[choice3])
                                 
-                    elif choice2 =="B":
-                        if len(rectangle_list)==0:
+                    elif choice2 =="B": # Selecting e rectangle
+                        if len(rectangle_list)==0: #checking if the rectangle list is empty
                             print("There are no rectangles to be selected")
                             time.sleep(1.5)
                             show_plot=False 
                         else:
                             os.system('cls' if os.name == 'nt' else 'clear')
                             print("Please select a rectangle by entering its number")
-                            for index_rec in range(len(rectangle_list)):
+                            for index_rec in range(len(rectangle_list)): #printing the list of available rectangles
                                 print(f"{index_rec}. {rectangle_list[index_rec][0]}")
                             
                             choice3=int(input("").strip())
@@ -234,7 +229,7 @@ while True : #program will run until we chose to quit by entering Q in the main 
                                 os.system('cls' if os.name == 'nt' else 'clear')
                                 choice4=input("What do you want to do with this rectangle ?\n1. Area\n2. Circumference\n3. Move it\n4. Move it to an exact point\n5. Scale it\n6. Change dimensions to exact values\n7. Check if it contains a point\n8. Compare to another rectangle\n9. Rotate\n10. Make horizontal\n11. Make vertical\n12. Info\nR. Remove\n\n\n")
                                 
-                                if choice4 not in ["1","2","3","4","5","6","7","8","9","10","11","12","r","R"]:
+                                if choice4 not in ["1","2","3","4","5","6","7","8","9","10","11","12","r","R"]: # Checking for invalid input by the user
                                     os.system('cls' if os.name == 'nt' else 'clear')
                                     print("Please enter a valid choice")
                                     time.sleep(1.5)
@@ -308,7 +303,7 @@ while True : #program will run until we chose to quit by entering Q in the main 
                                         os.system('cls' if os.name == 'nt' else 'clear')
                                         print("Please select a rectangle by entering its number\n")
                                         for index_rectangle in range(len(rectangle_list)):
-                                            if index_rectangle!=choice3:
+                                            if index_rectangle!=choice3: #printing the list of available rectangles to compare to, except the one we already selected 
                                                 print(f"{index_rectangle}. {rectangle_list[index_rectangle][0]}")
 
                                         choice5=int(input("").strip())
@@ -342,9 +337,9 @@ while True : #program will run until we chose to quit by entering Q in the main 
                                 elif choice4.capitalize()=="R": #Remove it
                                     rectangle_list.remove(rectangle_list[choice3])
 
-                    elif choice2 =="C": # Select a square
+                    elif choice2 =="C": # Selecting a square
 
-                        if len(square_list)==0:
+                        if len(square_list)==0: # Checking if the square list is empty
                             os.system('cls' if os.name == 'nt' else 'clear')
                             print("There are no squares to be selected")
                             time.sleep(1.5)
@@ -352,12 +347,12 @@ while True : #program will run until we chose to quit by entering Q in the main 
                         else:
                             os.system('cls' if os.name == 'nt' else 'clear')
                             print("Please select a square by entering its number")
-                            for index_squ in range(len(square_list)):
+                            for index_squ in range(len(square_list)): # printint out the square list 
                                 print(f"{index_squ}. {square_list[index_squ][0]}")
 
                             choice3=int(input("").strip())
 
-                            if choice3>=len(square_list) or choice3<0:
+                            if choice3>=len(square_list) or choice3<0: # checking for invalid choice
                                 print("Invalid index")
                                 time.sleep(1.5)
                                 show_plot=False 
@@ -366,7 +361,7 @@ while True : #program will run until we chose to quit by entering Q in the main 
                                 os.system('cls' if os.name == 'nt' else 'clear')
                                 choice4=input("What do you want to do with this square ?\n1. Area\n2. Circumference\n3. Move it\n4. Move it to an exact point\n5. Scale it\n6. Change dimensions to exact values\n7. Check if it contains a point\n8. Compare it to another square\n9. Rotate\n10. Make it horizontal\n11. Info\nR. Remove\n\n\n").strip()
 
-                                if choice4 not in ["1","2","3","4","5","6","7","8","9","10","11","R","r"]:
+                                if choice4 not in ["1","2","3","4","5","6","7","8","9","10","11","R","r"]: # Checking for invalid input by the user
                                     print("Please enter a valid choice")
                                     time.sleep(1.5)
                                     show_plot=False 
@@ -469,6 +464,7 @@ while True : #program will run until we chose to quit by entering Q in the main 
                 time.sleep(1.5)   
                 show_plot = False
 
+            # if during this loop we want to plot our shapes, we will loop through the shape lists and plot all of them
             if show_plot:
                 os.system('cls' if os.name == 'nt' else 'clear')
                 print("Please close the plot figure to continue")
@@ -494,7 +490,7 @@ while True : #program will run until we chose to quit by entering Q in the main 
 
                 os.system('cls' if os.name == 'nt' else 'clear')
                 choice1=input("\n1. Create a new 3D shape\n\n2. Select a 3D shape\n\nQ. Quit\n\n\n").strip() # 3D main menu
-                if choice1 not in ["1","2","Q","q"]:
+                if choice1 not in ["1","2","Q","q"]: # Checking for invalid input by the user
                     print("Please enter a valid choice")
                     time.sleep(1.5)
                     show_plot=False 
@@ -503,7 +499,7 @@ while True : #program will run until we chose to quit by entering Q in the main 
                     os.system('cls' if os.name == 'nt' else 'clear') #clear the
                     choice2=(input("\nWhat type of shape ?\n\nA.Sphere\n\nB.Rectangular Cuboid\n\nC.Cube\n\nM. Go back to main menu\n\n\n").strip()).capitalize()
                     
-                    if choice2 not in ["A","B","C","M"]:
+                    if choice2 not in ["A","B","C","M"]: # Checking for invalid input by the user
                         os.system('cls' if os.name == 'nt' else 'clear')
                         print("Invalid choice")
                         time.sleep(1.5)
@@ -523,7 +519,7 @@ while True : #program will run until we chose to quit by entering Q in the main 
 
                         sphere_list.append([name,Sphere(x,y,z,radius)])
                         
-                    elif choice2 =="B":
+                    elif choice2 =="B": # Create a rectangular cuboid
                         os.system('cls' if os.name == 'nt' else 'clear')
                         x = float(input("Please enter the X coordinate of the center of your rectangular cuboid :\n\n").strip())
                         os.system('cls' if os.name == 'nt' else 'clear')
@@ -557,18 +553,18 @@ while True : #program will run until we chose to quit by entering Q in the main 
                         show_plot=False 
                         continue
                 
-                elif choice1=="2": 
+                elif choice1=="2": # Select a shape
                     os.system('cls' if os.name == 'nt' else 'clear')
                     choice2=(input("What type of shape ?\nA.Sphere\nB.Rectangular Cuboid\nC.Cube\nM. Go back to main menu\n\n\n").strip()).capitalize()
                     
-                    if choice2 not in ["A","B","C","M"]:
+                    if choice2 not in ["A","B","C","M"]: # Checking for invalid input by the user
                         os.system('cls' if os.name == 'nt' else 'clear')
                         print("Please enter a valid choice")
                         time.sleep(1.5)
                         show_plot=False 
                     
-                    elif choice2 =="A":
-                        if len(sphere_list)==0:
+                    elif choice2 =="A":  # Select a sphere
+                        if len(sphere_list)==0: #checking if the sphere list is empty
                             os.system('cls' if os.name == 'nt' else 'clear')
                             print("There are no spheres to be selected")
                             time.sleep(1.5)
@@ -590,7 +586,7 @@ while True : #program will run until we chose to quit by entering Q in the main 
                                 selected_shape=sphere_list[choice3][1]
                                 choice4=input("What do you want to do with this sphere ?\n1. Volume\n2. Circumference surface\n3. Move it\n4. Move it to an exact point\n5. Scale it\n6. Change radius \n7. Check if it contains a point\n8. Compare with another sphere\n9.Info\nR. Remove\n\n\n").strip()
                                 
-                                if choice4 not in ["1","2","3","4","5","6","7","8","9","r","R"]:
+                                if choice4 not in ["1","2","3","4","5","6","7","8","9","r","R"]: # Checking for invalid input by the user
                                     os.system('cls' if os.name == 'nt' else 'clear')
                                     print("Please enter a valid choice")
                                     time.sleep(1.5)
@@ -693,8 +689,8 @@ while True : #program will run until we chose to quit by entering Q in the main 
                                     sphere_list.remove(sphere_list[choice3])
                                     
 
-                    elif choice2 =="B": # Rectangular cuboid
-                        if len(rec_cuboid_list)==0:
+                    elif choice2 =="B": # # Select a rectangular cuboid
+                        if len(rec_cuboid_list)==0: #checking if the rectangular cuboid list is empty
                             os.system('cls' if os.name == 'nt' else 'clear')
                             print("There are no rectangular cuboids to be selected")
                             time.sleep(1.5)
@@ -717,7 +713,7 @@ while True : #program will run until we chose to quit by entering Q in the main 
                                 os.system('cls' if os.name == 'nt' else 'clear')
                                 choice4=input("What do you want to do with this rectangular cuboid ?\n1. Volume\n2. Circumference surface\n3. Move it\n4. Move it to an exact point\n5. Scale it\n6. Change dimensions to exact values\n7. Check if it contains a point\n8. Compare it to another rectangular cuboid\n9. Info\nR. Remove\n\n\n").strip()
                                 
-                                if choice4 not in ["1","2","3","4","5","6","7","8","9","r","R"]: # Invalid choice
+                                if choice4 not in ["1","2","3","4","5","6","7","8","9","r","R"]: # Checking for invalid input by the user
                                     os.system('cls' if os.name == 'nt' else 'clear')
                                     print("Please enter a valid choice")
                                     show_plot=False 
@@ -818,7 +814,7 @@ while True : #program will run until we chose to quit by entering Q in the main 
 
                     elif choice2 =="C": # Select a cube
 
-                        if len(cube_list)==0:
+                        if len(cube_list)==0: #checking if the cube list is empty
                             os.system('cls' if os.name == 'nt' else 'clear')
                             print("There are no cubes to be selected")
                             time.sleep(1.5)
@@ -841,7 +837,7 @@ while True : #program will run until we chose to quit by entering Q in the main 
                                 os.system('cls' if os.name == 'nt' else 'clear')
                                 choice4=input("What do you want to do with this square ?\n1. Volume\n2. Circumference surface\n3. Move it\n4. Move it to an exact point\n5. Scale it\n6. Change dimensions to exact values\n7. Check if it contains a point\n8. Compare it to another cube\n9. Info\nR. Remove\n\n\n").strip()
                                 
-                                if choice4 not in ["1","2","3","4","5","6","7","8","9","r","R"]:
+                                if choice4 not in ["1","2","3","4","5","6","7","8","9","r","R"]: # Checking for invalid input by the user
                                     os.system('cls' if os.name == 'nt' else 'clear')
                                     print("Please enter a valid choice")
                                     time.sleep(1.5)
@@ -952,6 +948,9 @@ while True : #program will run until we chose to quit by entering Q in the main 
                 print(err)
                 time.sleep(1.5)   
                 show_plot = False
+
+            # if we want to plot during this loop, we will loop through all the shape lists and plot them 
+            # in our 3D figure
 
             if show_plot:
 
