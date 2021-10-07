@@ -8,7 +8,7 @@ from shapes import Cube
 import numpy as np
 
 import matplotlib.pyplot as plt
-import time
+import time # https://realpython.com/python-sleep/
 import os
 
 #creating lists for the geometric shapes that our used will create
@@ -143,8 +143,6 @@ while True : #program will run until we chose to quit by entering Q in the main 
 
                                     selected_shape.move(x,y)
                                     
-
-
                                 elif choice4=="4": #Move to a certain point
                                     os.system('cls' if os.name == 'nt' else 'clear')
                                     x=float(input("Please enter the X coordinate of the point :\n\n").strip())
@@ -152,14 +150,11 @@ while True : #program will run until we chose to quit by entering Q in the main 
 
                                     selected_shape.move_to(x,y)
 
-
                                 elif choice4=="5": #Scale it
                                     os.system('cls' if os.name == 'nt' else 'clear')
                                     scaling_value=float((input("Please enter the scaling value ").strip()))
                                     
                                     selected_shape.scale(scaling_value)
-
-
 
                                 elif choice4=="6": #Change radius
                                     os.system('cls' if os.name == 'nt' else 'clear')
@@ -283,13 +278,13 @@ while True : #program will run until we chose to quit by entering Q in the main 
                                     new_y=float(input("Please enter the new HEIGHT :\n\n").strip())
                                     rectangle_list[choice3][1]=selected_shape.change_size(new_x,new_y)
                                     
-
                                 elif choice4=="7": ##Check if it contains a point
                                     show_plot=False 
                                     os.system('cls' if os.name == 'nt' else 'clear')
-                                    new_x=float(input("Please enter the X coordinate of the point :\n\n").strip())
+                                    x=float(input("Please enter the X coordinate of the point :\n\n").strip())
                                     os.system('cls' if os.name == 'nt' else 'clear')
-                                    new_y=float(input("Please enter the Y coordinate of the point :\n\n").strip())
+                                    y=float(input("Please enter the Y coordinate of the point :\n\n").strip())
+                                    os.system('cls' if os.name == 'nt' else 'clear')
                                     if selected_shape.contains(x,y) :
                                         print(f"The point ({x},{y}) is withing this rectangle")
                                         time.sleep(4)
@@ -298,7 +293,6 @@ while True : #program will run until we chose to quit by entering Q in the main 
                                         print(f"The point ({x},{y}) is not withing this rectangle")
                                         time.sleep(4)
                                             
-
                                 elif choice4=="8": #Compare it to another rectangle
 
                                     show_plot=False
@@ -330,7 +324,6 @@ while True : #program will run until we chose to quit by entering Q in the main 
                                     os.system('cls' if os.name == 'nt' else 'clear')
                                     angle=float(input("Please enter the rotation angle :\n\n").strip())
                                     selected_shape.rotate(angle) 
-                                
                                 
                                 elif choice4=="10": #Make horizontal
                                     os.system('cls' if os.name == 'nt' else 'clear')
@@ -371,7 +364,7 @@ while True : #program will run until we chose to quit by entering Q in the main 
                             else:
                                 selected_shape=square_list[choice3][1]
                                 os.system('cls' if os.name == 'nt' else 'clear')
-                                choice4=input("What do you want to do with this square ?\n1. Area\n2. Circumference\n3. Move it\n4. Move it to an exact point\n5. Scale it\n6. Change dimensions to exact values\n7. Check if it contains a point\n8. Compare it to another circle\n9. Rotate\n10. Make it horizontal\n11. Info\nR. Remove\n\n\n").strip()
+                                choice4=input("What do you want to do with this square ?\n1. Area\n2. Circumference\n3. Move it\n4. Move it to an exact point\n5. Scale it\n6. Change dimensions to exact values\n7. Check if it contains a point\n8. Compare it to another square\n9. Rotate\n10. Make it horizontal\n11. Info\nR. Remove\n\n\n").strip()
 
                                 if choice4 not in ["1","2","3","4","5","6","7","8","9","10","11","R","r"]:
                                     print("Please enter a valid choice")
@@ -393,7 +386,6 @@ while True : #program will run until we chose to quit by entering Q in the main 
                                     y=float(input("Please enter the distance in the Y direction :\n\n").strip())
                                     selected_shape.move(x,y)
                 
-
                                 elif choice4=="4": #Move to a certain point
                                     os.system('cls' if os.name == 'nt' else 'clear')
                                     x=float(input("Please enter the X coordinate of the point :\n\n").strip())
@@ -495,13 +487,13 @@ while True : #program will run until we chose to quit by entering Q in the main 
                 plt.show()
 
 
-    else:
+    else: # 3D Shapes
         while True:
             try:
                 show_plot=True 
 
                 os.system('cls' if os.name == 'nt' else 'clear')
-                choice1=input("\n1. Create a new 3D shape\n\n2. Select a 3D shape\n\nQ. Quit\n\n\n").strip()
+                choice1=input("\n1. Create a new 3D shape\n\n2. Select a 3D shape\n\nQ. Quit\n\n\n").strip() # 3D main menu
                 if choice1 not in ["1","2","Q","q"]:
                     print("Please enter a valid choice")
                     time.sleep(1.5)
@@ -510,11 +502,13 @@ while True : #program will run until we chose to quit by entering Q in the main 
                 elif choice1=="1": #create a 3d shape
                     os.system('cls' if os.name == 'nt' else 'clear') #clear the
                     choice2=(input("\nWhat type of shape ?\n\nA.Sphere\n\nB.Rectangular Cuboid\n\nC.Cube\n\nM. Go back to main menu\n\n\n").strip()).capitalize()
+                    
                     if choice2 not in ["A","B","C","M"]:
                         os.system('cls' if os.name == 'nt' else 'clear')
                         print("Invalid choice")
                         time.sleep(1.5)
                         show_plot=False 
+                    
                     elif choice2 =="A":#create a sphere
                         os.system('cls' if os.name == 'nt' else 'clear')
                         x = float(input("Please enter the X coordinate of the center of your sphere :\n\n").strip())
@@ -529,7 +523,6 @@ while True : #program will run until we chose to quit by entering Q in the main 
 
                         sphere_list.append([name,Sphere(x,y,z,radius)])
                         
-
                     elif choice2 =="B":
                         os.system('cls' if os.name == 'nt' else 'clear')
                         x = float(input("Please enter the X coordinate of the center of your rectangular cuboid :\n\n").strip())
@@ -547,7 +540,6 @@ while True : #program will run until we chose to quit by entering Q in the main 
                         name = "r_cub" +str(len(rec_cuboid_list))
                         rec_cuboid_list.append([name,Rec_Cuboid(x,y,z,side1,side2,side3)])
                       
-
                     elif choice2 =="C": #create a Cube
                         os.system('cls' if os.name == 'nt' else 'clear')
                         x = float(input("Please enter the X coordinate of the center of your cube :\n\n").strip())
@@ -561,22 +553,20 @@ while True : #program will run until we chose to quit by entering Q in the main 
                         name = "cub"+str(len(cube_list))
                         cube_list.append([name,Cube(x,y,z,side)])
 
-                       
-
-
                     elif choice2 =="M":
                         show_plot=False 
                         continue
                 
-
                 elif choice1=="2": 
                     os.system('cls' if os.name == 'nt' else 'clear')
                     choice2=(input("What type of shape ?\nA.Sphere\nB.Rectangular Cuboid\nC.Cube\nM. Go back to main menu\n\n\n").strip()).capitalize()
+                    
                     if choice2 not in ["A","B","C","M"]:
                         os.system('cls' if os.name == 'nt' else 'clear')
                         print("Please enter a valid choice")
                         time.sleep(1.5)
                         show_plot=False 
+                    
                     elif choice2 =="A":
                         if len(sphere_list)==0:
                             os.system('cls' if os.name == 'nt' else 'clear')
@@ -594,6 +584,7 @@ while True : #program will run until we chose to quit by entering Q in the main 
                                 print("Invalid index")
                                 time.sleep(1.5)
                                 show_plot=False 
+                            
                             else:
                                 os.system('cls' if os.name == 'nt' else 'clear')
                                 selected_shape=sphere_list[choice3][1]
@@ -659,7 +650,6 @@ while True : #program will run until we chose to quit by entering Q in the main 
                                     os.system('cls' if os.name == 'nt' else 'clear')
                                     z=float(input("Please enter the Z coordinate of the point :\n\n").strip())
 
-                                    
                                     if selected_shape.contains(x,y,z) :
                                         print(f"The point ({x},{y},{z}) is withing this sphere")
                                         time.sleep(4)
@@ -676,6 +666,7 @@ while True : #program will run until we chose to quit by entering Q in the main 
                                         print("There are no spheres to be selected")
                                         time.sleep(1.5)
                                         show_plot=False 
+                                    
                                     else:
                                         os.system('cls' if os.name == 'nt' else 'clear')
                                         print("Please select a circle by entering its number\n")
@@ -702,7 +693,7 @@ while True : #program will run until we chose to quit by entering Q in the main 
                                     sphere_list.remove(sphere_list[choice3])
                                     
 
-                    elif choice2 =="B":
+                    elif choice2 =="B": # Rectangular cuboid
                         if len(rec_cuboid_list)==0:
                             os.system('cls' if os.name == 'nt' else 'clear')
                             print("There are no rectangular cuboids to be selected")
@@ -726,7 +717,7 @@ while True : #program will run until we chose to quit by entering Q in the main 
                                 os.system('cls' if os.name == 'nt' else 'clear')
                                 choice4=input("What do you want to do with this rectangular cuboid ?\n1. Volume\n2. Circumference surface\n3. Move it\n4. Move it to an exact point\n5. Scale it\n6. Change dimensions to exact values\n7. Check if it contains a point\n8. Compare it to another rectangular cuboid\n9. Info\nR. Remove\n\n\n").strip()
                                 
-                                if choice4 not in ["1","2","3","4","5","6","7","8","9","r","R"]:
+                                if choice4 not in ["1","2","3","4","5","6","7","8","9","r","R"]: # Invalid choice
                                     os.system('cls' if os.name == 'nt' else 'clear')
                                     print("Please enter a valid choice")
                                     show_plot=False 
@@ -972,7 +963,7 @@ while True : #program will run until we chose to quit by entering Q in the main 
                 u = np.linspace(0, np.pi, 20)
                 v = np.linspace(0, 2 * np.pi, 20)
 
-                for sphere in sphere_list:
+                for sphere in sphere_list:  # https://jakevdp.github.io/mpl_tutorial/tutorial_pages/tut5.html
                     actual_sphere = sphere[1]
                     x = actual_sphere.x + np.outer(np.sin(u), np.sin(v))*actual_sphere.radius
                     y = actual_sphere.y + np.outer(np.sin(u), np.cos(v))*actual_sphere.radius
@@ -1001,10 +992,5 @@ while True : #program will run until we chose to quit by entering Q in the main 
                     ax.plot3D(X, Y, Z)
 
                 
-
                 plt.show()
                 
-
-
-
-
