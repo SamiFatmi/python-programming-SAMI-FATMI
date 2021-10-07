@@ -407,6 +407,13 @@ class Rectangle(Shape):
         return ((point1[0]-point2[0])**2+(point1[1]-point2[1])**2)**0.5
     
     def corners (self)->list:
+        """ Calculating the coordinates of the corners of the rectangle
+        we will use the corners for plotting
+        angle is taken into account in the calculation to make it possible to rotate the 
+        rectangle
+        returning the 4 corners and the first corner at the end 
+        because we need 5 points to get 4 lines when plotting
+        """
         distance = pow(pow(self._side1/2,2)+pow(self._side2/2,2),0.5)
         inner_angle=math.acos(self._side1/(2*distance))
 
@@ -418,12 +425,14 @@ class Rectangle(Shape):
         return [c1,c2,c3,c4,c1]
     
     def plot(self):
+        """ plotting method, gets the corners coordinates and plots lines between points"""
         X_coordinates = [(self.corners())[i][0] for i in range(5)]
         Y_coordinates = [(self.corners())[i][1] for i in range(5)]
         plt.plot(X_coordinates,Y_coordinates)
 
 
     def __repr__(self)->str:
+        """ description of the rectangle"""
         if self._side1!=self._side2:
             return (f"Type: Rectangle\nCenter : ({self.x},{self.y})\nWidth : {self.side1}\nHeight: {self.side2}")
         else:
@@ -594,13 +603,18 @@ class Cube(Shape_3D):
         return Cube(self.x,self.y,self.z,self.side1)
     
     def contains(self,X:float,Y:float,Z:float)->bool:
-        """ Checking if the """
+        """ Checking if the cube contains a point
+        input is the point's coordinates
+        we check if all the coordinates are between the center coordinate +/- the width/2
+        """
         if not all([isinstance(i,(int,float)) for i in [X,Y,Z]]) or not all([not isinstance(i,bool) for i in [X,Y,Z]]):
             raise TypeError ("Point coordinates must be valid numbers")
 
         return True if (self.x-self.side1/2<=X<=self.x+self.side1/2 and self.y-self.side1/2<=Y<=self.y+self.side1/2 and self.z-self.side1/2<=Z<=self.z+self.side1/2) else False
 
     def __eq__(self, o: object) -> bool:
+        """ comparing two cubes, if the cubes have the same width
+        they are considered equal """
         if type(self)!=type(o):
             raise TypeError("Can't compare a cube with a non-cube.")
         else:
@@ -611,15 +625,20 @@ class Cube(Shape_3D):
         return ((point1[0]-point2[0])**2+(point1[1]-point2[1])**2+(point1[2]-point2[2])**2)**0.5
 
     def corners(self)->list:
-
-        c1=[self.x+self.side1/2,self.y+self.side1/2,self.z+self.side1]
-        c2=[self.x+self.side1/2,self.y-self.side1/2,self.z+self.side1]
-        c3=[self.x+self.side1/2,self.y-self.side1/2,self.z-self.side1]
-        c4=[self.x+self.side1/2,self.y+self.side1/2,self.z-self.side1]
-        c5=[self.x-self.side1/2,self.y+self.side1/2,self.z+self.side1]
-        c6=[self.x-self.side1/2,self.y-self.side1/2,self.z+self.side1]
-        c7=[self.x-self.side1/2,self.y-self.side1/2,self.z-self.side1]
-        c8=[self.x-self.side1/2,self.y+self.side1/2,self.z-self.side1]
+        """ calculating the coordinates of the corners of our cube 
+        since we will not be rotating any 3D shape, coordinates are simply 
+        center coordinate +/- width/2 
+        we return the points in such a way that would make the plotting not miss 
+        any side of the cube nor plot unnecessary lines
+        the points' coordinates will be used while plotting"""
+        c1=[self.x+self.side1/2,self.y+self.side1/2,self.z+self.side1/2]
+        c2=[self.x+self.side1/2,self.y-self.side1/2,self.z+self.side1/2]
+        c3=[self.x+self.side1/2,self.y-self.side1/2,self.z-self.side1/2]
+        c4=[self.x+self.side1/2,self.y+self.side1/2,self.z-self.side1/2]
+        c5=[self.x-self.side1/2,self.y+self.side1/2,self.z+self.side1/2]
+        c6=[self.x-self.side1/2,self.y-self.side1/2,self.z+self.side1/2]
+        c7=[self.x-self.side1/2,self.y-self.side1/2,self.z-self.side1/2]
+        c8=[self.x-self.side1/2,self.y+self.side1/2,self.z-self.side1/2]
 
         return [c1,c2,c3,c4,c1,c5,c6,c2,c6,c7,c3,c7,c8,c4,c8,c5]
     
@@ -752,18 +771,33 @@ class Rec_Cuboid(Cube):
         return Rec_Cuboid(self.x,self.y,self.z,self.side1,self.side2,self.side3)
     
     def contains(self,X:float,Y:float,Z:float)->bool:
+        """ Checking if the 3D rectangle contains a point
+        input is the point's coordinates
+        we check if all the coordinates are between the center coordinate +/- the height, width or depth 
+        divided by 2, depending on which coordinate we are checking
+        """
         if not all([isinstance(i,(int,float)) for i in [X,Y,Z]]) or not all([not isinstance(i,bool) for i in [X,Y,Z]]):
             raise TypeError ("Point coordinates must be valid numbers")
 
         return True if  self.x-self.side1 <=X<= self.x+self.side1 and self.y-self.side2 <=Y<= self.y+self.side2 and self.z-self.side3 <=Z<= self.z+self.side3 else False
     
     def __eq__(self, o: object) -> bool:
+        """ Comparing 2 rectangular cuboids
+        if their height, width and depth are respectively 
+        or non-respectively equal, they will be considered equal"""
         if type(self)!=type(o):
             raise TypeError("Can't compare a rectangular cuboid shape with a non-rectangular cuboid shape.")
         else:
             return True if (self.side1 == o.side1 or self.side1 == o.side2 or self.side1 == o.side3) and (self.side2 == o.side1 or self.side2 == o.side2 or self.side2 == o.side3) and (self.side3 == o.side1 or self.side3 == o.side2 or self.side3 == o.side3) else False
     
     def corners(self)->list:    
+        """ calculating the coordinates of the corners of our 3D rectangle 
+        since we will not be rotating any 3D shape, coordinates are simply 
+        center coordinate +/- heigh, width or depth by 2, depending
+        on what coordinate of the corner we are calculating 
+        we return the points in such a way that would make the plotting not miss 
+        any side of the 3D rectangle nor plot unnecessary lines
+        the points' coordinates will be used while plotting"""
         c1=[self.x+self.side1/2,self.y+self.side2/2,self.z+self.side3/2]
         c2=[self.x+self.side1/2,self.y-self.side2/2,self.z+self.side3/2]
         c3=[self.x+self.side1/2,self.y-self.side2/2,self.z-self.side3/2]
@@ -776,6 +810,7 @@ class Rec_Cuboid(Cube):
         return [c1,c2,c3,c4,c1,c5,c6,c2,c6,c7,c3,c7,c8,c4,c8,c5]
     
     def __repr__(self)->str:
+        """ description of our rectangular cuboid """
         return (f"Type: Rectangular cuboid\nCenter : ({self.x},{self.y},{self.z})\nWidth : {self.side1}\nHeight : {self.side2}\nDepth : {self.side3}")
 
 
@@ -875,18 +910,24 @@ class Sphere(Shape_3D):
         return Sphere(self.x,self.y,self.z,self.radius)
 
     def contains(self,X:float,Y:float,Z:float)->bool:
+        """ Checking if our sphere contains a point by comparing 
+        the distance between the center and the point with the 
+        radius of our sphere """
         if not all([isinstance(i,(int,float)) for i in [X,Y,Z]]) or not all([not isinstance(i,bool) for i in [X,Y,Z]]):
             raise TypeError ("Point coordinates must be valid numbers")
 
         return True if  ((self.x-X)**2 + (self.y-Y)**2 + (self.z-Z)**2)**0.5 <= self.radius else False
     
     def __eq__(self, o: object) -> bool:
+        """ Comparing 2 spheres, if they have the same radius we would 
+        consider them equal """
         if type(self)!=type(o):
             raise TypeError("Can't compare a Sphere with a non-sphere.")
         else:
             return True if self.radius == o.radius else False
 
     def __repr__(self)->str:
+        """ a short description of our sphere"""
         return (f"Type: Sphere\nCenter : ({self.x},{self.y},{self.z})\nRadius : {self.radius}")
 
 
