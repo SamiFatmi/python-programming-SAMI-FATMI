@@ -62,6 +62,10 @@ class Shape:
 
 
 class Circle(Shape):
+    """ This is a child class of Shape, it takes the X and Y coordinates from Shape
+    This class will contain all the methods for plotting, area and circumference counting,
+    moving, scaling or changing size and comparing to other circles.
+    """
     def __init__(self,x:float,y:float,radius:float)->None:
         super().__init__(x,y)
         self.radius=radius
@@ -85,9 +89,15 @@ class Circle(Shape):
         self._radius = value 
 
     def area(self)->float:
+        """
+        Calculating and returning the area of the circle
+        """
         return math.pi*(self._radius**2)
 
     def perimeter(self)->float:
+        """
+        Calculating and returning the circumference of the circle
+        """
         return 2*math.pi*self._radius
 
     def move(self,xdistance:float,ydistance:float)->'Circle':
@@ -114,6 +124,10 @@ class Circle(Shape):
         return Circle(self._x,self._y,self._radius)
     
     def scale(self,value:float)->'Circle':
+        """ Scaling the circle
+        input from the user : scaling value
+        The method scales the circle by multiplying the radius by the scaling value
+        """
 
         if not isinstance(value,(int,float)) or isinstance(value,bool):
             raise TypeError("Value must be an int or a float")
@@ -128,6 +142,10 @@ class Circle(Shape):
         return Circle(self._x,self._y,self._radius)
 
     def change_radius(self,value:float)->'Circle':
+        """ Changing the circle's radius 
+        input from the user : new radius
+        The method changes the circle's  radius to the new value
+        """
         if not isinstance(value,(int,float)) or isinstance(value,bool):
             raise TypeError("Value must be an int or a float")
 
@@ -140,6 +158,9 @@ class Circle(Shape):
         return Circle(self._x,self._y,value)
 
     def contain(self,x:float,y:float)->bool:
+        """Check if a point is within a circle by comparing the distance from the point to the center
+        of the circle and the radius 
+        point coordinates should be given by the user"""
 
         if not all([isinstance(i,(int,float)) for i in [x,y]]) or not all([not isinstance(i,bool) for i in [x,y]]):
             raise TypeError("Point coordinates should be numbers")
@@ -150,11 +171,14 @@ class Circle(Shape):
             return False
 
     def __eq__(self,other:'Circle')->bool:
+        """ Compairing 2 circles and checking if their radius is the same
+        if they have the same radius then they are equal"""
         if type(other) != type(self):
             raise TypeError("Can't compare a circle with a non-circle")
         return True if self._radius == other._radius else False
 
     def plot(self)->None:
+        """ Plotting 360 degrees of a circle """
         X = [ self._x+ self._radius*math.cos(math.radians(i)) for i in range(1,361)]
         Y = [ self._y+ self._radius*math.sin(math.radians(i)) for i in range(1,361)]
         plt.plot(X,Y)
@@ -169,6 +193,10 @@ class Circle(Shape):
 
 
 class Rectangle(Shape):
+    """ This is a child class of Shape, it takes the X and Y coordinates from Shape
+    This class will contain all the methods for plotting, area and circumference counting,
+    moving, scaling or changing size and comparing to other rectangles.
+    """
     def __init__(self,x:float,y:float,side1:float,side2:float,angle:float=0)->None:
         super().__init__(x,y)
         self.side1=side1
@@ -242,13 +270,26 @@ class Rectangle(Shape):
         self._y=new_y
         return Rectangle(new_x,new_y,self._side1,self._side2)
 
+
     def area(self)->float:
+        """
+        Calculating and returning the area of the rectangle
+        """
         return self._side1*self._side2
 
+
     def perimeter(self)->float:
+        """
+        Calculating and returning the circumference of the rectangle
+        """
         return 2*self._side1 + 2*self._side2
 
+
     def scale(self,value:float)->'Rectangle':
+        """ Scaling the rectangle
+        input from the user : scaling value
+        The method scales the rectangle by multiplying the width and height by the scaling value
+        """
         if not isinstance(value,(int,float)) or isinstance(value,bool):
             raise TypeError("Scaling Value should be a number")
         
@@ -262,6 +303,10 @@ class Rectangle(Shape):
         return Rectangle(self._x,self._y,self._side1,self._side2,self._angle)
 
     def change_size(self,new_side1:float,new_side2:float)->'Rectangle':
+        """ Changing the rectangle's size 
+        input from the user : new radius
+        The method changes the rectangle's width and height to the new values
+        """
         if not all([isinstance(i,(int,float)) for i in [new_side1,new_side2]]) or not all([not isinstance(i,bool) for i in[new_side1,new_side2]]):
             raise TypeError("The new length and width must be numbers")
 
@@ -277,12 +322,17 @@ class Rectangle(Shape):
         return Rectangle(self._x,self._y,self._side1,self._side2,self._angle)
     
     def rotate(self,rotation_angle:float)->'Rectangle':
+        """ Rotating the rectangle
+        input from the user : rotation angle 
+        Method rotates the rectangle by adding the rotation angle value to the actual angle value"""
         if not isinstance(rotation_angle,(int,float)) or isinstance(rotation_angle,bool):
             raise TypeError("Rotation angle should be an int or a float")
         self._angle+=rotation_angle
         return Rectangle(self._x,self._y,self._side1,self._side2,self._angle)
 
     def make_horizontal(self)->'Rectangle':
+        """ Making the rectangle horizontal by checking which side is longer and setting the angle 
+        to 0 or 90 depending on the cases"""
         if self._side1>=self._side2:
             self._angle = 0
             return Rectangle(self._x,self._y,self._side1,self._side2,0)
@@ -291,6 +341,8 @@ class Rectangle(Shape):
             return Rectangle(self._x,self._y,self._side1,self._side2,90)
     
     def make_vertical(self)->'Rectangle':
+        """ Making the rectangle vertical by checking which side is longer and setting the angle 
+        to 0 or 90 depending on the cases"""
         if self._side1>=self._side2:
             self._angle = 90
             return Rectangle(self._x,self._y,self._side1,self._side2,90)
@@ -299,6 +351,22 @@ class Rectangle(Shape):
             return Rectangle(self._x,self._y,self._side1,self._side2,0)
 
     def contains(self,x:float,y:float)->bool:
+        """ Checking if a point is within our rectangle 
+        Input by the user is the point coordinates
+        since the user can rotate the rectangle we can't only check if the 
+        point X coordinate is betwen center X +/- width and the same for Y 
+        coordinates.
+
+        We will check the area of all the triangles that could be made including our
+        point in this way: 
+        Let's say our rectangle is made of 4 points A,B,C,D
+        Our point is called P 
+        then for the point P to be within ABCD, all these triangles:
+        PAB ,PBC, PCD and PDA should have areas that add up to the area of the rectangle,
+        if the areas of those triangles' sum is bigger than the area of the rectangle 
+        then our point P is outside the rectangle ABCD.
+        """
+
         if not all([isinstance(i,(int,float)) for i in [x,y]]) or not all([not isinstance(i,bool) for i in [x,y]]):
             raise TypeError("Point coordinates must be numbers")
 
@@ -308,12 +376,25 @@ class Rectangle(Shape):
             else:
                 return False 
         else : 
-            for point in self.corners():
-                if self.euc_distance(point,[x,y]) > self.euc_distance((self.corners())[0],(self.corners())[2]):
-                    return False
+            rec_corners=self.corners()
+            point1=rec_corners[0]
+            point2=rec_corners[1]
+            point3=rec_corners[2]
+            point4=rec_corners[3]
+
+            triangle1_area= max(abs(point1[0]-point2[0]),abs(point1[0]-x),abs(x-point2[0]))*max(abs(point1[1]-point2[1]),abs(point1[1]-y),abs(y-point2[1])) - abs((point1[0]-point2[0])*(point1[1]-point2[1]))/2 - abs((point1[0]-x)*(point1[1]-y))/2 - abs((x-point2[0])*(y-point2[1]))/2
+            triangle2_area= max(abs(point3[0]-point2[0]),abs(point3[0]-x),abs(x-point2[0]))*max(abs(point3[1]-point2[1]),abs(point3[1]-y),abs(y-point2[1])) - abs((point3[0]-point2[0])*(point3[1]-point2[1]))/2 - abs((point3[0]-x)*(point3[1]-y))/2 - abs((x-point2[0])*(y-point2[1]))/2
+            triangle3_area= max(abs(point3[0]-point4[0]),abs(point3[0]-x),abs(x-point4[0]))*max(abs(point3[1]-point4[1]),abs(point3[1]-y),abs(y-point4[1])) - abs((point3[0]-point4[0])*(point3[1]-point4[1]))/2 - abs((point3[0]-x)*(point3[1]-y))/2 - abs((x-point4[0])*(y-point4[1]))/2
+            triangle4_area= max(abs(point1[0]-point4[0]),abs(point1[0]-x),abs(x-point4[0]))*max(abs(point1[1]-point4[1]),abs(point1[1]-y),abs(y-point4[1])) - abs((point1[0]-point4[0])*(point1[1]-point4[1]))/2 - abs((point1[0]-x)*(point1[1]-y))/2 - abs((x-point4[0])*(y-point4[1]))/2
+
+            if (triangle1_area+triangle2_area+triangle3_area+triangle4_area) - self.area() > 0.01:
+                return False
             return True 
     
     def __eq__(self,other:'Rectangle')->bool:
+        """ Comparing 2 rectangles by checking if they have the same width and height
+        since rectangles can be rotated, 2 rectangles having 
+        """
         if type(other)!=type(self):
             raise TypeError("Can't compare a rectangle with a non rectangle")
         if (self._side1 == other._side1 and self._side2 == other._side2 ) or (self._side2 == other._side1 and self._side1 == other._side2 ) :
@@ -442,9 +523,11 @@ class Cube(Shape_3D):
 
 
     def volume(self)->float:
+        """ Calculating and returning the volume of the cube """
         return self.side1**3 
 
     def circumference_surface(self)->float:
+        """ Calculating and returning the circumference surface of the cube """
         return (self.side1**2)*6
 
 
@@ -477,6 +560,10 @@ class Cube(Shape_3D):
         return Cube(self.x,self.y,self.z,self.side1) 
 
     def scale(self,scaling_value:float)->'Cube':
+        """ Scaling the cube
+        input from the user : scaling value
+        The method scales the cube by multiplying the width,height and depth by the scaling value
+        """
         if not isinstance(scaling_value,(int,float)) or isinstance(scaling_value,bool):
             raise TypeError("Scaling value must be a valid number")
 
@@ -490,6 +577,10 @@ class Cube(Shape_3D):
         return Cube(self.x,self.y,self.z,self.side1)
 
     def change_size(self,side_value:float)->'Cube':
+        """ Changing the cube's size 
+        input from the user : new width 
+        The method changes the cubes's width to the new value
+        """
         if not isinstance(side_value,(int,float)) or isinstance(side_value,bool):
             raise TypeError("Side dimension must be a valid number")
 
@@ -503,6 +594,7 @@ class Cube(Shape_3D):
         return Cube(self.x,self.y,self.z,self.side1)
     
     def contains(self,X:float,Y:float,Z:float)->bool:
+        """ Checking if the """
         if not all([isinstance(i,(int,float)) for i in [X,Y,Z]]) or not all([not isinstance(i,bool) for i in [X,Y,Z]]):
             raise TypeError ("Point coordinates must be valid numbers")
 
@@ -580,9 +672,15 @@ class Rec_Cuboid(Cube):
         self._side3=value
 
     def volume(self)->float:
+        """
+        Calculating and returning the volume of the rectangular cuboid
+        """
         return self.side1*self.side2*self.side3 
 
     def circumference_surface(self)->float:
+        """
+        Calculating and returning the circumference surface of the rectangular cuboid
+        """
         return self.side1*self.side2*2 + self.side1*self.side3*2 + self.side2*self.side3*2
 
     def move(self,X:float,Y:float,Z:float)->'Rec_Cuboid':
@@ -616,6 +714,10 @@ class Rec_Cuboid(Cube):
 
 
     def scale(self,scaling_value:float)->'Rec_Cuboid':
+        """ Scaling the rectangular cuboid
+        input from the user : scaling value
+        The method scales the rectangular cuboid by multiplying the width, height and depth by the scaling value
+        """
         if not isinstance(scaling_value,(int,float)) or isinstance(scaling_value,bool):
             raise TypeError("Scaling value must be a valid number")
 
@@ -631,6 +733,10 @@ class Rec_Cuboid(Cube):
         return Rec_Cuboid(self.x,self.y,self.z,self.side1,self.side2,self.side3)
 
     def change_size(self,new_side1:float,new_side2:float,new_side3:float)->'Rec_Cuboid':
+        """ Changing the rectangular cuboid's size 
+        input from the user : new width, height and depth
+        The method changes the rectangular cuboid's width, height and depth to the new values
+        """
         if not all([isinstance(i,(int,float)) for i in [new_side1,new_side2,new_side3]]) or not all([ not isinstance(i,bool) for i in [new_side1,new_side2,new_side3]]):
             raise TypeError("New sides values must be valid numbers")
 
@@ -657,15 +763,15 @@ class Rec_Cuboid(Cube):
         else:
             return True if (self.side1 == o.side1 or self.side1 == o.side2 or self.side1 == o.side3) and (self.side2 == o.side1 or self.side2 == o.side2 or self.side2 == o.side3) and (self.side3 == o.side1 or self.side3 == o.side2 or self.side3 == o.side3) else False
     
-    def corners(self)->list:
-        c1=[self.x+self.side1/2,self.y+self.side2/2,self.z+self.side3]
-        c2=[self.x+self.side1/2,self.y-self.side2/2,self.z+self.side3]
-        c3=[self.x+self.side1/2,self.y-self.side2/2,self.z-self.side3]
-        c4=[self.x+self.side1/2,self.y+self.side2/2,self.z-self.side3]
-        c5=[self.x-self.side1/2,self.y+self.side2/2,self.z+self.side3]
-        c6=[self.x-self.side1/2,self.y-self.side2/2,self.z+self.side3]
-        c7=[self.x-self.side1/2,self.y-self.side2/2,self.z-self.side3]
-        c8=[self.x-self.side1/2,self.y+self.side2/2,self.z-self.side3]
+    def corners(self)->list:    
+        c1=[self.x+self.side1/2,self.y+self.side2/2,self.z+self.side3/2]
+        c2=[self.x+self.side1/2,self.y-self.side2/2,self.z+self.side3/2]
+        c3=[self.x+self.side1/2,self.y-self.side2/2,self.z-self.side3/2]
+        c4=[self.x+self.side1/2,self.y+self.side2/2,self.z-self.side3/2]
+        c5=[self.x-self.side1/2,self.y+self.side2/2,self.z+self.side3/2]
+        c6=[self.x-self.side1/2,self.y-self.side2/2,self.z+self.side3/2]
+        c7=[self.x-self.side1/2,self.y-self.side2/2,self.z-self.side3/2]
+        c8=[self.x-self.side1/2,self.y+self.side2/2,self.z-self.side3/2]
 
         return [c1,c2,c3,c4,c1,c5,c6,c2,c6,c7,c3,c7,c8,c4,c8,c5]
     
@@ -697,9 +803,11 @@ class Sphere(Shape_3D):
         self._radius=value
 
     def volume(self)->float:
+        """ Calculating and returning the volume of the sphere  """
         return 4 * math.pi*(self.radius**3)/3
 
     def circumference_surface(self)->float:
+        """ Calculating and returning the circumference surface of the sphere """
         return 4*math.pi*(self.radius**2)
 
 
@@ -733,6 +841,10 @@ class Sphere(Shape_3D):
 
 
     def scale(self,scaling_value:float)->'Sphere':
+        """ Scaling the sphere
+        input from the user : scaling value
+        The method scales the sphere by multiplying the radius by the scaling value
+        """
         if not isinstance(scaling_value,(int,float)) or isinstance(scaling_value,bool):
             raise TypeError("Scaling value must be a valid number")
 
@@ -746,6 +858,10 @@ class Sphere(Shape_3D):
         return Sphere(self.x,self.y,self.z,self.radius)
 
     def change_radius(self,new_radius_value:float)->'Sphere':
+        """ Changing the spheres's radius 
+        input from the user : new radius
+        The method changes the spheres's  radius to the new value
+        """
         if not isinstance(new_radius_value,(int,float)) or isinstance(new_radius_value,bool):
             raise TypeError("New radius value must be a valid number")
 
